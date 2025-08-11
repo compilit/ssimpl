@@ -21,6 +21,6 @@
 - Voice calls
 - Screen sharing
 - Real-time multiplayer games
-- Decentralized applications
+- Decentralised applications
 
 WebRTC is supported by all major browsers and is a core building block for modern real-time web applications.

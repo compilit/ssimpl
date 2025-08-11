@@ -1,8 +1,8 @@
 # DID
 
-Decentralized IDentifier. A DID is a globally unique identifier that is not controlled by a central authority. Unlike
+Decentralised IDentifier. A DID is a globally unique identifier that is not controlled by a central authority. Unlike
 traditional identifiers (usernames, emails, etc.), a DID is linked to a cryptographic keypair, allowing users to prove
-ownership without relying on a centralized system.
+ownership without relying on a centralised system.
 
 A DID follows this format:
 

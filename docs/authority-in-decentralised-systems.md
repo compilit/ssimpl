@@ -1,6 +1,6 @@
 # Authorities in Decentralised Identity Systems
 
-It might seem counter-intuitive, why would there be a need for a trusted centralized party in a Decentralised identity
+It might seem counter-intuitive, why would there be a need for a trusted centralised party in a Decentralised identity
 system?
 This is simply because identity is non-deterministic. It is a social construct that is solely based on trust.
 

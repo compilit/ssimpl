@@ -24,22 +24,22 @@ impersonating individuals with minimal effort.
 
 SSIMPL stands for Self-Sovereign Identity & Mondial Pseudonymous Ledger. Which tells us already quite a bit about its
 components.
-SSIMPL tries to find a balance between centralized and decentralized systems. It creates a bridge between the physical
+SSIMPL tries to find a balance between centralised and decentralised systems. It creates a bridge between the physical
 and digital worlds through
 authority-backed cryptographic proof.
 Therefor, implementing SSIMPL requires a trusted central authority (such as a government) that supports some form of
 cryptography-based identification for individuals. Read more
-about [centralized authorities in a decentralized system](authority-in-decentralized-systems.md).
+about [centralised authorities in a decentralised system](authority-in-decentralised-systems.md).
 
 ## 1.1 The wallet itself
 
-The wallet must be a decentralized [BIP32-compliant](bip32.md) implementation backed-up up with
+The wallet must be a decentralised [BIP32-compliant](bip32.md) implementation backed-up up with
 a [BIP39-compliant](bip39.md) mnemonic
 phrase (stored offline). This wallet contains both a root keypair that can be used to sign and verify data and to
 authorize
 the bearer online, and all claims of the owner. It also supports creating child keypairs for pseudonymous
 authentication. The root public key is used
-to generate a [DID](did.md) (Decentralized Identifier), which is then signed by the neutral third party. Furthermore,
+to generate a [DID](did.md) (decentralised Identifier), which is then signed by the neutral third party. Furthermore,
 all encoded data, like the cryptographic keys, must be encoded using [Multibase-encoding](multibase-encoding.md) to
 ensure all peers of all possible future implementations always know which encoding is used.
 
@@ -87,7 +87,7 @@ required. These are used for peers to locate each other, after which, further co
 
 ## 1.3 IPFS Integration
 
-Some details need to be stored in a way that anyone can access them, preferably without a centralized server. The IPFS
+Some details need to be stored in a way that anyone can access them, preferably without a centralised server. The IPFS
 is a good candidate for this. The IPFS needs to host a file that contains all registered, invalidated/expired DIDs (the
 ledger).
 Every time another version of this file is uploaded, a pointer-file also needs to be updated. This pointer-file is a
@@ -141,12 +141,12 @@ const identityDocumentHash = sha256(
 )
 ```
 
-# 2 DoaToa - Decentralised Open Auth & Trusted Open Auth - a SSIMPL implementation
+# 2 DoaToa - a SSIMPL implementation
 
-DoaToa is the first SSIMPL implementation ever created. It consists of a client-side app (the id-wallet) and a few
-stateless microservices necessary to help set up decentralized communication and sharing of data. These microservices,
-while being centralized components, are meant to be 'the first of many' open-source interchangeable implementations. The
-same goes for the id-wallet. As long as the specification is followed, multiple implementations of both the centralized
+DoaToa (Decentralised Open Auth & Trusted Open Auth) is the first SSIMPL implementation created. It consists of a client-side app (the id-wallet) and a few
+stateless microservices necessary to help set up decentralised communication and sharing of data. These microservices,
+while being centralised components, are meant to be 'the first of many' open-source interchangeable implementations. The
+same goes for the id-wallet. As long as the specification is followed, multiple implementations of both the centralised
 components and the wallet, should be able to co-exist.
 
 ## 2.1 Decentralisation
@@ -175,17 +175,17 @@ on Android. This introduces a few risks that need to be mitigated:
 Each wallet has the capability to share data to another wallet in the form of a data sharing event, or a subscription.
 
 - Ad-hoc data sharing event: the receiver sends a request containing the scope of the requested data, and their
-  DID. This request is used to establish a [WebRTC](../concepts/web-rtc.md)
+  DID. This request is used to establish a [WebRTC](web-rtc.md)
   connection between the two peers, which is then used to share the data. This scenario is also quite similar to how an
   authentication request could be fulfilled. Although the use of WebRTC for that is optional when backed by a backend
-  server. See [UCAN](UCAN.md)
+  server. See [UCAN](ucan.md)
 - Subscriptions: the receiver sends a request containing the scope of the requested data, a public key (used for sharing
   a secret. E.g. Hybrid-Encryption or DHKE), the
   DID of the requestor and some optional metadata concerning the duration of the subscription.This request is used to
   establish a WebRTC. A symmetric key for encryption is either generated or resolved based on the provided
   public key. The data is gathered and encrypted with this symmetric key. In case of Hybrid-Encryption, the symmetric
   key is then encrypted using the public key. The encrypted data (and optionally the encrypted key) are then publicly
-  stored on the [IPFS](../concepts/ipfs.md).
+  stored on the [IPFS](ipfs.md).
   Finally, the location to this subscription is shared. While the IPFS does not support updating files, as it would
   require to change the CID used to retrieve the data, DoaToa stores a pointer to the file in question. The file itself
   never changes, but its metadata is updated to point to the latest version of the file thus allowing the file to be

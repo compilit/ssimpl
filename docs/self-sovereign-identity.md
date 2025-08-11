@@ -1,6 +1,6 @@
 # Self-Sovereign-Identity
 
-Self-Sovereign Identity (SSI) is a decentralized identity model where individuals control their own digital identities
+Self-Sovereign Identity (SSI) is a Decentralised identity model where individuals control their own digital identities
 without relying on central authorities.
 
 The main issue which the concept SSI usually tends to ignore is 'truth'. As long an individual is in complete control of
