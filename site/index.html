@@ -115,12 +115,12 @@ issue has become even more critical with the rise of AI and bots capable of
 impersonating individuals with minimal effort.</p>
 <p>SSIMPL stands for Self-Sovereign Identity &amp; Mondial Pseudonymous Ledger. Which tells us already quite a bit about its
 components.
-SSIMPL tries to find a balance between centralized and decentralised systems. It creates a bridge between the physical
+SSIMPL tries to find a balance between centralised and decentralised systems. It creates a bridge between the physical
 and digital worlds through
 authority-backed cryptographic proof.
 Therefor, implementing SSIMPL requires a trusted central authority (such as a government) that supports some form of
 cryptography-based identification for individuals. Read more
-about <a href="authority-in-decentralised-systems/">centralized authorities in a decentralised system</a>.</p>
+about <a href="authority-in-decentralised-systems/">centralised authorities in a decentralised system</a>.</p>
 <h2 id="11-the-wallet-itself">1.1 The wallet itself</h2>
 <p>The wallet must be a decentralised <a href="bip32/">BIP32-compliant</a> implementation backed-up up with
 a <a href="bip39/">BIP39-compliant</a> mnemonic
@@ -165,7 +165,7 @@ otherwise tempered with. The result of the challenge will be stored in the id wa
 <p>In order to be able to establish direct communication between peers through WebRTC, a Signal-, STUN- and TURN-server are
 required. These are used for peers to locate each other, after which, further communication is truly p2p.</p>
 <h2 id="13-ipfs-integration">1.3 IPFS Integration</h2>
-<p>Some details need to be stored in a way that anyone can access them, preferably without a centralized server. The IPFS
+<p>Some details need to be stored in a way that anyone can access them, preferably without a centralised server. The IPFS
 is a good candidate for this. The IPFS needs to host a file that contains all registered, invalidated/expired DIDs (the
 ledger).
 Every time another version of this file is uploaded, a pointer-file also needs to be updated. This pointer-file is a
@@ -215,8 +215,8 @@ instance integrating with the IPFS needs to implement these business rules:</p>
 <h1 id="2-doatoa-a-ssimpl-implementation">2 DoaToa - a SSIMPL implementation</h1>
 <p>DoaToa (Decentralised Open Auth &amp; Trusted Open Auth) is the first SSIMPL implementation created. It consists of a client-side app (the id-wallet) and a few
 stateless microservices necessary to help set up decentralised communication and sharing of data. These microservices,
-while being centralized components, are meant to be 'the first of many' open-source interchangeable implementations. The
-same goes for the id-wallet. As long as the specification is followed, multiple implementations of both the centralized
+while being centralised components, are meant to be 'the first of many' open-source interchangeable implementations. The
+same goes for the id-wallet. As long as the specification is followed, multiple implementations of both the centralised
 components and the wallet, should be able to co-exist.</p>
 <h2 id="21-decentralisation">2.1 Decentralisation</h2>
 <p>In order to fully implement SSI, a user needs to have full control over their own data. There are several ways to
@@ -363,5 +363,5 @@ request DoaToa to register your DID as a provider.</p></div>
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-08-11 12:12:24.004665+00:00
+Build Date UTC : 2025-08-11 12:13:52.002067+00:00
 -->
