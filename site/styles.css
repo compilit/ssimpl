@@ -1,3 +1,52 @@
-/*h2 {*/
-/*    font-size: 1.5em;*/
-/*}*/
+:root {
+    --primary-blue: #3333FF;
+    --secondary-blue: #3A86FF;
+    --tertiary-blue: #cfdaff;
+    --quartiary-blue: #1EB6FF;
+    --primary-pink: #FA4BE8;
+    --secondary-pink: #E3879E;
+    --tertiary-pink: #D183C9;
+    --primary-purple: #643A71;
+    --primary-warn: #ffc100;
+    --primary-danger: #F0386B;
+    --secondary-danger: #ffd2cf;
+    --tertiary-danger: #ff9191;
+    --dark: rgba(var(--bs-light-rgb));
+    --light-gray: #ebebeb;
+    --dark-gray: #969696;
+    --white: #FFFFFF;
+    --nominal: #51b600;
+    --light-color: #e0e0e0;;
+    --white-color: #f0f0f0;
+    --dark-color: #676161;
+    --light-dark-color: #cacaca;
+    --light-darker-color: #aaaaaa;
+    --pure-white-color: #ffffff;
+    --darkest-color: #332e2e;
+    --near-black: #1c1c1c;
+    --pure-black-color: #000;
+    --background-color: var(--light-color);
+    --color: var(--dark-color);
+    --directional-light-color: var(--pure-white-color);
+    --shadow-outer: var(--light-darker-color);
+    --shadow-inner: var(--white-color);
+    --light-dark-gradient: linear-gradient(145deg, var(--white-color), var(--light-dark-color));
+    --dark-light-gradient: linear-gradient(145deg, var(--light-dark-color), var(--white-color));
+    --fs-md: 16px;
+    --fs-lg: 20px;
+}
+
+h1, h2, h3, h4, h5 {
+    font-size: 1.5em;
+    color: var(--primary-pink);
+}
+
+.navbar.fixed-top.navbar-expand-lg.navbar-dark.bg-primary {
+    background: var(--secondary-blue) !important;
+}
+.nav-link {
+    --bs-nav-link-color: var(--secondary-blue);
+}
+a {
+    color: var(--secondary-blue);
+}

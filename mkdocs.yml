@@ -3,11 +3,9 @@ site_name: SSIMPL
 nav:
   - index.md
 
-theme:
-  name: mkdocs
-  custom_dir: docs/overrides
-
-
 extra_css:
   - styles.css
   - normalise.css
+
+extra:
+  generator: false

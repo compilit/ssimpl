@@ -4,7 +4,7 @@ The SSIMPL protocol described in the following specification addresses a few pro
 days of the internet — certainly since Web
 2.0:
 
-##### How do you keep the owner of the online identity in control of their identity data?
+**How do you keep the owner of the online identity in control of their identity data?**
 
 There have been several iterations of OAuth in the past, one of which (Open ID Connect), was meant to add an
 identification layer to a protocol that's otherwise solely used for delegated authorization. This identity layer,
@@ -15,7 +15,7 @@ identification, it is essential that individuals are capable of managing their d
 known as [SSI - Self-Sovereign-Identity](self-sovereign-identity.md). But SSI is still worth as much as an
 identity provided by a multinational if it is not verified.
 
-##### How do you verify someone’s digital identity?
+**How do you verify someone’s digital identity?**
 
 Online, everyone can claim to anyone. For some systems - like social media - that could be fine. But for professional
 services, it is of the utmost importance that all parties of a transaction are actually who they say they are. This
@@ -140,6 +140,7 @@ const identityDocumentHash = sha256(
     )
 )
 ```
+
 
 # 2 DoaToa - a SSIMPL implementation
 
