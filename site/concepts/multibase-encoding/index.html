@@ -7,18 +7,16 @@
         
         
         
-        <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>BIP32 - SSIMPL</title>
-        <link href="../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../css/fontawesome.min.css" rel="stylesheet">
-        <link href="../css/brands.min.css" rel="stylesheet">
-        <link href="../css/solid.min.css" rel="stylesheet">
-        <link href="../css/v4-font-face.min.css" rel="stylesheet">
-        <link href="../css/base.css" rel="stylesheet">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Multibase Encoding - SSIMPL</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
         <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
         <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
-        <link href="../styles.css" rel="stylesheet">
-        <link href="../normalise.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
         <script>hljs.highlightAll();</script> 
     </head>
@@ -26,10 +24,23 @@
     <body>
         <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
-                <a class="navbar-brand" href="..">SSIMPL</a>
+                <a class="navbar-brand" href="../..">SSIMPL</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
                 <!-- Expanded navigation -->
                 <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">Concepts</a>
+                            </li>
+                        </ul>
 
                     <ul class="nav navbar-nav ms-md-auto">
                         <li class="nav-item">
@@ -55,7 +66,7 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#bip32" class="nav-link">BIP32</a>
+            <li class="nav-item" data-bs-level="1"><a href="#multibase-encoding" class="nav-link">Multibase Encoding</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -64,17 +75,14 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="bip32">BIP32</h1>
-<p>BIP32 (Bitcoin Improvement Proposal 32) defines Hierarchical Deterministic (HD) wallets, which allow you to derive a tree of keypairs from a single root seed.</p>
-<p>How it works:
-•   Starts with a single seed (often from a BIP39 mnemonic).
-•   From that seed, it deterministically derives a master keypair (private + public key).
-•   You can derive child keypairs from the master, and children of those, forming a tree structure.</p>
-<p>Key features:
-•   One backup = all keys: Backing up the seed gives access to all derived keys.
-•   Key separation: You can derive independent identities (child keys) without compromising the master.
-•   Public derivation: Given a parent public key, you can derive child public keys (but not private keys).
-•   Hardened derivation: A safer variant where child keys can’t be derived from public keys, but requires the parent private key.</p></div>
+<h1 id="multibase-encoding">Multibase Encoding</h1>
+<p>On the internet, a lot of raw data (bytes) is transported using something called base encoding. These encodings
+essentially turn the raw bytes into a piece of transportable and near-readable text. But when you wish to access the raw
+bytes again on the receiving side, you need to know which encoding was used in order to decode it. But there are a lot
+of different encodings to choose from. This means that encoding and decoding must be well-documented. With Multibase
+encoding, a special reserved character for each specific encoding is appended to the encoded value which indicates which
+encoding was used. This means that anyone receiving the encoded bytes can always decode it. More can be read
+<a href="https://w3c-ccg.github.io/multibase/">here</a>.</p></div>
             </div>
         </div>
 
@@ -82,13 +90,13 @@
             <hr>
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
-        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
         <script>
-            var base_url = "..",
+            var base_url = "../..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-        <script src="../js/base.js"></script>
-        <script src="../search/main.js"></script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

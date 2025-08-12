@@ -41,12 +41,24 @@ h1, h2, h3, h4, h5 {
     color: var(--primary-pink);
 }
 
+
 .navbar.fixed-top.navbar-expand-lg.navbar-dark.bg-primary {
-    background: var(--secondary-blue) !important;
+    /*background: var(--secondary-blue) !important;*/
+    background: var(--white) !important;
+    border: 1px solid var(--secondary-blue);
 }
+
+#toc-collapse.navbar-collapse.collapse.card.bg-body-tertiary {
+    background: var(--white) !important;
+    border: 1px solid var(--secondary-blue);
+}
+
 .nav-link {
     --bs-nav-link-color: var(--secondary-blue);
+    --bs-nav-link-disabled-color:  var(--dark-gray);
+    --bs-nav-link-hover-color: blue;
 }
+
 a {
     color: var(--secondary-blue);
 }

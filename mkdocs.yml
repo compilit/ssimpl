@@ -1,11 +1,12 @@
 site_name: SSIMPL
 
 nav:
-  - index.md
+  - Home: index.md
+  - Concepts: concepts.md
 
 extra_css:
-  - styles.css
-  - normalise.css
+#  - styles.css
+#  - normalise.css
 
-extra:
-  generator: false
+#extra:
+#  generator: false
