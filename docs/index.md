@@ -1,4 +1,4 @@
-# 1 Specification
+# 1. Specification
 
 The SSIMPL protocol described in the following specification addresses a few problems that have existed since the early
 days of the internet — certainly since Web
@@ -142,7 +142,7 @@ const identityDocumentHash = sha256(
 ```
 
 
-# 2 DoaToa - a SSIMPL implementation
+# 2. DoaToa - a SSIMPL implementation
 
 DoaToa (Decentralised Open Auth & Trusted Open Auth) is the first SSIMPL implementation created. It consists of a client-side app (the id-wallet) and a few
 stateless microservices necessary to help set up decentralised communication and sharing of data. These microservices,
