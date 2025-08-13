@@ -5,8 +5,8 @@ nav:
   - Concepts: concepts.md
 
 extra_css:
+  - normalise.css
 #  - styles.css
-#  - normalise.css
 
 #extra:
 #  generator: false
