@@ -161,42 +161,42 @@
               </ul>
             </li>
             
-            <li class="nav-item" data-bs-level="1"><a href="#6-authentication-through-webrtc" class="nav-link">6. Authentication through WebRTC</a>
+            <li class="nav-item" data-bs-level="1"><a href="#53-authentication-through-webrtc" class="nav-link">5.3. Authentication through WebRTC</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#61-authentication-through-an-endpoint" class="nav-link">6.1 Authentication through an endpoint</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-bs-level="2"><a href="#62-delegated-signing-using-ucan" class="nav-link">6.2 Delegated signing using UCAN</a>
+            <li class="nav-item" data-bs-level="2"><a href="#54-authentication-through-an-endpoint" class="nav-link">5.4 Authentication through an endpoint</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-bs-level="1"><a href="#7-cryptography" class="nav-link">7. Cryptography</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#71-post-quantum-disclaimer" class="nav-link">7.1 Post-Quantum disclaimer</a>
+            <li class="nav-item" data-bs-level="2"><a href="#55-delegated-signing-using-ucan" class="nav-link">5.5 Delegated signing using UCAN</a>
               <ul class="nav flex-column">
               </ul>
             </li>
               </ul>
             </li>
             
-            <li class="nav-item" data-bs-level="1"><a href="#8-ipfs" class="nav-link">8. IPFS</a>
+            <li class="nav-item" data-bs-level="1"><a href="#6-cryptography" class="nav-link">6. Cryptography</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#81-key-features-of-ipfs" class="nav-link">8.1 Key Features of IPFS:</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-bs-level="2"><a href="#82-problems-ipfs-solves" class="nav-link">8.2 Problems IPFS Solves:</a>
+            <li class="nav-item" data-bs-level="2"><a href="#61-post-quantum-disclaimer" class="nav-link">6.1 Post-Quantum disclaimer</a>
               <ul class="nav flex-column">
               </ul>
             </li>
               </ul>
             </li>
             
-            <li class="nav-item" data-bs-level="1"><a href="#9-multibase-encoding" class="nav-link">9. Multibase Encoding</a>
+            <li class="nav-item" data-bs-level="1"><a href="#7-ipfs" class="nav-link">7. IPFS</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#71-key-features-of-ipfs" class="nav-link">7.1 Key Features of IPFS:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#72-problems-ipfs-solves" class="nav-link">7.2 Problems IPFS Solves:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#8-multibase-encoding" class="nav-link">8. Multibase Encoding</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -233,7 +233,6 @@ tree of keypairs from a single root seed.</p>
 • Public derivation: Given a parent public key, you can derive child public keys (but not private keys).
 • Hardened derivation: A safer variant where child keys can’t be derived from public keys, but requires the parent
 private key.</p>
-<hr />
 <h2 id="12-bip39">1.2 BIP39</h2>
 <p>BIP39 (Bitcoin Improvement Proposal 39) defines a way to represent a deterministic wallet’s private key using a
 human-readable set of words, called a mnemonic phrase.</p>
@@ -394,12 +393,12 @@ authenticate Party A:</p>
   }
 }
 </code></pre>
-<h1 id="6-authentication-through-webrtc">6. Authentication through WebRTC</h1>
+<h1 id="53-authentication-through-webrtc">5.3. Authentication through WebRTC</h1>
 <p>Party D SHOULD initiate the WebRTC connection using the specified channel id. Party C is also allowed to do so, but that
 would expose the UCAN token to Party C, which is less secure. Party B will do so some seconds after
 scanning the payload. After the connection is set up, Party B will send the UCAN Connect token. Afterward, the
 connection is closed.</p>
-<h2 id="61-authentication-through-an-endpoint">6.1 Authentication through an endpoint</h2>
+<h2 id="54-authentication-through-an-endpoint">5.4 Authentication through an endpoint</h2>
 <p>The Party D connection endpoint MUST have the same domain as that of Party C. A subdomain is allowed.
 The connection endpoint MUST be as follows:</p>
 <p>```http request
@@ -415,7 +414,7 @@ Authorization: "Bearer ${theUCANConnectToken}"</p>
 </ul>
 <p>Then Party D SHOULD provide Party C with another token, specific for the current context, so Party C doesn't need to
 know anything about Party A.</p>
-<h2 id="62-delegated-signing-using-ucan">6.2 Delegated signing using UCAN</h2>
+<h2 id="55-delegated-signing-using-ucan">5.5 Delegated signing using UCAN</h2>
 <p>By creating a dedicated, short-lived and identity-bound token (by setting receivers' DID as the audience of the token),
 a user can delegate signing authority towards another
 entity, like the website they are currently on. The UCAN token is then embedded in the signature JWT in the prf-array.
@@ -424,7 +423,7 @@ website wants to have this content bound to a DID.</p>
 <p>The implications are that all content on the internet HAS to be tied to an author, producer, etc. Which means that
 fraudulent content, like non-consensual, AI-generated media, will have to signed as well.</p>
 <hr />
-<h1 id="7-cryptography">7. Cryptography</h1>
+<h1 id="6-cryptography">6. Cryptography</h1>
 <p>Achieving true decentralization requires users to handle complex cryptographic operations. To make this accessible, all
 cryptographic functionality should be encapsulated within a user-friendly interface — a ‘wallet’.</p>
 <p>This wallet contains at least one cryptographic keypair:</p>
@@ -438,7 +437,7 @@ for that.</p>
 over their information.</p>
 <p>In the subscription system, an additional key pair is introduced. This keypair facilitates sharing a derived
 AES key—not the root AES key, but a deterministically generated AES key unique to each subscription.</p>
-<h2 id="71-post-quantum-disclaimer">7.1 Post-Quantum disclaimer</h2>
+<h2 id="61-post-quantum-disclaimer">6.1 Post-Quantum disclaimer</h2>
 <p>With the inevitable advent of quantum computing, these algorithms will change eventually. Currently, there are several
 candidates which could potentially take over the aforementioned algorithms. DoaToa will adapt accordingly.</p>
 <p>The biggest concern lies in asymmetric encryption, which is used for signing and sharing of secrets. Through Shor's
@@ -446,7 +445,7 @@ algorithm, the asymmetric encryption algorithms we currently rely on will be cra
 be derived based on public keys. This is why everything related to asymmetric encryption should have an expiration
 time. And this is also part of the design of DoaToa: most data stays client-side.</p>
 <hr />
-<h1 id="8-ipfs">8. IPFS</h1>
+<h1 id="7-ipfs">7. IPFS</h1>
 <p><strong>IPFS (InterPlanetary File System)</strong> is a <strong>peer-to-peer distributed file system</strong> that aims to make the web more *
 <em>Decentralised</em><em>, </em><em>resilient</em><em>, and </em><em>permanent</em>*.</p>
 <p>Traditionally, large tech companies have been responsible for storing data. This centralised model comes with several
@@ -470,7 +469,7 @@ server. This approach provides several advantages:</p>
 <p>For DoaToa, a peer-to-peer approach aligns best with its principles. The InterPlanetary File System (IPFS) is a
 Decentralised, peer-to-peer protocol for storing and sharing data. Unlike traditional location-based addressing (where
 URLs point to specific servers), IPFS uses content addressing, identifying files by their cryptographic hash (CID).</p>
-<h2 id="81-key-features-of-ipfs">8.1 Key Features of IPFS:</h2>
+<h2 id="71-key-features-of-ipfs">7.1 Key Features of IPFS:</h2>
 <ul>
 <li>Content Addressing – Files are identified by unique hashes, ensuring integrity and deduplication.</li>
 <li>Peer-to-Peer Distribution – Files are retrieved from multiple nodes rather than a central server.</li>
@@ -478,7 +477,7 @@ URLs point to specific servers), IPFS uses content addressing, identifying files
 <li>Caching – Popular content is cached across the network for faster access.</li>
 <li>Interoperability – Works well with blockchain and Decentralised applications (dApps).</li>
 </ul>
-<h2 id="82-problems-ipfs-solves">8.2 Problems IPFS Solves:</h2>
+<h2 id="72-problems-ipfs-solves">7.2 Problems IPFS Solves:</h2>
 <ul>
 <li>Redundancy &amp; Availability – Data remains accessible without reliance on a single server.</li>
 <li>Censorship Resistance – Information remains online as long as at least one node hosts it.</li>
@@ -489,7 +488,7 @@ persistence, data must be pinned. This can be done either manually (free) or thr
 DoaToa uses a pinning service, but in the future, your wallet will evolve to support self-hosting and pinning, ensuring
 full control over data storage</p>
 <hr />
-<h1 id="9-multibase-encoding">9. Multibase Encoding</h1>
+<h1 id="8-multibase-encoding">8. Multibase Encoding</h1>
 <p>On the internet, a lot of raw data (bytes) is transported using something called base encoding. These encodings
 essentially turn the raw bytes into a piece of transportable and near-readable text. But when you wish to access the raw
 bytes again on the receiving side, you need to know which encoding was used in order to decode it. But there are a lot

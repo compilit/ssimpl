@@ -226,5 +226,3 @@ material, the DID will be signed by DoaToa. Verification of this material goes a
 This limited set of features is provided by DoaToa, but could relatively easily be implemented by other enthusiasts. The
 only requirements are that they are open-sourced. Each provider of these features will require a DID as well. You can
 request DoaToa to register your DID as a provider.
-
----

@@ -36,8 +36,6 @@ Key features:
 • Hardened derivation: A safer variant where child keys can’t be derived from public keys, but requires the parent
 private key.
 
----
-
 ## 1.2 BIP39
 
 BIP39 (Bitcoin Improvement Proposal 39) defines a way to represent a deterministic wallet’s private key using a
@@ -241,14 +239,14 @@ This payload MUST be a multibase-encoded JSON message:
 }
 ```
 
-# 6. Authentication through WebRTC
+# 5.3. Authentication through WebRTC
 
 Party D SHOULD initiate the WebRTC connection using the specified channel id. Party C is also allowed to do so, but that
 would expose the UCAN token to Party C, which is less secure. Party B will do so some seconds after
 scanning the payload. After the connection is set up, Party B will send the UCAN Connect token. Afterward, the
 connection is closed.
 
-## 6.1 Authentication through an endpoint
+## 5.4 Authentication through an endpoint
 
 The Party D connection endpoint MUST have the same domain as that of Party C. A subdomain is allowed.
 The connection endpoint MUST be as follows:
@@ -269,7 +267,7 @@ This endpoint MUST respond with either a 200 OK or a 401 UNAUTHENTICATED
 Then Party D SHOULD provide Party C with another token, specific for the current context, so Party C doesn't need to
 know anything about Party A.
 
-## 6.2 Delegated signing using UCAN
+## 5.5 Delegated signing using UCAN
 
 By creating a dedicated, short-lived and identity-bound token (by setting receivers' DID as the audience of the token),
 a user can delegate signing authority towards another
@@ -282,7 +280,7 @@ fraudulent content, like non-consensual, AI-generated media, will have to signed
 
 ---
 
-# 7. Cryptography
+# 6. Cryptography
 
 Achieving true decentralization requires users to handle complex cryptographic operations. To make this accessible, all
 cryptographic functionality should be encapsulated within a user-friendly interface — a ‘wallet’.
@@ -301,7 +299,7 @@ over their information.
 In the subscription system, an additional key pair is introduced. This keypair facilitates sharing a derived
 AES key—not the root AES key, but a deterministically generated AES key unique to each subscription.
 
-## 7.1 Post-Quantum disclaimer
+## 6.1 Post-Quantum disclaimer
 
 With the inevitable advent of quantum computing, these algorithms will change eventually. Currently, there are several
 candidates which could potentially take over the aforementioned algorithms. DoaToa will adapt accordingly.
@@ -313,7 +311,7 @@ time. And this is also part of the design of DoaToa: most data stays client-side
 
 ---
 
-# 8. IPFS
+# 7. IPFS
 
 **IPFS (InterPlanetary File System)** is a **peer-to-peer distributed file system** that aims to make the web more *
 *Decentralised**, **resilient**, and **permanent**.
@@ -341,7 +339,7 @@ For DoaToa, a peer-to-peer approach aligns best with its principles. The InterPl
 Decentralised, peer-to-peer protocol for storing and sharing data. Unlike traditional location-based addressing (where
 URLs point to specific servers), IPFS uses content addressing, identifying files by their cryptographic hash (CID).
 
-## 8.1 Key Features of IPFS:
+## 7.1 Key Features of IPFS:
 
 - Content Addressing – Files are identified by unique hashes, ensuring integrity and deduplication.
 - Peer-to-Peer Distribution – Files are retrieved from multiple nodes rather than a central server.
@@ -349,7 +347,7 @@ URLs point to specific servers), IPFS uses content addressing, identifying files
 - Caching – Popular content is cached across the network for faster access.
 - Interoperability – Works well with blockchain and Decentralised applications (dApps).
 
-## 8.2 Problems IPFS Solves:
+## 7.2 Problems IPFS Solves:
 
 - Redundancy & Availability – Data remains accessible without reliance on a single server.
 - Censorship Resistance – Information remains online as long as at least one node hosts it.
@@ -362,7 +360,7 @@ full control over data storage
 
 ---
 
-# 9. Multibase Encoding
+# 8. Multibase Encoding
 
 On the internet, a lot of raw data (bytes) is transported using something called base encoding. These encodings
 essentially turn the raw bytes into a piece of transportable and near-readable text. But when you wish to access the raw
