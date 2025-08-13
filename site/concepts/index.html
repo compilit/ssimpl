@@ -202,39 +202,47 @@
 <h2 id="1-bip">1. BIP</h2>
 <p>BIP stands for Bitcoin Improvement Proposal — it’s a formal design document used to propose changes or additions to
 Bitcoin’s protocol, processes, or tools.</p>
-<p>It’s essentially the “RFC” (Request for Comments) system for Bitcoin.
-Each BIP has:
-• A number (e.g., BIP-39)
-• A type (Standards Track, Informational, or Process)
-• A status (Draft, Proposed, Final, etc.)
-• A detailed specification of the proposed change.</p>
-<p>For example:
-• BIP-32 defines hierarchical deterministic (HD) wallets.
-• BIP-39 defines mnemonic phrases (seed words).
-• BIP-44 defines a multi-account wallet structure.</p>
+<p>It’s essentially the “RFC” (Request for Comments) system for Bitcoin.</p>
+<p>Each BIP has:</p>
+<ul>
+<li>A number (e.g., BIP-39)</li>
+<li>A type (Standards Track, Informational, or Process)</li>
+<li>A status (Draft, Proposed, Final, etc.)</li>
+<li>A detailed specification of the proposed change.</li>
+</ul>
+<p>For example:</p>
+<ul>
+<li>BIP-32 defines hierarchical deterministic (HD) wallets.</li>
+<li>BIP-39 defines mnemonic phrases (seed words).</li>
+<li>BIP-44 defines a multi-account wallet structure.</li>
+</ul>
 <p>While SSIMPL has nothing to do with Bitcoin, or even blockchains, it does rely some of the same concepts.</p>
 <h2 id="11-bip32">1.1 BIP32</h2>
 <p>BIP32 (Bitcoin Improvement Proposal 32) defines Hierarchical Deterministic (HD) wallets, which allow you to derive a
 tree of keypairs from a single root seed.</p>
-<p>Key features:
-• One backup = all keys: Backing up the seed gives access to all derived keys.
-• Key separation: You can derive independent identities (child keys) without compromising the master.
-• Public derivation: Given a parent public key, you can derive child public keys (but not private keys).
-• Hardened derivation: A safer variant where child keys can’t be derived from public keys, but requires the parent
-private key.</p>
-<p>How it works:
-You start with a single seed (often from a <a href="#12-bip39">BIP39</a> mnemonic).
+<p>Key features:</p>
+<ul>
+<li>One backup = all keys: Backing up the seed gives access to all derived keys.</li>
+<li>Key separation: You can derive independent identities (child keys) without compromising the master.</li>
+<li>Public derivation: Given a parent public key, you can derive child public keys (but not private keys).</li>
+<li>Hardened derivation: A safer variant where child keys can’t be derived from public keys, but requires the parent
+private key.</li>
+</ul>
+<p>How it works:</p>
+<p>You start with a single seed (often from a <a href="#12-bip39">BIP39</a> mnemonic).
 From that seed, it deterministically derives a master keypair (private + public key).
 Then you can derive child keypairs from the master, and children of those, forming a tree structure.</p>
 <h2 id="12-bip39">1.2 BIP39</h2>
 <p>BIP39 (Bitcoin Improvement Proposal 39) defines a way to represent a deterministic wallet’s private key using a
 human-readable set of words, called a mnemonic phrase.</p>
-<p>Key properties:
-• Mnemonic = backup: If you lose your device, you can recover your entire wallet using the phrase.
-• Language-agnostic: Wordlists exist for multiple languages.
-• Deterministic: The same phrase will always regenerate the same wallet.</p>
-<p>How it works:
-First, a cryptographically strong random number (entropy) is generated. Then that number is converted into a sequence of
+<p>Key properties:</p>
+<ul>
+<li>Mnemonic = backup: If you lose your device, you can recover your entire wallet using the phrase.</li>
+<li>Language-agnostic: Wordlists exist for multiple languages.</li>
+<li>Deterministic: The same phrase will always regenerate the same wallet.</li>
+</ul>
+<p>How it works:</p>
+<p>First, a cryptographically strong random number (entropy) is generated. Then that number is converted into a sequence of
 12–24 words chosen from a predefined list of 2048 words. Finally, this phrase can be used to derive a seed, which in
 turn can generate a hierarchy of keys (e.g., via BIP32).</p>
 <hr />
@@ -323,16 +331,20 @@ DSCs)</strong>:</p>
 <h1 id="4-webrtc">4. WebRTC</h1>
 <p><strong>WebRTC (Web Real-Time Communication)</strong> is an open-source project and API standard that enables <strong>peer-to-peer
 communication</strong> directly between browsers or mobile apps, without requiring intermediate servers for media routing.</p>
-<p>Key Features:
-- <strong>Real-time audio and video</strong> streaming.
-- <strong>Data channels</strong> for arbitrary peer-to-peer data transfer.
-- <strong>Low latency</strong>, ideal for voice/video calls, gaming, and file sharing.</p>
-<p>How It Works:
-1. <strong>Signaling (out of scope for the WebRTC-spec):</strong> Exchanging connection info (e.g., IPs, codecs) between peers using
-   a separate method (like WebSocket).
-2. <strong>ICE (Interactive Connectivity Establishment):</strong> Finds the best path through NATs/firewalls.
-3. <strong>DTLS/SRTP:</strong> Ensures <strong>encryption</strong> and <strong>secure transport</strong>.
-4. <strong>STUN/TURN servers:</strong> Help peers connect when direct connections are blocked.</p>
+<p>Key Features:</p>
+<ul>
+<li><strong>Real-time audio and video</strong> streaming.</li>
+<li><strong>Data channels</strong> for arbitrary peer-to-peer data transfer.</li>
+<li><strong>Low latency</strong>, ideal for voice/video calls, gaming, and file sharing.</li>
+</ul>
+<p>How It Works:</p>
+<ol>
+<li><strong>Signaling (out of scope for the WebRTC-spec):</strong> Exchanging connection info (e.g., IPs, codecs) between peers using
+   a separate method (like WebSocket).</li>
+<li><strong>ICE (Interactive Connectivity Establishment):</strong> Finds the best path through NATs/firewalls.</li>
+<li><strong>DTLS/SRTP:</strong> Ensures <strong>encryption</strong> and <strong>secure transport</strong>.</li>
+<li><strong>STUN/TURN servers:</strong> Help peers connect when direct connections are blocked.</li>
+</ol>
 <p>WebRTC is supported by all major browsers and is a core building block for modern real-time web applications.</p>
 <hr />
 <h1 id="5-ucan-user-controlled-authorization-networks">5. UCAN - User Controlled Authorization Networks</h1>

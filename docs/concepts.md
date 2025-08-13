@@ -6,16 +6,19 @@ BIP stands for Bitcoin Improvement Proposal — it’s a formal design document 
 Bitcoin’s protocol, processes, or tools.
 
 It’s essentially the “RFC” (Request for Comments) system for Bitcoin.
+
 Each BIP has:
-• A number (e.g., BIP-39)
-• A type (Standards Track, Informational, or Process)
-• A status (Draft, Proposed, Final, etc.)
-• A detailed specification of the proposed change.
+
+- A number (e.g., BIP-39)
+- A type (Standards Track, Informational, or Process)
+- A status (Draft, Proposed, Final, etc.)
+- A detailed specification of the proposed change.
 
 For example:
-• BIP-32 defines hierarchical deterministic (HD) wallets.
-• BIP-39 defines mnemonic phrases (seed words).
-• BIP-44 defines a multi-account wallet structure.
+
+- BIP-32 defines hierarchical deterministic (HD) wallets.
+- BIP-39 defines mnemonic phrases (seed words).
+- BIP-44 defines a multi-account wallet structure.
 
 While SSIMPL has nothing to do with Bitcoin, or even blockchains, it does rely some of the same concepts.
 
@@ -25,13 +28,15 @@ BIP32 (Bitcoin Improvement Proposal 32) defines Hierarchical Deterministic (HD) 
 tree of keypairs from a single root seed.
 
 Key features:
-• One backup = all keys: Backing up the seed gives access to all derived keys.
-• Key separation: You can derive independent identities (child keys) without compromising the master.
-• Public derivation: Given a parent public key, you can derive child public keys (but not private keys).
-• Hardened derivation: A safer variant where child keys can’t be derived from public keys, but requires the parent
+
+- One backup = all keys: Backing up the seed gives access to all derived keys.
+- Key separation: You can derive independent identities (child keys) without compromising the master.
+- Public derivation: Given a parent public key, you can derive child public keys (but not private keys).
+- Hardened derivation: A safer variant where child keys can’t be derived from public keys, but requires the parent
 private key.
 
 How it works:
+
 You start with a single seed (often from a [BIP39](#12-bip39) mnemonic).
 From that seed, it deterministically derives a master keypair (private + public key).
 Then you can derive child keypairs from the master, and children of those, forming a tree structure.
@@ -42,11 +47,13 @@ BIP39 (Bitcoin Improvement Proposal 39) defines a way to represent a determinist
 human-readable set of words, called a mnemonic phrase.
 
 Key properties:
-• Mnemonic = backup: If you lose your device, you can recover your entire wallet using the phrase.
-• Language-agnostic: Wordlists exist for multiple languages.
-• Deterministic: The same phrase will always regenerate the same wallet.
+
+- Mnemonic = backup: If you lose your device, you can recover your entire wallet using the phrase.
+- Language-agnostic: Wordlists exist for multiple languages.
+- Deterministic: The same phrase will always regenerate the same wallet.
 
 How it works:
+
 First, a cryptographically strong random number (entropy) is generated. Then that number is converted into a sequence of
 12–24 words chosen from a predefined list of 2048 words. Finally, this phrase can be used to derive a seed, which in
 turn can generate a hierarchy of keys (e.g., via BIP32).
@@ -163,11 +170,13 @@ Together, these standards form the cryptographic backbone that allows e-passport
 communication** directly between browsers or mobile apps, without requiring intermediate servers for media routing.
 
 Key Features:
+
 - **Real-time audio and video** streaming.
 - **Data channels** for arbitrary peer-to-peer data transfer.
 - **Low latency**, ideal for voice/video calls, gaming, and file sharing.
 
 How It Works:
+
 1. **Signaling (out of scope for the WebRTC-spec):** Exchanging connection info (e.g., IPs, codecs) between peers using
    a separate method (like WebSocket).
 2. **ICE (Interactive Connectivity Establishment):** Finds the best path through NATs/firewalls.
