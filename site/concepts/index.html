@@ -138,14 +138,6 @@
             
             <li class="nav-item" data-bs-level="1"><a href="#4-webrtc" class="nav-link">4. WebRTC</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#41-key-features" class="nav-link">4.1 Key Features</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-bs-level="2"><a href="#42-how-it-works" class="nav-link">4.2 How It Works</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
               </ul>
             </li>
             
@@ -224,27 +216,27 @@ Each BIP has:
 <h2 id="11-bip32">1.1 BIP32</h2>
 <p>BIP32 (Bitcoin Improvement Proposal 32) defines Hierarchical Deterministic (HD) wallets, which allow you to derive a
 tree of keypairs from a single root seed.</p>
-<p>How it works:
-• Starts with a single seed (often from a BIP39 mnemonic).
-• From that seed, it deterministically derives a master keypair (private + public key).
-• You can derive child keypairs from the master, and children of those, forming a tree structure.</p>
 <p>Key features:
 • One backup = all keys: Backing up the seed gives access to all derived keys.
 • Key separation: You can derive independent identities (child keys) without compromising the master.
 • Public derivation: Given a parent public key, you can derive child public keys (but not private keys).
 • Hardened derivation: A safer variant where child keys can’t be derived from public keys, but requires the parent
 private key.</p>
+<p>How it works:
+You start with a single seed (often from a <a href="#12-bip39">BIP39</a> mnemonic).
+From that seed, it deterministically derives a master keypair (private + public key).
+Then you can derive child keypairs from the master, and children of those, forming a tree structure.</p>
 <h2 id="12-bip39">1.2 BIP39</h2>
 <p>BIP39 (Bitcoin Improvement Proposal 39) defines a way to represent a deterministic wallet’s private key using a
 human-readable set of words, called a mnemonic phrase.</p>
-<p>How it works:
-• A cryptographically strong random number (entropy) is generated.
-• That number is converted into a sequence of 12–24 words chosen from a predefined list of 2048 words.
-• This phrase can be used to derive a seed, which in turn can generate a hierarchy of keys (e.g., via BIP32).</p>
 <p>Key properties:
 • Mnemonic = backup: If you lose your device, you can recover your entire wallet using the phrase.
 • Language-agnostic: Wordlists exist for multiple languages.
 • Deterministic: The same phrase will always regenerate the same wallet.</p>
+<p>How it works:
+First, a cryptographically strong random number (entropy) is generated. Then that number is converted into a sequence of
+12–24 words chosen from a predefined list of 2048 words. Finally, this phrase can be used to derive a seed, which in
+turn can generate a hierarchy of keys (e.g., via BIP32).</p>
 <hr />
 <h1 id="2-self-sovereign-identity">2. Self-Sovereign-Identity</h1>
 <p>Self-Sovereign Identity (SSI) is a Decentralised identity model where individuals control their own digital identities
@@ -331,20 +323,16 @@ DSCs)</strong>:</p>
 <h1 id="4-webrtc">4. WebRTC</h1>
 <p><strong>WebRTC (Web Real-Time Communication)</strong> is an open-source project and API standard that enables <strong>peer-to-peer
 communication</strong> directly between browsers or mobile apps, without requiring intermediate servers for media routing.</p>
-<h2 id="41-key-features">4.1 Key Features</h2>
-<ul>
-<li><strong>Real-time audio and video</strong> streaming.</li>
-<li><strong>Data channels</strong> for arbitrary peer-to-peer data transfer.</li>
-<li><strong>Low latency</strong>, ideal for voice/video calls, gaming, and file sharing.</li>
-</ul>
-<h2 id="42-how-it-works">4.2 How It Works</h2>
-<ol>
-<li><strong>Signaling (out of scope for the WebRTC-spec):</strong> Exchanging connection info (e.g., IPs, codecs) between peers using
-   a separate method (like WebSocket).</li>
-<li><strong>ICE (Interactive Connectivity Establishment):</strong> Finds the best path through NATs/firewalls.</li>
-<li><strong>DTLS/SRTP:</strong> Ensures <strong>encryption</strong> and <strong>secure transport</strong>.</li>
-<li><strong>STUN/TURN servers:</strong> Help peers connect when direct connections are blocked.</li>
-</ol>
+<p>Key Features:
+- <strong>Real-time audio and video</strong> streaming.
+- <strong>Data channels</strong> for arbitrary peer-to-peer data transfer.
+- <strong>Low latency</strong>, ideal for voice/video calls, gaming, and file sharing.</p>
+<p>How It Works:
+1. <strong>Signaling (out of scope for the WebRTC-spec):</strong> Exchanging connection info (e.g., IPs, codecs) between peers using
+   a separate method (like WebSocket).
+2. <strong>ICE (Interactive Connectivity Establishment):</strong> Finds the best path through NATs/firewalls.
+3. <strong>DTLS/SRTP:</strong> Ensures <strong>encryption</strong> and <strong>secure transport</strong>.
+4. <strong>STUN/TURN servers:</strong> Help peers connect when direct connections are blocked.</p>
 <p>WebRTC is supported by all major browsers and is a core building block for modern real-time web applications.</p>
 <hr />
 <h1 id="5-ucan-user-controlled-authorization-networks">5. UCAN - User Controlled Authorization Networks</h1>
