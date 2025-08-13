@@ -401,11 +401,11 @@ connection is closed.</p>
 <h2 id="54-authentication-through-an-endpoint">5.4 Authentication through an endpoint</h2>
 <p>The Party D connection endpoint MUST have the same domain as that of Party C. A subdomain is allowed.
 The connection endpoint MUST be as follows:</p>
-<p>```http request
-POST /ucan-connect/auth HTTP/2
-Authorization: "Bearer ${theUCANConnectToken}"</p>
-<p>(no body should be provided)
-```</p>
+<pre><code class="language-text">POST /ucan-connect/auth HTTP/2
+Authorization: &quot;Bearer ${theUCANConnectToken}&quot;
+
+(no body should be provided)
+</code></pre>
 <p>This endpoint MUST respond with either a 200 OK or a 401 UNAUTHENTICATED</p>
 <ul>
 <li>200 OK: the tokens' signature matches the provided DID</li>

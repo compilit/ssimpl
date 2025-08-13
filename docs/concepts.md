@@ -251,7 +251,7 @@ connection is closed.
 The Party D connection endpoint MUST have the same domain as that of Party C. A subdomain is allowed.
 The connection endpoint MUST be as follows:
 
-```http request
+```text
 POST /ucan-connect/auth HTTP/2
 Authorization: "Bearer ${theUCANConnectToken}"
 
