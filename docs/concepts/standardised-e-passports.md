@@ -1,6 +1,8 @@
 # Cryptographic Standards Enabling European e-Passport Integrity
 
-A European e-passport relies on a set of international standards to prove its authenticity and integrity using cryptographic techniques. These standards work together to ensure the data on the passport is both verifiable and resistant to tampering or cloning.
+A European e-passport relies on a set of international standards to prove its authenticity and integrity using
+cryptographic techniques. These standards work together to ensure the data on the passport is both verifiable and
+resistant to tampering or cloning.
 
 ## ICAO Doc 9303
 
@@ -8,8 +10,10 @@ The foundational specification for Machine Readable Travel Documents (MRTDs). It
 
 - The structure and contents of the e-passport chip.
 - Cryptographic protocols such as:
-    - **Passive Authentication (PA):** Verifies the integrity and authenticity of the stored data using digital signatures from the issuing authority.
-    - **Active Authentication (AA):** Ensures the chip hasn’t been cloned by using a private key challenge/response protocol.
+    - **Passive Authentication (PA):** Verifies the integrity and authenticity of the stored data using digital
+      signatures from the issuing authority.
+    - **Active Authentication (AA):** Ensures the chip hasn’t been cloned by using a private key challenge/response
+      protocol.
 
 ## ISO/IEC 7816 (Parts 4, 8, 9)
 
@@ -38,7 +42,8 @@ Specifies the physical format and layout of machine-readable passports, includin
 
 ## CSCA and DSC Certificates
 
-Each country operates a **Country Signing Certificate Authority (CSCA)** and issues **Document Signer Certificates (DSCs)**:
+Each country operates a **Country Signing Certificate Authority (CSCA)** and issues **Document Signer Certificates (
+DSCs)**:
 
 - The CSCA’s public key is distributed globally.
 - The DSC signs the data on each passport.

@@ -87,7 +87,8 @@ know anything about Party A.
 
 ## Delegated signing using UCAN
 
-By creating a dedicated, short-lived and identity-bound token (by setting receivers' DID as the audience of the token), a user can delegate signing authority towards another
+By creating a dedicated, short-lived and identity-bound token (by setting receivers' DID as the audience of the token),
+a user can delegate signing authority towards another
 entity, like the website they are currently on. The UCAN token is then embedded in the signature JWT in the prf-array.
 This is relevant if the user is adding content to the website and the
 website wants to have this content bound to a DID.

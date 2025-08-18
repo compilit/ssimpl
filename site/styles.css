@@ -55,7 +55,7 @@ h1, h2, h3, h4, h5 {
 
 .nav-link {
     --bs-nav-link-color: var(--secondary-blue);
-    --bs-nav-link-disabled-color:  var(--dark-gray);
+    --bs-nav-link-disabled-color: var(--dark-gray);
     --bs-nav-link-hover-color: blue;
 }
 

@@ -33,11 +33,11 @@ about [centralised authorities in a decentralised system](./concepts.md#16-autho
 
 ## 1.1 The wallet
 
-The wallet must be a decentralised [BIP32-compliant](./concepts.md#11-bip32) implementation backed-up up with
+The wallet must be a decentralised [BIP32-compliant](./concepts.md#11-bip32) implementation, backed-up up with
 a [BIP39-compliant](./concepts.md#12-bip39) mnemonic
 phrase (stored offline). This wallet contains both a root keypair that can be used to sign and verify data and to
 authorize
-the bearer online, and all claims of the owner. It also supports creating child keypairs for pseudonymous
+the bearer online, and all claims of the owner. It also supports creating child key pairs for pseudonymous
 authentication. The root public key is used
 to generate a [DID](./concepts.md#111-did) (decentralised Identifier), which is then signed by the neutral third party.
 Furthermore,
