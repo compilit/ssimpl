@@ -12,13 +12,14 @@ however, has never been implemented in a way that anyone can truly rely on. It r
 is provided in the form of billion-dollar companies saying "this data belongs to the person who just logged in". But it
 adds no guarantees about the validity of those claims. In order to minimize the amount of trust necessary for
 identification, it is essential that individuals are capable of managing their digital identity themselves, this is
-known as [SSI - Self-Sovereign-Identity](./concepts.md#13-self-sovereign-identity). But SSI is still worth as much as an
-identity provided by a multinational if it is not verified.
+known as [SSI - Self-Sovereign-Identity](./concepts.md#13-self-sovereign-identity). But a self-issued identity still
+isn't worth much if it is not verified.
 
 **How do you verify someone’s digital identity?**
 
 Online, everyone can claim to anyone. For some systems - like social media - that could be fine. But for professional
-services, it is of the utmost importance that all parties of a transaction are actually who they say they are. This
+services, it is of the utmost importance that all parties taking part in any kind of transaction, have a verified
+identity shared among the other participants. This
 issue has become even more critical with the rise of AI and bots capable of
 impersonating individuals with minimal effort.
 
@@ -109,6 +110,8 @@ These rules must be implemented by checking the signature for each entry against
 
 ##### rootClaim:
 
+(The choice to use JSON is arbitrary)
+
 ```json
 {
   "data": {
@@ -128,6 +131,8 @@ These rules must be implemented by checking the signature for each entry against
 
 ##### identityDocumentHash:
 
+(The choice to use JSON is arbitrary)
+
 ```js
 const identityDocumentHash = sha256(
     JSON.stringify(
@@ -138,7 +143,6 @@ const identityDocumentHash = sha256(
             "lastName": "DOE",
             "documentNumber": "ABC12345XYZ",
             "documentType": "P",
-            "documentSubType": "P",
             "documentExpiryDate": "01012050"
         }
     )
@@ -208,8 +212,8 @@ mobile device containing the wallet, which in term opens a deep link in the app 
 ## 2.3 Centralised component
 
 In order to establish WebRTC connections, some centralised components are required for peers to find each other. As soon
-as the connection is created, all data will be moved directly from peer to peer. So there is no need to trust the
-central server.
+as the connection is created, all data will be moved directly from peer to peer. So there is no need to entrust any
+server with your data.
 
 In order to store data on the IPFS while leveraging metadata to 'update' files, a central server is also required.
 

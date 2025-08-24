@@ -226,16 +226,16 @@ from someone inside the legal entity, willing to represent the legal entity.
 
 Typically, A will visit C, which at some point requires A to identify themselves (to complete an order, for example).
 
-Party C has to create a scannable image (like a QR-code), which provides Party B all necessary information to
-authenticate Party A:
+Party C has to provide (QR-code, WebRTC, etc.) Party B with all necessary information to authenticate Party A:
 
 - The DID of Party C.
 - The scopes of Party A that Party C requires.
 - A connection proposal. Containing either a channel id - used to set up a WebRTC channel, or an authentication
   endpoint (Party D) - to which the token should be sent.
 
-This payload MUST be a multibase-encoded JSON message:
+This payload MUST be a multibase-encoded message:
 
+(The choice to use JSON is arbitrary)
 ```json
 {
   "requestor": "did:key:a1b2c3d4e5f6g7h8ij9k0",
@@ -271,7 +271,7 @@ Authorization: "Bearer ${theUCANConnectToken}"
 
 This endpoint MUST respond with either a 200 OK or a 401 UNAUTHENTICATED
 
-- 200 OK: the tokens' signature matches the provided DID
+- 200 OK: the tokens' signature matches the provided DID & the 'attenuations' array contains a with/can pair matching the current domain and action.
 - 401 UNAUTHENTICATED: the tokens' signature does not match the provided DID. The DID will be in the 'claims' array of
   the UCAN token. Or the DID does not match the specified public key.
 

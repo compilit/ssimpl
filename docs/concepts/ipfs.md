@@ -46,8 +46,10 @@ URLs point to specific servers), IPFS uses content addressing, identifying files
 
 However, IPFS alone does not guarantee permanent storage—data can disappear if no node continues to host it. To ensure
 persistence, data must be pinned. This can be done either manually (free) or through a pinning service. Currently,
-DoaToa uses a pinning service, but in the future, your wallet will evolve to support self-hosting and pinning, ensuring
-full control over data storage
+DoaToa uses a pinning service. The ultimate way to do it, would be to support self-hosting and pinning from the wallet
+itself, ensuring
+full control over data storage. However, since the wallet resides on a phone, a phone is managed by their OS and most
+OS-es are quite strict about persistent connections (and rightly so), this setup is not feasible.
 
 ## Key Features
 

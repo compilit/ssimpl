@@ -130,11 +130,12 @@ however, has never been implemented in a way that anyone can truly rely on. It r
 is provided in the form of billion-dollar companies saying "this data belongs to the person who just logged in". But it
 adds no guarantees about the validity of those claims. In order to minimize the amount of trust necessary for
 identification, it is essential that individuals are capable of managing their digital identity themselves, this is
-known as <a href="concepts/#13-self-sovereign-identity">SSI - Self-Sovereign-Identity</a>. But SSI is still worth as much as an
-identity provided by a multinational if it is not verified.</p>
+known as <a href="concepts/#13-self-sovereign-identity">SSI - Self-Sovereign-Identity</a>. But a self-issued identity still
+isn't worth much if it is not verified.</p>
 <p><strong>How do you verify someone’s digital identity?</strong></p>
 <p>Online, everyone can claim to anyone. For some systems - like social media - that could be fine. But for professional
-services, it is of the utmost importance that all parties of a transaction are actually who they say they are. This
+services, it is of the utmost importance that all parties taking part in any kind of transaction, have a verified
+identity shared among the other participants. This
 issue has become even more critical with the rise of AI and bots capable of
 impersonating individuals with minimal effort.</p>
 <p>SSIMPL stands for Self-Sovereign Identity &amp; Mondial Pseudonymous Ledger. Which tells us already quite a bit about its
@@ -209,6 +210,7 @@ instance integrating with the IPFS needs to implement these business rules:</p>
 </ol>
 <p>These rules must be implemented by checking the signature for each entry against the provided DID.</p>
 <h5 id="rootclaim">rootClaim:</h5>
+<p>(The choice to use JSON is arbitrary)</p>
 <pre><code class="language-json">{
   &quot;data&quot;: {
     &quot;did&quot;: &quot;&quot;,
@@ -225,6 +227,7 @@ instance integrating with the IPFS needs to implement these business rules:</p>
 }
 </code></pre>
 <h5 id="identitydocumenthash">identityDocumentHash:</h5>
+<p>(The choice to use JSON is arbitrary)</p>
 <pre><code class="language-js">const identityDocumentHash = sha256(
     JSON.stringify(
         {
@@ -234,7 +237,6 @@ instance integrating with the IPFS needs to implement these business rules:</p>
             &quot;lastName&quot;: &quot;DOE&quot;,
             &quot;documentNumber&quot;: &quot;ABC12345XYZ&quot;,
             &quot;documentType&quot;: &quot;P&quot;,
-            &quot;documentSubType&quot;: &quot;P&quot;,
             &quot;documentExpiryDate&quot;: &quot;01012050&quot;
         }
     )
@@ -296,8 +298,8 @@ either used to set up a WebRTC connection. Another could be by providing your e-
 mobile device containing the wallet, which in term opens a deep link in the app to authentication yourself.</p>
 <h2 id="23-centralised-component">2.3 Centralised component</h2>
 <p>In order to establish WebRTC connections, some centralised components are required for peers to find each other. As soon
-as the connection is created, all data will be moved directly from peer to peer. So there is no need to trust the
-central server.</p>
+as the connection is created, all data will be moved directly from peer to peer. So there is no need to entrust any
+server with your data.</p>
 <p>In order to store data on the IPFS while leveraging metadata to 'update' files, a central server is also required.</p>
 <p>Finally, in order to ensure every SSIMPLE DID out there is actually from the ones they claim to be, DoaToa can be
 presented with the cryptographic material coming from your passport along with the DID. If DoaToa can verify this
@@ -393,5 +395,5 @@ request DoaToa to register your DID as a provider.</p></div>
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-08-18 18:04:08.849760+00:00
+Build Date UTC : 2025-08-24 05:38:04.873625+00:00
 -->
