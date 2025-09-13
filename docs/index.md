@@ -64,7 +64,7 @@ with. In other words: if they would like to be able to proof they were the origi
 they would need to do is sign it. Other people could sign it as well, of course, but signature cannot be created using a
 past date. So the first one to sign something, always can proof they were the original creator.
 
-## 1.2 Authentication
+## 1.2 Identification
 
 All users of the SSIMPL protocol must possess a
 modern [Standardised e-passport](./concepts.md#17-cryptographic-standards-enabling-european-e-passport-integrity). These
@@ -181,34 +181,6 @@ on Android. This introduces a few risks that need to be mitigated:
    everything relies on that
    mnemonic phrase. It is advised to use a (maybe even redundant) cold storage to keep the mnemonic phrase safe.
 
-## 2.2 Use-cases
-
-Each wallet has the capability to share data to another wallet in the form of a data sharing event, or a subscription.
-
-- Ad-hoc data sharing event: the receiver sends a request containing the scope of the requested data, and their
-  DID. This request is used to establish a [WebRTC](./concepts.md#18-webrtc)
-  connection between the two peers, which is then used to share the data. This scenario is also quite similar to how an
-  authentication request could be fulfilled. Although the use of WebRTC for that is optional when backed by a backend
-  server. See [UCAN](./concepts.md#19-ucan---user-controlled-authorization-networks).
-- Subscriptions: the receiver sends a request containing the scope of the requested data, a public key (used for sharing
-  a secret. E.g. Hybrid-Encryption or DHKE), the
-  DID of the requestor and some optional metadata concerning the duration of the subscription.This request is used to
-  establish a WebRTC. A symmetric key for encryption is either generated or resolved based on the provided
-  public key. The data is gathered and encrypted with this symmetric key. In case of Hybrid-Encryption, the symmetric
-  key is then encrypted using the public key. The encrypted data (and optionally the encrypted key) are then publicly
-  stored on the IPFS.
-  Finally, the location to this subscription is shared. While the IPFS does not support updating files, as it would
-  require to change the CID used to retrieve the data, DoaToa stores a pointer to the file in question. The file itself
-  never changes, but its metadata is updated to point to the latest version of the file thus allowing the file to be
-  updated. The only implication is that the latest version of the file needs to be requested through the central DoaToa
-  server. A direct WebRTC connection could also be used to update a subscription. However, a WebRTC connection requires
-  both sides to actively set it up, which means that syncing between peers becomes occasionally at best when both peers
-  happen to be online at the same time.
-
-There are several options for sending the request to the client app. One is through a simple qr-code which is
-either used to set up a WebRTC connection. Another could be by providing your e-mail address which you open on your
-mobile device containing the wallet, which in term opens a deep link in the app to authentication yourself.
-
 ## 2.3 Centralised component
 
 In order to establish WebRTC connections, some centralised components are required for peers to find each other. As soon
@@ -217,7 +189,7 @@ server with your data.
 
 In order to store data on the IPFS while leveraging metadata to 'update' files, a central server is also required.
 
-Finally, in order to ensure every SSIMPLE DID out there is actually from the ones they claim to be, DoaToa can be
+Finally, in order to ensure every SSIMPL DID out there is actually from the ones they claim to be, DoaToa can be
 presented with the cryptographic material coming from your passport along with the DID. If DoaToa can verify this
 material, the DID will be signed by DoaToa. Verification of this material goes as follows:
 
