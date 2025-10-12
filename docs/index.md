@@ -251,7 +251,9 @@ The DoaToa id wallet offers an entire implementation of the SSIMPL client-side s
 
 The ledger described in the specification has certain requirements tied to it. For example: it should be decentralised,
 and it must be append-only. Research for the right technology is still ongoing. We've had successful experiments with
-the IPFS. But blockchains like Arweave are still undergoing investigation.
+the IPFS. But blockchains like Arweave are still undergoing investigation. At the moment, a simple GitLab repository is
+used to store the ledger. Since entities that are allowed to mutate the ledger are limited, and DoaToa is still in the
+POC phase, this ought to be enough.
 
 ## 2.3 Security
 
@@ -271,12 +273,14 @@ on Android. This introduces a few risks that need to be mitigated:
 3. The mnemonic phrase is lost/stolen. - The user will need to invalidate their current DID
    and create a new wallet (which will also mean the user gets a new mnemonic phrase)
 4. A user loses both their mnemonic phrase and their phone. - **This scenario should be prevented at all costs, since
-   everything relies on that mnemonic phrase.** It is advised to use a (maybe even redundant) paper/metal backup to keep the
+   everything relies on that mnemonic phrase.** It is advised to use a (maybe even redundant) paper/metal backup to keep
+   the
    mnemonic phrase safe.
 
 [//]: # (## 2.4 Centralised component)
 
 [//]: # ()
+
 [//]: # (In order to establish WebRTC connections, some centralised components are required for peers to find each other. As soon)
 
 [//]: # (as the connection is created, all data will be moved directly from peer to peer. So there is no need to entrust any)
@@ -284,9 +288,11 @@ on Android. This introduces a few risks that need to be mitigated:
 [//]: # (server with your data.)
 
 [//]: # ()
+
 [//]: # (In order to store data on the IPFS while leveraging metadata to 'update' files, a central server is also required.)
 
 [//]: # ()
+
 [//]: # (Finally, in order to ensure every SSIMPL DID out there is actually from the ones they claim to be, DoaToa can be)
 
 [//]: # (presented with the cryptographic material coming from your passport along with the DID. If DoaToa can verify this)
@@ -294,6 +300,7 @@ on Android. This introduces a few risks that need to be mitigated:
 [//]: # (material, the DID will be signed by DoaToa. Verification of this material goes as follows:)
 
 [//]: # ()
+
 [//]: # (1. The passport contains all the means for an Active Authentication challenge, which needs to be passed. This challenge)
 
 [//]: # (   makes sure the cryptographic material actually comes from the passport in the hands of the owner.)
@@ -305,6 +312,7 @@ on Android. This introduces a few risks that need to be mitigated:
 [//]: # (   signature.)
 
 [//]: # ()
+
 [//]: # (This limited set of features is provided by DoaToa, but could relatively easily be implemented by other enthusiasts. The)
 
 [//]: # (only requirements are that they are open-sourced. Each provider of these features will require a DID as well. You can)

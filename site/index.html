@@ -214,7 +214,9 @@ components and the wallet, should be able to co-exist.</p>
 <h2 id="22-mondial-pseudonymous-ledger">2.2 Mondial Pseudonymous Ledger</h2>
 <p>The ledger described in the specification has certain requirements tied to it. For example: it should be decentralised,
 and it must be append-only. Research for the right technology is still ongoing. We've had successful experiments with
-the IPFS. But blockchains like Arweave are still undergoing investigation.</p>
+the IPFS. But blockchains like Arweave are still undergoing investigation. At the moment, a simple GitLab repository is
+used to store the ledger. Since entities that are allowed to mutate the ledger are limited, and DoaToa is still in the
+POC phase, this ought to be enough.</p>
 <h2 id="23-security">2.3 Security</h2>
 <p>In order to fully implement SSI, a user needs to have full control over their own data. There are several ways to
 accomplish this (using a hardware wallet for example), but DoaToa relies on a somewhat controversial take: most people
@@ -232,7 +234,8 @@ on Android. This introduces a few risks that need to be mitigated:</p>
 <li>The mnemonic phrase is lost/stolen. - The user will need to invalidate their current DID
    and create a new wallet (which will also mean the user gets a new mnemonic phrase)</li>
 <li>A user loses both their mnemonic phrase and their phone. - <strong>This scenario should be prevented at all costs, since
-   everything relies on that mnemonic phrase.</strong> It is advised to use a (maybe even redundant) paper/metal backup to keep the
+   everything relies on that mnemonic phrase.</strong> It is advised to use a (maybe even redundant) paper/metal backup to keep
+   the
    mnemonic phrase safe.</li>
 </ol></div>
             </div>
@@ -316,5 +319,5 @@ on Android. This introduces a few risks that need to be mitigated:</p>
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-10-12 12:13:28.752590+00:00
+Build Date UTC : 2025-10-12 12:20:04.099440+00:00
 -->
