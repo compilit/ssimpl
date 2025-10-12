@@ -96,7 +96,7 @@ that is allowed to sign newly
 created DIDs. This signature serves as proof that the owner of the DID successfully has authenticated themselves using
 their e-passport.
 
-## 2.0 Peer-to-peer
+## 1.4 Peer-to-peer
 
 In order to promote a truly trustless environment, all essential communication - like the transfer of identity-related
 data - must be done p2p. The client-server model must only be used for setting op connections between peers. So the
