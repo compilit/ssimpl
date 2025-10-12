@@ -108,7 +108,7 @@ A DID follows this format:
 In DoaToa, primarily the 'key' method is used. This means that each 'identifier' part is actually the public part of a
 specific cryptographic public/private keypair. Each user is responsible for their own private key, which is used to sign
 data. The public key can always be used to verify the signature. The only small deviation from the spec is that
-SSIMPL promotes the use of [Multibase encoding](#8-multibase-encoding), which means that even the public key part of the
+SSIMPL promotes the use of [Multibase encoding](#9-multibase-encoding), which means that even the public key part of the
 DID is multibase-encoded.
 
 The 'key' method also means there is no real need for a DID document, which is part of the DID spec.
