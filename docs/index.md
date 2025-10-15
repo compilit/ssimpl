@@ -1,8 +1,7 @@
 # 1. SSIMPL - Specification
 
 The SSIMPL protocol described in the following specification addresses a few problems that have existed since the early
-days of the internet — certainly since Web
-2.0:
+days of the internet — certainly since Web 2.0:
 
 **How do you keep the owner of the online identity in control of their identity data?**
 
@@ -31,19 +30,28 @@ authority-backed cryptographic proof.
 Therefor, implementing SSIMPL requires a trusted central authority (such as a government) that supports some form of
 one-time, cryptography-based identification for individuals.
 
+## 1.0 Passport
+
+- All users of the SSIMPL protocol MUST possess a [Standardised e-passport](./concepts.md#4-european-e-passports).
+
 ## 1.1 The wallet
 
-The wallet must be a decentralised [BIP32-compliant](./concepts.md#11-bip32) implementation, backed-up up with
-a [BIP39-compliant](./concepts.md#12-bip39) mnemonic
-phrase (stored offline). This wallet contains both a root keypair that can be used to sign and verify data and to
-authorize
-the bearer online, and all claims of the owner. It also supports creating child key pairs for pseudonymous
-authentication. The root public key is used
-to generate a [DID](./concepts.md#3-did) (decentralised Identifier), which is then signed by the neutral third party.
-Furthermore,
-all encoded data, like the cryptographic keys, must be encoded
-using [Multibase-encoding](./concepts.md#9-multibase-encoding) to
-ensure all peers of all possible future implementations always know which encoding is used.
+- The wallet MUST perform an [Active-Authentication challenge](./concepts.md#10-active-authentication).
+- The wallet SHOULD store the DG11, which contains the personal details of the owner which can be the first basic,
+  verified claims.
+- The wallet MUST be a decentralised [BIP32-compliant](./concepts.md#11-bip32) implementation.
+- The wallet MUST be backed-up up with a [BIP39-compliant](./concepts.md#12-bip39) mnemonic phrase (stored offline).
+- The wallet MUST be able to store both a root keypair that can be used to sign and verify data and to
+  authorize the bearer online, and all claims of the owner.
+- The root public key MUST be used to generate a [DID](./concepts.md#3-did) (decentralised Identifier), which is then
+  signed by the neutral third party.
+- All encoded data, like the cryptographic keys, MUST be encoded
+  using [Multibase-encoding](./concepts.md#9-multibase-encoding) to ensure all peers of all possible future
+  implementations always know which encoding is used.
+- The wallet MUST have one or many associated online storages where the 'subscription' can be stored.
+- The wallet MUST have the ability to encrypt claims and store them as a 'subscription' object on an online storage.
+- The wallet MUST have the ability to generate a JWT (Authentication & UCAN).
+- The wallet MUST be able to perform asymmetric encryption like DHKE or Hybrid Encryption using RSA.
 
 At this point, in the spirit of Open ID Connect, the user has all the components needed to authenticate themselves
 online at multiple levels:
@@ -54,8 +62,8 @@ online at multiple levels:
 
 Level 0 is sufficient to prove the user is not an AI or bot.
 Level 1 may be used when specific, unverified attributes are needed, like an address or a phone number.
-Level 2 provides verified claims. The requestor of these claims merely needs to request a certain scope of claims.
-You, as the owner then needs to approve this request and send them the requested claims, while signing them with your
+Level 2 provides verified claims. The requestor of these claims merely needs to request a certain scope of claims. You,
+as the owner then needs to approve this request and send them the requested claims, while signing them with your
 wallet.
 
 At the same time, the user will have the ability to cryptographically sign anything they would want to be associated
@@ -63,27 +71,7 @@ with. In other words: if they would like to be able to proof they were the origi
 they would need to do is sign it. Other people could sign it as well, of course, but signature cannot be created using a
 past date. So the first one to sign something, always can proof they were the original creator.
 
-## 1.2 Identification
-
-All users of the SSIMPL protocol must possess a
-modern [Standardised e-passport](./concepts.md#4-european-e-passports). These
-contain cryptographic
-material used to verify the legitimacy of the passport, thereby delegating the authority of the identity represented to
-the bearer—assuming basic checks are met (e.g., does the bearer match the photo?). This bearer token-like construct can
-only be trusted if people take good care of their passports and also follow basic protocols in
-case of a lost or stolen passport.
-
-By reading the NFC chip, one will get access to so-called 'data groups'. Each group represents some other part of the
-identity or the passport.
-
-While reading the NFC chip, an implementation of SSIMPL is required to perform an Active-Authentication challenge, which
-makes the passport sign a randomly generated challenge with its embedded private key, which can then be
-verified by the key found in DG15. This challenge is there to proof that the passport was not in fact cloned or
-otherwise tempered with. The result of the challenge will be stored in the id wallet.
-
-DG11 contains the personal details of the owner which can be the first basic, verified claims, stored in the id wallet.
-
-## 1.3 Mondial Pseudonymous Ledger
+## 1.2 Mondial Pseudonymous Ledger
 
 In order to protect users from misuse, fraud and identity-theft, each wallet (and specifically the related public keys),
 must have a mechanism that allows them to be invalidated. These invalidated public keys must be published to a publicly
@@ -96,11 +84,204 @@ that is allowed to sign newly
 created DIDs. This signature serves as proof that the owner of the DID successfully has authenticated themselves using
 their e-passport.
 
-## 1.4 Peer-to-peer
+- The ledger MUST contain an append-only list for all its invalidated entries.
+- The ledger SHOULD contain a list of DID's that are 'designated SSIMPL authorities', meaning they can sign initial
+  DID's.
+- The ledger SHOULD allow updates on the 'designated SSIMPL authorities' list by the owners of the DID's, proven by
+  providing a signed version of the DID.
+- The ledger SHOULD be decentralised.
 
-In order to promote a truly trustless environment, all essential communication - like the transfer of identity-related
-data - must be done p2p. The client-server model must only be used for setting op connections between peers. So the
-server never receives any sensitive data, but merely acts as a guide to find other peers.
+## 1.3 Subscriptions
+
+The ability to establish a verified, digital identity is only part of the equation. It is essential that parts of this
+identity can be shared with other entities on the internet. A simple example would be 'signing in' on a website. Usually
+these parts of your identity (aka 'Claims'), come from a centralised service which has your profile stored. SSIMPL
+offers a completely new perspective. Since you already have the claims stored in your own wallet, there is no need for
+an external, centralised service. Instead, the entity interested in your claims shares with you the necessary claims (
+aka a '
+Scope') to sign in or complete some transaction, a webhook to provide the entity with the web-location of the (
+temporary)
+subscription on those claims, and, finally, the UCAN token necessary to access that web-locations' endpoint.
+
+This 'subscription' is called that, because the duration that the endpoint is reserved could potentially last longer
+than just one transaction. Meaning that you could update the claims if necessary and the other party could fetch the new
+data once again. By default, the endpoint is random and must 'self-destruct'. Meaning that neither the owner of the data
+nor the other party can interact with it anymore.
+
+- Each online storage MUST delete the subscription after being read once.
+- Each storage endpoint MUST send a 200 OK with the subscription the first time it's accessed, and a 204 NO CONTENT (
+  without content...) for the duration of the subscription or until the subscription is updated again.
+- Each storage endpoint path must remain reserved for the duration of the subscription.
+- Each storage endpoint MUST allow updates by the owner for the duration of the subscription.
+
+## 1.4 Security
+
+In order to fully implement SSI, a user needs to have full control over their own data. There are several ways to
+accomplish this (using a hardware wallet for example), but SSIMPL relies on a somewhat controversial take: most people
+have a smartphone and treat it with more respect than their passport. Smartphones these days lack true HSMs (Hardware
+Security Modules), which would be the best place for cryptographic material to exist. Due to this (hopefully temporary)
+imperfection in smartphones, SIMMPL requires you to use the keystores that exist on devices: Keychain on iOS and the
+KeyStore
+on Android. This introduces a few risks that need to be mitigated:
+
+1. The device is lost/stolen, the related wallet needs to be invalidated. - This is achieved by registering the DID
+   on a decentralised ledger. It would require you use the mnemonic phrase on a new device to re-create your wallet,
+   then invalidate it. The user can then create a new wallet
+   again.
+2. A user switches devices, the wallet needs to be re-created. - The mnemonic phrase can be used to re-create the old
+   wallet. Always do take care to either delete the wallet from the device, or to factory-reset the device.
+3. The mnemonic phrase is lost/stolen. - The user will need to invalidate their current DID
+   and create a new wallet (which will also mean the user gets a new mnemonic phrase)
+4. A user loses both their mnemonic phrase and their phone. - **This scenario should be prevented at all costs, since
+   everything relies on that mnemonic phrase.** It is advised to use a (maybe even redundant) paper/metal backup to keep
+   the mnemonic phrase safe.
+
+[//]: # (## 1.4 Authentication deep-dive)
+
+[//]: # ()
+
+[//]: # (Open ID Connect adds an identification layer to OAuth2. But true Open ID Connect relies on a centralised third party)
+
+[//]: # (which manages your claims. Using SSIMPL, this third party has become obsolete. But one can still perform a flow similar)
+
+[//]: # (to that of OIDC. The future receiver of the token notifies the issuer of the token which scope&#40;s&#41; they would like to)
+
+[//]: # (receive, and the issuer adds the related claims to the token. The receiver also should specify where the answer should)
+
+[//]: # (be sent.)
+
+[//]: # ()
+
+[//]: # (So how would all of this work in a real-world example? Let's set up a scenario. We start with these parties:)
+
+[//]: # ()
+
+[//]: # (- Party A. The owner of the identity, aka the issuer of the JWT.)
+
+[//]: # (- Party B. The id-wallet of the owner.)
+
+[//]: # (- Party C. A website, let's say a webshop called "foo-bar.baz".)
+
+[//]: # (- Party D. The server of "foo-bar.baz".)
+
+[//]: # (- Party E. The online storage used for the &#40;temporary&#41; storage of the 'subscription'.)
+
+[//]: # ()
+
+[//]: # ([//]: # &#40;TODO&#41;)
+
+[//]: # (Pre-requisite: both Party A/B, and Party C/D have a DID, signed by the neutral Notary server. For a non-natural person, this means a DID)
+
+[//]: # (from someone inside the legal entity, willing to represent the legal entity.)
+
+[//]: # ()
+
+[//]: # (Typically, A will visit C, which at some point requires A to identify themselves &#40;to complete an order, for example&#41;.)
+
+[//]: # ()
+
+[//]: # (Party C has to create a scannable image &#40;like a QR-code&#41;, which provides Party B all necessary information to)
+
+[//]: # (authenticate Party A:)
+
+[//]: # ()
+
+[//]: # (- The DID of Party C.)
+
+[//]: # (- The scopes of Party A that Party C requires.)
+
+[//]: # (- And endpoint, like a webhook &#40;Party D&#41; - to which the answer should be sent.)
+
+[//]: # ()
+
+[//]: # (This payload MUST be a multibase-encoded JSON message containing at least:)
+
+[//]: # ()
+
+[//]: # (```json)
+
+[//]: # ({)
+
+[//]: # (  "requestor": "did:key:a1b2c3d4e5f6g7h8ij9k0",)
+
+[//]: # (  "scopes": [)
+
+[//]: # (    "did",)
+
+[//]: # (    "private-address")
+
+[//]: # (  ],)
+
+[//]: # (  "destination": "https://some.endpoint/a1b2c3d4")
+
+[//]: # (})
+
+[//]: # (```)
+
+[//]: # ()
+
+[//]: # (### Authentication through an endpoint)
+
+[//]: # ()
+
+[//]: # (- Party A gathers all related claims and add them all to a subscription object with the related metadata:)
+
+[//]: # ()
+
+[//]: # (```json)
+
+[//]: # ({)
+
+[//]: # (})
+
+[//]: # (```)
+
+[//]: # ()
+
+[//]: # (- Party A then stores this object at Party E, which responds with its web-location.)
+
+[//]: # (- Party A creates a UCAN token for this web-location.)
+
+[//]: # (- Party A sends the UCAN to the 'destination' endpoint of Party D)
+
+[//]: # (- Party D uses the UCAN token and the web-location stored inside to actually retrieve the subscription)
+
+[//]: # (- Party E deletes the subscription)
+
+[//]: # (- Party E removes the reservation on the URL if the subscription is a one-time data exchange, otherwise it keeps it)
+
+[//]: # (  reserved for the duration of the subscription.)
+
+[//]: # (## Delegated signing using UCAN)
+
+[//]: # ()
+
+[//]: # (By creating a dedicated, short-lived and identity-bound token &#40;by setting receivers' DID as the audience of the token&#41;,)
+
+[//]: # (a user can delegate signing authority towards another)
+
+[//]: # (entity, like the website they are currently on. The UCAN token is then embedded in the signature JWT in the prf-array.)
+
+[//]: # (This is relevant if the user is adding content to the website and the)
+
+[//]: # (website wants to have this content bound to a DID.)
+
+[//]: # ()
+
+[//]: # (The implications are that all content on the internet HAS to be tied to an author, producer, etc. Which means that)
+
+[//]: # (fraudulent content, like non-consensual, AI-generated media, will have to signed as well.)
+
+
+[//]: # (## 1.4 Peer-to-peer)
+
+[//]: # ()
+
+[//]: # (In order to promote a truly trustless environment, all essential communication - like the transfer of identity-related)
+
+[//]: # (data - must be done p2p. The client-server model must only be used for setting op connections between peers. So the)
+
+[//]: # (server never receives any sensitive data, but merely acts as a guide to find other peers.)
 
 [//]: # (## 1.2 WebRTC)
 
@@ -234,48 +415,87 @@ server never receives any sensitive data, but merely acts as a guide to find oth
 
 [//]: # (---)
 
-# 2. DoaToa - a SSIMPL implementation
+[//]: # (# 2. DoaToa - a SSIMPL implementation)
 
-DoaToa (Decentralised Open Auth & Trusted Open Auth) is the first SSIMPL implementation created. It consists of a
-client-side app (the id-wallet) and a few
-stateless microservices necessary to help set up decentralised communication and sharing of data. These microservices,
-while being centralised components, are meant to be 'the first of many' open-source interchangeable implementations. The
-same goes for the id-wallet. As long as the specification is followed, multiple implementations of both the centralised
-components and the wallet, should be able to co-exist.
+[//]: # ()
 
-## 2.1 The Wallet
+[//]: # (DoaToa &#40;Decentralised Open Auth & Trusted Open Auth&#41; is the first SSIMPL implementation created. It consists of a)
 
-The DoaToa id wallet offers an entire implementation of the SSIMPL client-side specification.
+[//]: # (client-side app &#40;the id-wallet&#41; and a few)
 
-## 2.2 Mondial Pseudonymous Ledger
+[//]: # (stateless microservices necessary to help set up decentralised communication and sharing of data. These microservices,)
 
-The ledger described in the specification has certain requirements tied to it. For example: it should be decentralised,
-and it must be append-only. Research for the right technology is still ongoing. We've had successful experiments with
-the IPFS. But blockchains like Arweave are still undergoing investigation. At the moment, a simple GitLab repository is
-used to store the ledger. Since entities that are allowed to mutate the ledger are limited, and DoaToa is still in the
-POC phase, this ought to be enough.
+[//]: # (while being centralised components, are meant to be 'the first of many' open-source interchangeable implementations. The)
 
-## 2.3 Security
+[//]: # (same goes for the id-wallet. As long as the specification is followed, multiple implementations of both the centralised)
 
-In order to fully implement SSI, a user needs to have full control over their own data. There are several ways to
-accomplish this (using a hardware wallet for example), but DoaToa relies on a somewhat controversial take: most people
-have a smartphone and treat it with more respect than their passport. Smartphones these days lack true HSMs (Hardware
-Security Modules), which would be the best place for cryptographic material to exist. Due to this (hopefully temporary)
-imperfection in smartphones, DoaToa uses the keystores that exist on devices: Keychain on iOS and the KeyStore
-on Android. This introduces a few risks that need to be mitigated:
+[//]: # (components and the wallet, should be able to co-exist.)
 
-1. The device is lost/stolen, the related wallet needs to be invalidated. - This is achieved by registering the DID
-   on a decentralised ledger, stored on the IPFS. DoaToa provides this functionality. It would require you use the
-   mnemonic phrase on a new device to re-create your wallet, then invalidate it. The user can then create a new wallet
-   again.
-2. A user switches devices, the wallet needs to be re-created. - The mnemonic phrase can be used to re-create the old
-   wallet. Always do take care to either delete the wallet from the device, or to factory-reset the device.
-3. The mnemonic phrase is lost/stolen. - The user will need to invalidate their current DID
-   and create a new wallet (which will also mean the user gets a new mnemonic phrase)
-4. A user loses both their mnemonic phrase and their phone. - **This scenario should be prevented at all costs, since
-   everything relies on that mnemonic phrase.** It is advised to use a (maybe even redundant) paper/metal backup to keep
-   the
-   mnemonic phrase safe.
+[//]: # ()
+
+[//]: # (## 2.1 The Wallet)
+
+[//]: # ()
+
+[//]: # (The DoaToa id wallet offers an entire implementation of the SSIMPL client-side specification.)
+
+[//]: # ()
+
+[//]: # (## 2.2 Mondial Pseudonymous Ledger)
+
+[//]: # ()
+
+[//]: # (The ledger described in the specification has certain requirements tied to it. For example: it should be decentralised,)
+
+[//]: # (and it must be append-only. Research for the right technology is still ongoing. We've had successful experiments with)
+
+[//]: # (the IPFS. But blockchains like Arweave are still undergoing investigation. At the moment, a simple GitLab repository is)
+
+[//]: # (used to store the ledger. Since entities that are allowed to mutate the ledger are limited, and DoaToa is still in the)
+
+[//]: # (POC phase, this ought to be enough.)
+
+[//]: # ()
+
+[//]: # (## 2.3 Security)
+
+[//]: # ()
+
+[//]: # (In order to fully implement SSI, a user needs to have full control over their own data. There are several ways to)
+
+[//]: # (accomplish this &#40;using a hardware wallet for example&#41;, but DoaToa relies on a somewhat controversial take: most people)
+
+[//]: # (have a smartphone and treat it with more respect than their passport. Smartphones these days lack true HSMs &#40;Hardware)
+
+[//]: # (Security Modules&#41;, which would be the best place for cryptographic material to exist. Due to this &#40;hopefully temporary&#41;)
+
+[//]: # (imperfection in smartphones, DoaToa uses the keystores that exist on devices: Keychain on iOS and the KeyStore)
+
+[//]: # (on Android. This introduces a few risks that need to be mitigated:)
+
+[//]: # ()
+
+[//]: # (1. The device is lost/stolen, the related wallet needs to be invalidated. - This is achieved by registering the DID)
+
+[//]: # (   on a decentralised ledger, stored on the IPFS. DoaToa provides this functionality. It would require you use the)
+
+[//]: # (   mnemonic phrase on a new device to re-create your wallet, then invalidate it. The user can then create a new wallet)
+
+[//]: # (   again.)
+
+[//]: # (2. A user switches devices, the wallet needs to be re-created. - The mnemonic phrase can be used to re-create the old)
+
+[//]: # (   wallet. Always do take care to either delete the wallet from the device, or to factory-reset the device.)
+
+[//]: # (3. The mnemonic phrase is lost/stolen. - The user will need to invalidate their current DID)
+
+[//]: # (   and create a new wallet &#40;which will also mean the user gets a new mnemonic phrase&#41;)
+
+[//]: # (4. A user loses both their mnemonic phrase and their phone. - **This scenario should be prevented at all costs, since)
+
+[//]: # (   everything relies on that mnemonic phrase.** It is advised to use a &#40;maybe even redundant&#41; paper/metal backup to keep)
+
+[//]: # (   the mnemonic phrase safe.)
 
 [//]: # (## 2.4 Centralised component)
 

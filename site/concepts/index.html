@@ -193,6 +193,11 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#10-active-authentication" class="nav-link">10. Active-Authentication</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
@@ -288,7 +293,8 @@ DID is multibase-encoded.</p>
 <h1 id="4-european-e-passports">4. European e-Passports</h1>
 <p>A European e-passport relies on a set of international standards to prove its authenticity and integrity using
 cryptographic techniques. These standards work together to ensure the data on the passport is both verifiable and
-resistant to tampering or cloning.</p>
+resistant to tampering or cloning. These passports contain cryptographic material used to verify the legitimacy of the passport, thereby delegating the authority of the identity represented to
+the bearer—assuming basic checks are met (e.g., does the bearer match the photo?).</p>
 <h2 id="41-icao-doc-9303">4.1 ICAO Doc 9303</h2>
 <p>The foundational specification for Machine Readable Travel Documents (MRTDs). It defines:</p>
 <ul>
@@ -413,7 +419,8 @@ Authorization: &quot;Bearer ${theUCANConnectToken}&quot;
 </code></pre>
 <p>This endpoint MUST respond with either a 200 OK or a 401 UNAUTHENTICATED</p>
 <ul>
-<li>200 OK: the tokens' signature matches the provided DID &amp; the 'attenuations' array contains a with/can pair matching the current domain and action.</li>
+<li>200 OK: the tokens' signature matches the provided DID &amp; the 'attenuations' array contains a with/can pair matching
+  the current domain and action.</li>
 <li>401 UNAUTHENTICATED: the tokens' signature does not match the provided DID. The DID will be in the 'claims' array of
   the UCAN token. Or the DID does not match the specified public key.</li>
 </ul>
@@ -504,7 +511,11 @@ bytes again on the receiving side, you need to know which encoding was used in o
 of different encodings to choose from. This means that encoding and decoding must be well-documented. With Multibase
 encoding, a special reserved character for each specific encoding is appended to the encoded value which indicates which
 encoding was used. This means that anyone receiving the encoded bytes can always decode it. More can be read
-<a href="https://w3c-ccg.github.io/multibase/">here</a>.</p></div>
+<a href="https://w3c-ccg.github.io/multibase/">here</a>.</p>
+<h1 id="10-active-authentication">10. Active-Authentication</h1>
+<p>When reading the NFC-chip, the reader makes the passport sign a randomly generated challenge with its embedded private key, which can then be
+verified by the key found in DG15. This challenge is there to proof that the passport was not in fact cloned or
+otherwise tempered with. The result of the challenge will be stored in the id wallet.</p></div>
             </div>
         </div>
 

@@ -117,7 +117,8 @@ The 'key' method also means there is no real need for a DID document, which is p
 
 A European e-passport relies on a set of international standards to prove its authenticity and integrity using
 cryptographic techniques. These standards work together to ensure the data on the passport is both verifiable and
-resistant to tampering or cloning.
+resistant to tampering or cloning. These passports contain cryptographic material used to verify the legitimacy of the passport, thereby delegating the authority of the identity represented to
+the bearer—assuming basic checks are met (e.g., does the bearer match the photo?).
 
 ## 4.1 ICAO Doc 9303
 
@@ -236,6 +237,7 @@ Party C has to provide (QR-code, WebRTC, etc.) Party B with all necessary inform
 This payload MUST be a multibase-encoded message:
 
 (The choice to use JSON is arbitrary)
+
 ```json
 {
   "requestor": "did:key:a1b2c3d4e5f6g7h8ij9k0",
@@ -271,7 +273,8 @@ Authorization: "Bearer ${theUCANConnectToken}"
 
 This endpoint MUST respond with either a 200 OK or a 401 UNAUTHENTICATED
 
-- 200 OK: the tokens' signature matches the provided DID & the 'attenuations' array contains a with/can pair matching the current domain and action.
+- 200 OK: the tokens' signature matches the provided DID & the 'attenuations' array contains a with/can pair matching
+  the current domain and action.
 - 401 UNAUTHENTICATED: the tokens' signature does not match the provided DID. The DID will be in the 'claims' array of
   the UCAN token. Or the DID does not match the specified public key.
 
@@ -388,3 +391,8 @@ of different encodings to choose from. This means that encoding and decoding mus
 encoding, a special reserved character for each specific encoding is appended to the encoded value which indicates which
 encoding was used. This means that anyone receiving the encoded bytes can always decode it. More can be read
 <a href="https://w3c-ccg.github.io/multibase/">here</a>.
+
+# 10. Active-Authentication
+When reading the NFC-chip, the reader makes the passport sign a randomly generated challenge with its embedded private key, which can then be
+verified by the key found in DG15. This challenge is there to proof that the passport was not in fact cloned or
+otherwise tempered with. The result of the challenge will be stored in the id wallet.
