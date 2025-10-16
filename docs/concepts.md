@@ -265,14 +265,7 @@ encoding, a special reserved character for each specific encoding is appended to
 encoding was used. This means that anyone receiving the encoded bytes can always decode it. More can be read
 <a href="https://w3c-ccg.github.io/multibase/">here</a>.
 
-# 9. Active-Authentication
-
-When reading the NFC-chip, the reader makes the passport sign a randomly generated challenge with its embedded private
-key, which can then be
-verified by the key found in DG15. This challenge is there to proof that the passport was not in fact cloned or
-otherwise tempered with. The result of the challenge will be stored in the id wallet.
-
-# 10. Notary server
+# 9. Notary server
 
 In order to keep the SSIMPL network trustworthy, certain open-source checkpoints have to be available which can verify
 someone's root claims purely based on cryptography. These servers are stateless in essence, but it needs to check the

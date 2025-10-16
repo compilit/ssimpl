@@ -164,12 +164,7 @@
               </ul>
             </li>
             
-            <li class="nav-item" data-bs-level="1"><a href="#9-active-authentication" class="nav-link">9. Active-Authentication</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-bs-level="1"><a href="#10-notary-server" class="nav-link">10. Notary server</a>
+            <li class="nav-item" data-bs-level="1"><a href="#9-notary-server" class="nav-link">9. Notary server</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -384,12 +379,7 @@ of different encodings to choose from. This means that encoding and decoding mus
 encoding, a special reserved character for each specific encoding is appended to the encoded value which indicates which
 encoding was used. This means that anyone receiving the encoded bytes can always decode it. More can be read
 <a href="https://w3c-ccg.github.io/multibase/">here</a>.</p>
-<h1 id="9-active-authentication">9. Active-Authentication</h1>
-<p>When reading the NFC-chip, the reader makes the passport sign a randomly generated challenge with its embedded private
-key, which can then be
-verified by the key found in DG15. This challenge is there to proof that the passport was not in fact cloned or
-otherwise tempered with. The result of the challenge will be stored in the id wallet.</p>
-<h1 id="10-notary-server">10. Notary server</h1>
+<h1 id="9-notary-server">9. Notary server</h1>
 <p>In order to keep the SSIMPL network trustworthy, certain open-source checkpoints have to be available which can verify
 someone's root claims purely based on cryptography. These servers are stateless in essence, but it needs to check the
 ledger to see if a DID hasn't been invalidated yet. For this reason, a supporter of the SSIMPL network is allowed to

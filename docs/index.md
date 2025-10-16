@@ -64,7 +64,7 @@ with. In other words: if they would like to be able to proof they were the origi
 they would need to do is sign it. Other people could sign it as well, of course, but signature cannot be created using a
 past date. So the first one to sign something, always can proof they were the original creator.
 
-- The wallet MUST perform an [Active-Authentication challenge](./concepts.md#9-active-authentication).
+- The wallet MUST perform an [Active-Authentication challenge](./concepts.md#41-icao-doc-9303).
 - The wallet SHOULD store the DG11, which contains the personal details of the owner which can be the first basic,
   verified claims.
 - The wallet MUST be a decentralised [BIP32-compliant](./concepts.md#11-bip32) implementation.
@@ -135,7 +135,7 @@ share our claims with something like a webshop? Let's set up a scenario. We star
 - Party B. A website (front- and backend), let's say a webshop called "foo-bar.baz".
 - Party C. The online storage used for the (temporary) storage of the 'subscription'.
 
-Pre-requisite: all parties have a DID, signed by a neutral '[notary](./concepts.md#10-notary-server)' server. For a non-natural person,
+Pre-requisite: all parties have a DID, signed by a neutral '[notary](./concepts.md#9-notary-server)' server. For a non-natural person,
 this means a DID from someone inside the legal entity, willing to represent the legal entity.
 
 01. Party A visits Party B, which at some point requires A to identify themselves (to complete an order, for example)
