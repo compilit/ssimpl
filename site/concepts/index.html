@@ -143,24 +143,7 @@
             
             <li class="nav-item" data-bs-level="1"><a href="#6-ucan-user-controlled-authorization-networks" class="nav-link">6. UCAN - User Controlled Authorization Networks</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#61-ucan-connect" class="nav-link">6.1 'UCAN Connect'</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-bs-level="2"><a href="#62-implementation-of-the-ucan-connect-flow" class="nav-link">6.2 Implementation of the UCAN Connect flow</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-bs-level="1"><a href="#63-authentication-through-webrtc" class="nav-link">6.3. Authentication through WebRTC</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#64-authentication-through-an-endpoint" class="nav-link">6.4 Authentication through an endpoint</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-bs-level="2"><a href="#65-delegated-signing-using-ucan" class="nav-link">6.5 Delegated signing using UCAN</a>
+            <li class="nav-item" data-bs-level="2"><a href="#61-delegated-signing-using-ucan" class="nav-link">6.1 Delegated signing using UCAN</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -176,25 +159,17 @@
               </ul>
             </li>
             
-            <li class="nav-item" data-bs-level="1"><a href="#8-ipfs" class="nav-link">8. IPFS</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#81-key-features-of-ipfs" class="nav-link">8.1 Key Features of IPFS:</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-bs-level="2"><a href="#82-problems-ipfs-solves" class="nav-link">8.2 Problems IPFS Solves:</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-bs-level="1"><a href="#9-multibase-encoding" class="nav-link">9. Multibase Encoding</a>
+            <li class="nav-item" data-bs-level="1"><a href="#8-multibase-encoding" class="nav-link">8. Multibase Encoding</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             
-            <li class="nav-item" data-bs-level="1"><a href="#10-active-authentication" class="nav-link">10. Active-Authentication</a>
+            <li class="nav-item" data-bs-level="1"><a href="#9-active-authentication" class="nav-link">9. Active-Authentication</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#10-notary-server" class="nav-link">10. Notary server</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -260,7 +235,7 @@ conjuring up a completely new non-existing identity.</p>
 <p>Cryptography can verify who issued a claim and whether it was tampered with, but it cannot verify the truthfulness of
 the claim itself. The validity of claims like a name, nationality, or birthdate ultimately depends on who the issuer is
 and whether they are trusted. However, since this requires authorities to be fully aligned with Web3 standards, we hit a
-dead end. Currently, most (if not all) authorities don't have any way to issue a <a href="#3-did">DID</a>. So what DoaToa does, is
+dead end. Currently, most (if not all) authorities don't have any way to issue a <a href="#3-did">DID</a>. So what SSIMPL does, is
 reversing
 the flow yet again: an individual can create their own DID along with the related cryptographic keys. Which is actually
 in line with the entire idea of decentralisation. But 'claims' an individual makes are divided into 2 categories: formal
@@ -272,7 +247,7 @@ effectively endorsing its validity. This attestation carries moral responsibilit
 become publicly associated with the claim.</p>
 <h2 id="22-formal-claims">2.2 Formal Claims</h2>
 <p>Formal claims cannot be self-issued; they must come from a recognized authority. At this point in time, the only formal
-claims available to a DoaToa user, are the ones coming from their passport. These can be used to chain other claims of
+claims available to a SSIMPL user, are the ones coming from their passport. These can be used to chain other claims of
 course. For example: by taking your full name and birthdate, you can match then with the names and birthdate written on
 an official
 diploma.</p>
@@ -284,16 +259,17 @@ ownership without relying on a centralised system.</p>
 <p>A DID follows this format:</p>
 <pre><code>did:&lt;method&gt;:&lt;identifier&gt;
 </code></pre>
-<p>In DoaToa, primarily the 'key' method is used. This means that each 'identifier' part is actually the public part of a
+<p>In SSIMPL, primarily the 'key' method is used. This means that each 'identifier' part is actually the public part of a
 specific cryptographic public/private keypair. Each user is responsible for their own private key, which is used to sign
 data. The public key can always be used to verify the signature. The only small deviation from the spec is that
-SSIMPL promotes the use of <a href="#9-multibase-encoding">Multibase encoding</a>, which means that even the public key part of the
+SSIMPL promotes the use of <a href="#8-multibase-encoding">Multibase encoding</a>, which means that even the public key part of the
 DID is multibase-encoded.</p>
 <p>The 'key' method also means there is no real need for a DID document, which is part of the DID spec.</p>
 <h1 id="4-european-e-passports">4. European e-Passports</h1>
 <p>A European e-passport relies on a set of international standards to prove its authenticity and integrity using
 cryptographic techniques. These standards work together to ensure the data on the passport is both verifiable and
-resistant to tampering or cloning. These passports contain cryptographic material used to verify the legitimacy of the passport, thereby delegating the authority of the identity represented to
+resistant to tampering or cloning. These passports contain cryptographic material used to verify the legitimacy of the
+passport, thereby delegating the authority of the identity represented to
 the bearer—assuming basic checks are met (e.g., does the bearer match the photo?).</p>
 <h2 id="41-icao-doc-9303">4.1 ICAO Doc 9303</h2>
 <p>The foundational specification for Machine Readable Travel Documents (MRTDs). It defines:</p>
@@ -358,7 +334,7 @@ communication</strong> directly between browsers or mobile apps, without requiri
 <p>WebRTC is supported by all major browsers and is a core building block for modern real-time web applications.</p>
 <hr />
 <h1 id="6-ucan-user-controlled-authorization-networks">6. UCAN - User Controlled Authorization Networks</h1>
-<p>To align with Web3 standards, DoaToa has adopted UCAN. UCAN challenges the traditional client-server model, shifting
+<p>To align with Web3 standards, SSIMPL has adopted UCAN. UCAN challenges the traditional client-server model, shifting
 control to the client.</p>
 <p>Clients generate their own JWTs, specifying the request and resource they intend to access. Each JWT is signed with the
 user’s private key, allowing the server to verify the signature and determine whether access should be granted. This
@@ -366,67 +342,7 @@ essentially reverses the OAuth 2.0 flow, where clients request a server-issued J
 <p>It should be noted that UCAN was originally designed for "delegated authorization". Meaning, an issuer creates a token
 that allows the bearer of the token to perform certain actions on certain resources. For authentication, an addition is
 required.</p>
-<h2 id="61-ucan-connect">6.1 'UCAN Connect'</h2>
-<p>Like Open ID Connect adds an identification layer to OAuth2, UCAN Connect also adds an identification layer to UCAN.
-By embedding (verified) claims within UCAN JWTs, authentication systems eliminate the need to store user data, further
-decentralizing trust. The receiver of the token notifies the issuer of the token which scope(s) they would like to
-receive, and the issuer adds the related claims to the token. The receiver also should specify where the JWT should be
-sent.</p>
-<h2 id="62-implementation-of-the-ucan-connect-flow">6.2 Implementation of the UCAN Connect flow</h2>
-<p>So how would all of this work in a real-world example? Let's set up a scenario. We start with three parties:</p>
-<ul>
-<li>Party A. The owner of the identity, aka the issuer of the UCAN token.</li>
-<li>Party B. The id-wallet of the owner (like DoaToa).</li>
-<li>Party C. A website, let's say a webshop called "foo-bar.baz".</li>
-<li>Party D. The server of "foo-bar.baz".</li>
-</ul>
-<p>Pre-requisite: both Party A/B, and Party C/D have a DID, signed by DoaToa. For a non-natural person, this means a DID
-from someone inside the legal entity, willing to represent the legal entity.</p>
-<p>Typically, A will visit C, which at some point requires A to identify themselves (to complete an order, for example).</p>
-<p>Party C has to provide (QR-code, WebRTC, etc.) Party B with all necessary information to authenticate Party A:</p>
-<ul>
-<li>The DID of Party C.</li>
-<li>The scopes of Party A that Party C requires.</li>
-<li>A connection proposal. Containing either a channel id - used to set up a WebRTC channel, or an authentication
-  endpoint (Party D) - to which the token should be sent.</li>
-</ul>
-<p>This payload MUST be a multibase-encoded message:</p>
-<p>(The choice to use JSON is arbitrary)</p>
-<pre><code class="language-json">{
-  &quot;requestor&quot;: &quot;did:key:a1b2c3d4e5f6g7h8ij9k0&quot;,
-  &quot;scopes&quot;: [
-    &quot;did&quot;,
-    &quot;private-address&quot;
-  ],
-  &quot;destination&quot;: {
-    &quot;channelId&quot;: &quot;someId&quot;,
-    &quot;authenticationEndpoint&quot;: &quot;someEndpoint&quot;
-  }
-}
-</code></pre>
-<h1 id="63-authentication-through-webrtc">6.3. Authentication through WebRTC</h1>
-<p>Party D SHOULD initiate the WebRTC connection using the specified channel id. Party C is also allowed to do so, but that
-would expose the UCAN token to Party C, which is less secure. Party B will do so some seconds after
-scanning the payload. After the connection is set up, Party B will send the UCAN Connect token. Afterward, the
-connection is closed.</p>
-<h2 id="64-authentication-through-an-endpoint">6.4 Authentication through an endpoint</h2>
-<p>The Party D connection endpoint MUST have the same domain as that of Party C. A subdomain is allowed.
-The connection endpoint MUST be as follows:</p>
-<pre><code class="language-text">POST /ucan-connect/auth HTTP/2
-Authorization: &quot;Bearer ${theUCANConnectToken}&quot;
-
-(no body should be provided)
-</code></pre>
-<p>This endpoint MUST respond with either a 200 OK or a 401 UNAUTHENTICATED</p>
-<ul>
-<li>200 OK: the tokens' signature matches the provided DID &amp; the 'attenuations' array contains a with/can pair matching
-  the current domain and action.</li>
-<li>401 UNAUTHENTICATED: the tokens' signature does not match the provided DID. The DID will be in the 'claims' array of
-  the UCAN token. Or the DID does not match the specified public key.</li>
-</ul>
-<p>Then Party D SHOULD provide Party C with another token, specific for the current context, so Party C doesn't need to
-know anything about Party A.</p>
-<h2 id="65-delegated-signing-using-ucan">6.5 Delegated signing using UCAN</h2>
+<h2 id="61-delegated-signing-using-ucan">6.1 Delegated signing using UCAN</h2>
 <p>By creating a dedicated, short-lived and identity-bound token (by setting receivers' DID as the audience of the token),
 a user can delegate signing authority towards another
 entity, like the website they are currently on. The UCAN token is then embedded in the signature JWT in the prf-array.
@@ -451,60 +367,16 @@ over their information.</p>
 AES key—not the root AES key, but a deterministically generated AES key unique to each subscription.</p>
 <h2 id="71-post-quantum-disclaimer">7.1 Post-Quantum disclaimer</h2>
 <p>With the inevitable advent of quantum computing, these algorithms will change eventually. Currently, there are several
-candidates which could potentially take over the aforementioned algorithms. DoaToa will adopt them as soon as they are
+candidates which could potentially take over the aforementioned algorithms. SSIMPL will adopt them as soon as they are
 ripe.</p>
 <p>The biggest concern lies in asymmetric encryption, which is used for signing and sharing of secrets. Through Shor's
 algorithm, the asymmetric encryption algorithms we currently rely on will be cracked, meaning that private keys can
 be derived based on public keys. This is why everything related to asymmetric encryption should have an expiration
 time.</p>
-<p>The other concern is in the symmetric encryption, for which exclusively AES is used. DoaToa is already post-quantum
+<p>The other concern is in the symmetric encryption, for which exclusively AES is used. SSIMPL is already post-quantum
 proof in this area, since it used AES-256. Which is overkill in the current day and time, but will be equivalent to
 AES-128 when quantum computing becomes more prevalent.</p>
-<hr />
-<h1 id="8-ipfs">8. IPFS</h1>
-<p><strong>IPFS (InterPlanetary File System)</strong> is a <strong>peer-to-peer distributed file system</strong> that aims to make the web more *
-<em>Decentralised</em><em>, </em><em>resilient</em><em>, and </em><em>permanent</em>*.</p>
-<p>Traditionally, large tech companies have been responsible for storing data. This centralised model comes with several
-drawbacks, including single points of failure, high costs, and control over access to information.</p>
-<p>Decentralised storage offers an alternative by distributing data across multiple nodes instead of relying on a central
-server. This approach provides several advantages:</p>
-<ul>
-<li>Eliminates Single Points of Failure – No central server means no single point of failure, reducing the risk of data
-  loss or downtime.</li>
-<li>Censorship Resistance – Data isn’t controlled by a single entity, making it harder for governments or organizations to
-  censor or remove information.</li>
-<li>Improved Availability – Multiple copies of data are stored across a network, ensuring accessibility even if some nodes
-  go offline.</li>
-<li>Lower Costs – Users can share and utilize spare storage from others, reducing infrastructure costs compared to
-  traditional cloud providers.</li>
-<li>Tamper Resistance – Cryptographic hashing and content addressing ensure data integrity and prevent unauthorized
-  modifications.</li>
-<li>Trustless Environment – No need to rely on a central authority; cryptographic verification ensures data is stored and
-  retrieved correctly.</li>
-</ul>
-<p>For DoaToa, a peer-to-peer approach aligns best with its principles. The InterPlanetary File System (IPFS) is a
-Decentralised, peer-to-peer protocol for storing and sharing data. Unlike traditional location-based addressing (where
-URLs point to specific servers), IPFS uses content addressing, identifying files by their cryptographic hash (CID).</p>
-<h2 id="81-key-features-of-ipfs">8.1 Key Features of IPFS:</h2>
-<ul>
-<li>Content Addressing – Files are identified by unique hashes, ensuring integrity and deduplication.</li>
-<li>Peer-to-Peer Distribution – Files are retrieved from multiple nodes rather than a central server.</li>
-<li>Versioning – IPFS can track changes, similar to Git.</li>
-<li>Caching – Popular content is cached across the network for faster access.</li>
-<li>Interoperability – Works well with blockchain and Decentralised applications (dApps).</li>
-</ul>
-<h2 id="82-problems-ipfs-solves">8.2 Problems IPFS Solves:</h2>
-<ul>
-<li>Redundancy &amp; Availability – Data remains accessible without reliance on a single server.</li>
-<li>Censorship Resistance – Information remains online as long as at least one node hosts it.</li>
-<li>Efficient Content Delivery – Data is retrieved from the nearest available node, reducing latency.</li>
-</ul>
-<p>However, IPFS alone does not guarantee permanent storage—data can disappear if no node continues to host it. To ensure
-persistence, data must be pinned. This can be done either manually (free) or through a pinning service. Currently,
-DoaToa uses a pinning service, but in the future, your wallet will evolve to support self-hosting and pinning, ensuring
-full control over data storage</p>
-<hr />
-<h1 id="9-multibase-encoding">9. Multibase Encoding</h1>
+<h1 id="8-multibase-encoding">8. Multibase Encoding</h1>
 <p>On the internet, a lot of raw data (bytes) is transported using something called base encoding. These encodings
 essentially turn the raw bytes into a piece of transportable and near-readable text. But when you wish to access the raw
 bytes again on the receiving side, you need to know which encoding was used in order to decode it. But there are a lot
@@ -512,10 +384,16 @@ of different encodings to choose from. This means that encoding and decoding mus
 encoding, a special reserved character for each specific encoding is appended to the encoded value which indicates which
 encoding was used. This means that anyone receiving the encoded bytes can always decode it. More can be read
 <a href="https://w3c-ccg.github.io/multibase/">here</a>.</p>
-<h1 id="10-active-authentication">10. Active-Authentication</h1>
-<p>When reading the NFC-chip, the reader makes the passport sign a randomly generated challenge with its embedded private key, which can then be
+<h1 id="9-active-authentication">9. Active-Authentication</h1>
+<p>When reading the NFC-chip, the reader makes the passport sign a randomly generated challenge with its embedded private
+key, which can then be
 verified by the key found in DG15. This challenge is there to proof that the passport was not in fact cloned or
-otherwise tempered with. The result of the challenge will be stored in the id wallet.</p></div>
+otherwise tempered with. The result of the challenge will be stored in the id wallet.</p>
+<h1 id="10-notary-server">10. Notary server</h1>
+<p>In order to keep the SSIMPL network trustworthy, certain open-source checkpoints have to be available which can verify
+someone's root claims purely based on cryptography. These servers are stateless in essence, but it needs to check the
+ledger to see if a DID hasn't been invalidated yet. For this reason, a supporter of the SSIMPL network is allowed to
+combine both functionalities </p></div>
             </div>
         </div>
 

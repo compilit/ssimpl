@@ -79,23 +79,23 @@
             
             <li class="nav-item" data-bs-level="1"><a href="#1-ssimpl-specification" class="nav-link">1. SSIMPL - Specification</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#10-passport" class="nav-link">1.0 Passport</a>
+            <li class="nav-item" data-bs-level="2"><a href="#11-means-of-identification" class="nav-link">1.1 Means of identification</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-bs-level="2"><a href="#11-the-wallet" class="nav-link">1.1 The wallet</a>
+            <li class="nav-item" data-bs-level="2"><a href="#12-the-wallet" class="nav-link">1.2 The wallet</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-bs-level="2"><a href="#12-mondial-pseudonymous-ledger" class="nav-link">1.2 Mondial Pseudonymous Ledger</a>
+            <li class="nav-item" data-bs-level="2"><a href="#13-mondial-pseudonymous-ledger" class="nav-link">1.3 Mondial Pseudonymous Ledger</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-bs-level="2"><a href="#13-subscriptions" class="nav-link">1.3 Subscriptions</a>
+            <li class="nav-item" data-bs-level="2"><a href="#14-subscriptions" class="nav-link">1.4 Subscriptions</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-bs-level="2"><a href="#14-security" class="nav-link">1.4 Security</a>
+            <li class="nav-item" data-bs-level="2"><a href="#15-security" class="nav-link">1.5 Security</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -131,30 +131,19 @@ and digital worlds through
 authority-backed cryptographic proof.
 Therefor, implementing SSIMPL requires a trusted central authority (such as a government) that supports some form of
 one-time, cryptography-based identification for individuals.</p>
-<h2 id="10-passport">1.0 Passport</h2>
+<h2 id="11-means-of-identification">1.1 Means of identification</h2>
+<p>Online identities are usually based upon a certain amount of trust. In it's worst form this trust is based on the user
+filling in their own identity-details in an open form. At its best, it's based on some authority having determined you
+are who you say you are. By scanning your passport for example.</p>
+<p>In order to establish a truly trustworthy online identity, we must somehow match an actual person to some digital
+claims. All this is done in the wallet itself. But to be able to achieve that, there is one requirement:</p>
 <ul>
 <li>All users of the SSIMPL protocol MUST possess a <a href="concepts/#4-european-e-passports">Standardised e-passport</a>.</li>
 </ul>
-<h2 id="11-the-wallet">1.1 The wallet</h2>
-<ul>
-<li>The wallet MUST perform an <a href="concepts/#10-active-authentication">Active-Authentication challenge</a>.</li>
-<li>The wallet SHOULD store the DG11, which contains the personal details of the owner which can be the first basic,
-  verified claims.</li>
-<li>The wallet MUST be a decentralised <a href="concepts/#11-bip32">BIP32-compliant</a> implementation.</li>
-<li>The wallet MUST be backed-up up with a <a href="concepts/#12-bip39">BIP39-compliant</a> mnemonic phrase (stored offline).</li>
-<li>The wallet MUST be able to store both a root keypair that can be used to sign and verify data and to
-  authorize the bearer online, and all claims of the owner.</li>
-<li>The root public key MUST be used to generate a <a href="concepts/#3-did">DID</a> (decentralised Identifier), which is then
-  signed by the neutral third party.</li>
-<li>All encoded data, like the cryptographic keys, MUST be encoded
-  using <a href="concepts/#9-multibase-encoding">Multibase-encoding</a> to ensure all peers of all possible future
-  implementations always know which encoding is used.</li>
-<li>The wallet MUST have one or many associated online storages where the 'subscription' can be stored.</li>
-<li>The wallet MUST have the ability to encrypt claims and store them as a 'subscription' object on an online storage.</li>
-<li>The wallet MUST have the ability to generate a JWT (Authentication &amp; UCAN).</li>
-<li>The wallet MUST be able to perform asymmetric encryption like DHKE or Hybrid Encryption using RSA.</li>
-</ul>
-<p>At this point, in the spirit of Open ID Connect, the user has all the components needed to authenticate themselves
+<h2 id="12-the-wallet">1.2 The wallet</h2>
+<p>The wallet is the core component that holds the owners most important data: their 'claims' and the means to support
+those claims. A wallet can be defined as a secure means to store digital data that can only be accessed by its owner.</p>
+<p>In the spirit of Open ID Connect, the wallet gives a user all the components needed to authenticate themselves
 online at multiple levels:</p>
 <ul>
 <li>Level 0: The DID belongs to a human being.</li>
@@ -170,10 +159,28 @@ wallet.</p>
 with. In other words: if they would like to be able to proof they were the original creator of some digital content, all
 they would need to do is sign it. Other people could sign it as well, of course, but signature cannot be created using a
 past date. So the first one to sign something, always can proof they were the original creator.</p>
-<h2 id="12-mondial-pseudonymous-ledger">1.2 Mondial Pseudonymous Ledger</h2>
+<ul>
+<li>The wallet MUST perform an <a href="concepts/#9-active-authentication">Active-Authentication challenge</a>.</li>
+<li>The wallet SHOULD store the DG11, which contains the personal details of the owner which can be the first basic,
+  verified claims.</li>
+<li>The wallet MUST be a decentralised <a href="concepts/#11-bip32">BIP32-compliant</a> implementation.</li>
+<li>The wallet MUST be backed-up up with a <a href="concepts/#12-bip39">BIP39-compliant</a> mnemonic phrase (stored offline).</li>
+<li>The wallet MUST be able to store both a root keypair that can be used to sign and verify data and to
+  authorize the bearer online, and all claims of the owner.</li>
+<li>The root public key MUST be used to generate a <a href="concepts/#3-did">DID</a> (decentralised Identifier), which is then
+  signed by the neutral third party.</li>
+<li>All encoded data, like the cryptographic keys, MUST be encoded
+  using <a href="concepts/#8-multibase-encoding">Multibase-encoding</a> to ensure all peers of all possible future
+  implementations always know which encoding is used.</li>
+<li>The wallet MUST have one or many associated online storages where the 'subscription' can be stored.</li>
+<li>The wallet MUST have the ability to encrypt claims and store them as a 'subscription' object on an online storage.</li>
+<li>The wallet MUST have the ability to generate a JWT (Authentication &amp; UCAN).</li>
+<li>The wallet MUST be able to perform asymmetric encryption in order to share a (or establish a mutual) secret.</li>
+</ul>
+<h2 id="13-mondial-pseudonymous-ledger">1.3 Mondial Pseudonymous Ledger</h2>
 <p>In order to protect users from misuse, fraud and identity-theft, each wallet (and specifically the related public keys),
 must have a mechanism that allows them to be invalidated. These invalidated public keys must be published to a publicly
-accessible, append-only, preferably decentralized data storage. Anytime someone suspects their identity has been
+accessible, append-only, preferably decentralized, data storage. Anytime someone suspects their identity has been
 compromised, they're required to add their public keys to the ledger. This way, everyone can check whether the identity
 they're dealing with is actually valid.</p>
 <p>The ledger also contains the public keys of so-called "neutral ledger authorities" (similar to a notary). Each entity
@@ -188,9 +195,11 @@ their e-passport.</p>
   providing a signed version of the DID.</li>
 <li>The ledger SHOULD be decentralised.</li>
 </ul>
-<h2 id="13-subscriptions">1.3 Subscriptions</h2>
-<p>The ability to establish a verified, digital identity is only part of the equation. It is essential that parts of this
-identity can be shared with other entities on the internet. A simple example would be 'signing in' on a website. Usually
+<h2 id="14-subscriptions">1.4 Subscriptions</h2>
+<p>The ability to establish a verified, digital identity is only part of the equation of an id-wallet. It is essential that
+parts of this
+identity can be shared with other entities on the internet. A simple example would be 'signing in' on a website.
+Originally
 these parts of your identity (aka 'Claims'), come from a centralised service which has your profile stored. SSIMPL
 offers a completely new perspective. Since you already have the claims stored in your own wallet, there is no need for
 an external, centralised service. Instead, the entity interested in your claims shares with you the necessary claims (
@@ -209,14 +218,52 @@ nor the other party can interact with it anymore.</p>
 <li>Each storage endpoint path must remain reserved for the duration of the subscription.</li>
 <li>Each storage endpoint MUST allow updates by the owner for the duration of the subscription.</li>
 </ul>
-<h2 id="14-security">1.4 Security</h2>
+<h3 id="141-example-authentication">1.4.1 Example: Authentication</h3>
+<p>With SSIMPL, using a third party to provide another party with your identity data has become obsolete. But how DO we
+share our claims with something like a webshop? Let's set up a scenario. We start with these parties:</p>
+<ul>
+<li>Party A. The owner of the identity with their id-wallet.</li>
+<li>Party B. A website (front- and backend), let's say a webshop called "foo-bar.baz".</li>
+<li>Party C. The online storage used for the (temporary) storage of the 'subscription'.</li>
+</ul>
+<p>Pre-requisite: all parties have a DID, signed by a neutral '<a href="concepts/#10-notary-server">notary</a>' server. For a non-natural person,
+this means a DID from someone inside the legal entity, willing to represent the legal entity.</p>
+<ol>
+<li>Party A visits Party B, which at some point requires A to identify themselves (to complete an order, for example)</li>
+<li>Party B has to create a scannable image (like a QR-code), which provides Party B <a href="#142-subscription-request-payload">all necessary information</a> to
+    authenticate Party A</li>
+<li>Party A uses their wallet to scan the image</li>
+<li>The wallet of Party A verifies the contents of the payload and shows it to Party A</li>
+<li>Party A verifies and accepts the request</li>
+<li>The wallet gathers the necessary claims, combines them into a 'subscription' object, encrypts it, and stores it at
+    Party C</li>
+<li>Party C reserves the web-location for the duration of the subscription</li>
+<li>Party C responds with the web-location of this subscription</li>
+<li>The wallet of Party A then creates a UCAN token which grants Party B one-time access to this the specific
+    web-location</li>
+<li>The wallet of Party A sends this token to the destination defined in the original request</li>
+<li>Party B uses the token to retrieve the subscription</li>
+<li>Party C deletes the data</li>
+</ol>
+<h3 id="142-subscription-request-payload">1.4.2 Subscription request payload</h3>
+<pre><code class="language-json">
+{
+  &quot;audience&quot;: &quot;&lt;did:of:partyB&gt;&quot;,
+  &quot;scopes&quot;: [
+    &quot;did&quot;,
+    &quot;private-address&quot;
+  ],
+  &quot;destination&quot;: &quot;https://some.endpoint/webhook&quot;
+}
+
+</code></pre>
+<h2 id="15-security">1.5 Security</h2>
 <p>In order to fully implement SSI, a user needs to have full control over their own data. There are several ways to
 accomplish this (using a hardware wallet for example), but SSIMPL relies on a somewhat controversial take: most people
 have a smartphone and treat it with more respect than their passport. Smartphones these days lack true HSMs (Hardware
 Security Modules), which would be the best place for cryptographic material to exist. Due to this (hopefully temporary)
-imperfection in smartphones, SIMMPL requires you to use the keystores that exist on devices: Keychain on iOS and the
-KeyStore
-on Android. This introduces a few risks that need to be mitigated:</p>
+imperfection in smartphones, SSIMPL requires you to use the keystores that exist on devices: Keychain on iOS and the
+KeyStore on Android. This introduces a few risks that need to be mitigated:</p>
 <ol>
 <li>The device is lost/stolen, the related wallet needs to be invalidated. - This is achieved by registering the DID
    on a decentralised ledger. It would require you use the mnemonic phrase on a new device to re-create your wallet,
@@ -227,8 +274,8 @@ on Android. This introduces a few risks that need to be mitigated:</p>
 <li>The mnemonic phrase is lost/stolen. - The user will need to invalidate their current DID
    and create a new wallet (which will also mean the user gets a new mnemonic phrase)</li>
 <li>A user loses both their mnemonic phrase and their phone. - <strong>This scenario should be prevented at all costs, since
-   everything relies on that mnemonic phrase.</strong> It is advised to use a (maybe even redundant) paper/metal backup to keep
-   the mnemonic phrase safe.</li>
+   everything relies on that mnemonic phrase. And no mitigation exists for this scenario.</strong> It is advised to use a (
+   maybe even redundant) paper/metal backup to keep the mnemonic phrase safe.</li>
 </ol></div>
             </div>
         </div>
@@ -311,5 +358,5 @@ on Android. This introduces a few risks that need to be mitigated:</p>
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-10-15 19:07:45.627638+00:00
+Build Date UTC : 2025-10-16 19:08:35.047513+00:00
 -->

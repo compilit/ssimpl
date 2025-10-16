@@ -30,30 +30,23 @@ authority-backed cryptographic proof.
 Therefor, implementing SSIMPL requires a trusted central authority (such as a government) that supports some form of
 one-time, cryptography-based identification for individuals.
 
-## 1.0 Passport
+## 1.1 Means of identification
+
+Online identities are usually based upon a certain amount of trust. In it's worst form this trust is based on the user
+filling in their own identity-details in an open form. At its best, it's based on some authority having determined you
+are who you say you are. By scanning your passport for example.
+
+In order to establish a truly trustworthy online identity, we must somehow match an actual person to some digital
+claims. All this is done in the wallet itself. But to be able to achieve that, there is one requirement:
 
 - All users of the SSIMPL protocol MUST possess a [Standardised e-passport](./concepts.md#4-european-e-passports).
 
-## 1.1 The wallet
+## 1.2 The wallet
 
-- The wallet MUST perform an [Active-Authentication challenge](./concepts.md#10-active-authentication).
-- The wallet SHOULD store the DG11, which contains the personal details of the owner which can be the first basic,
-  verified claims.
-- The wallet MUST be a decentralised [BIP32-compliant](./concepts.md#11-bip32) implementation.
-- The wallet MUST be backed-up up with a [BIP39-compliant](./concepts.md#12-bip39) mnemonic phrase (stored offline).
-- The wallet MUST be able to store both a root keypair that can be used to sign and verify data and to
-  authorize the bearer online, and all claims of the owner.
-- The root public key MUST be used to generate a [DID](./concepts.md#3-did) (decentralised Identifier), which is then
-  signed by the neutral third party.
-- All encoded data, like the cryptographic keys, MUST be encoded
-  using [Multibase-encoding](./concepts.md#9-multibase-encoding) to ensure all peers of all possible future
-  implementations always know which encoding is used.
-- The wallet MUST have one or many associated online storages where the 'subscription' can be stored.
-- The wallet MUST have the ability to encrypt claims and store them as a 'subscription' object on an online storage.
-- The wallet MUST have the ability to generate a JWT (Authentication & UCAN).
-- The wallet MUST be able to perform asymmetric encryption like DHKE or Hybrid Encryption using RSA.
+The wallet is the core component that holds the owners most important data: their 'claims' and the means to support
+those claims. A wallet can be defined as a secure means to store digital data that can only be accessed by its owner.
 
-At this point, in the spirit of Open ID Connect, the user has all the components needed to authenticate themselves
+In the spirit of Open ID Connect, the wallet gives a user all the components needed to authenticate themselves
 online at multiple levels:
 
 - Level 0: The DID belongs to a human being.
@@ -71,11 +64,28 @@ with. In other words: if they would like to be able to proof they were the origi
 they would need to do is sign it. Other people could sign it as well, of course, but signature cannot be created using a
 past date. So the first one to sign something, always can proof they were the original creator.
 
-## 1.2 Mondial Pseudonymous Ledger
+- The wallet MUST perform an [Active-Authentication challenge](./concepts.md#9-active-authentication).
+- The wallet SHOULD store the DG11, which contains the personal details of the owner which can be the first basic,
+  verified claims.
+- The wallet MUST be a decentralised [BIP32-compliant](./concepts.md#11-bip32) implementation.
+- The wallet MUST be backed-up up with a [BIP39-compliant](./concepts.md#12-bip39) mnemonic phrase (stored offline).
+- The wallet MUST be able to store both a root keypair that can be used to sign and verify data and to
+  authorize the bearer online, and all claims of the owner.
+- The root public key MUST be used to generate a [DID](./concepts.md#3-did) (decentralised Identifier), which is then
+  signed by the neutral third party.
+- All encoded data, like the cryptographic keys, MUST be encoded
+  using [Multibase-encoding](./concepts.md#8-multibase-encoding) to ensure all peers of all possible future
+  implementations always know which encoding is used.
+- The wallet MUST have one or many associated online storages where the 'subscription' can be stored.
+- The wallet MUST have the ability to encrypt claims and store them as a 'subscription' object on an online storage.
+- The wallet MUST have the ability to generate a JWT (Authentication & UCAN).
+- The wallet MUST be able to perform asymmetric encryption in order to share a (or establish a mutual) secret.
+
+## 1.3 Mondial Pseudonymous Ledger
 
 In order to protect users from misuse, fraud and identity-theft, each wallet (and specifically the related public keys),
 must have a mechanism that allows them to be invalidated. These invalidated public keys must be published to a publicly
-accessible, append-only, preferably decentralized data storage. Anytime someone suspects their identity has been
+accessible, append-only, preferably decentralized, data storage. Anytime someone suspects their identity has been
 compromised, they're required to add their public keys to the ledger. This way, everyone can check whether the identity
 they're dealing with is actually valid.
 
@@ -91,10 +101,12 @@ their e-passport.
   providing a signed version of the DID.
 - The ledger SHOULD be decentralised.
 
-## 1.3 Subscriptions
+## 1.4 Subscriptions
 
-The ability to establish a verified, digital identity is only part of the equation. It is essential that parts of this
-identity can be shared with other entities on the internet. A simple example would be 'signing in' on a website. Usually
+The ability to establish a verified, digital identity is only part of the equation of an id-wallet. It is essential that
+parts of this
+identity can be shared with other entities on the internet. A simple example would be 'signing in' on a website.
+Originally
 these parts of your identity (aka 'Claims'), come from a centralised service which has your profile stored. SSIMPL
 offers a completely new perspective. Since you already have the claims stored in your own wallet, there is no need for
 an external, centralised service. Instead, the entity interested in your claims shares with you the necessary claims (
@@ -114,15 +126,56 @@ nor the other party can interact with it anymore.
 - Each storage endpoint path must remain reserved for the duration of the subscription.
 - Each storage endpoint MUST allow updates by the owner for the duration of the subscription.
 
-## 1.4 Security
+### 1.4.1 Example: Authentication
+
+With SSIMPL, using a third party to provide another party with your identity data has become obsolete. But how DO we
+share our claims with something like a webshop? Let's set up a scenario. We start with these parties:
+
+- Party A. The owner of the identity with their id-wallet.
+- Party B. A website (front- and backend), let's say a webshop called "foo-bar.baz".
+- Party C. The online storage used for the (temporary) storage of the 'subscription'.
+
+Pre-requisite: all parties have a DID, signed by a neutral '[notary](./concepts.md#10-notary-server)' server. For a non-natural person,
+this means a DID from someone inside the legal entity, willing to represent the legal entity.
+
+01. Party A visits Party B, which at some point requires A to identify themselves (to complete an order, for example)
+02. Party B has to create a scannable image (like a QR-code), which provides Party B [all necessary information](#142-subscription-request-payload) to
+    authenticate Party A
+03. Party A uses their wallet to scan the image
+04. The wallet of Party A verifies the contents of the payload and shows it to Party A
+05. Party A verifies and accepts the request
+06. The wallet gathers the necessary claims, combines them into a 'subscription' object, encrypts it, and stores it at
+    Party C
+07. Party C reserves the web-location for the duration of the subscription
+08. Party C responds with the web-location of this subscription
+09. The wallet of Party A then creates a UCAN token which grants Party B one-time access to this the specific
+    web-location
+10. The wallet of Party A sends this token to the destination defined in the original request
+11. Party B uses the token to retrieve the subscription
+12. Party C deletes the data
+
+### 1.4.2 Subscription request payload
+```json
+
+{
+  "audience": "<did:of:partyB>",
+  "scopes": [
+    "did",
+    "private-address"
+  ],
+  "destination": "https://some.endpoint/webhook"
+}
+
+```
+
+## 1.5 Security
 
 In order to fully implement SSI, a user needs to have full control over their own data. There are several ways to
 accomplish this (using a hardware wallet for example), but SSIMPL relies on a somewhat controversial take: most people
 have a smartphone and treat it with more respect than their passport. Smartphones these days lack true HSMs (Hardware
 Security Modules), which would be the best place for cryptographic material to exist. Due to this (hopefully temporary)
-imperfection in smartphones, SIMMPL requires you to use the keystores that exist on devices: Keychain on iOS and the
-KeyStore
-on Android. This introduces a few risks that need to be mitigated:
+imperfection in smartphones, SSIMPL requires you to use the keystores that exist on devices: Keychain on iOS and the
+KeyStore on Android. This introduces a few risks that need to be mitigated:
 
 1. The device is lost/stolen, the related wallet needs to be invalidated. - This is achieved by registering the DID
    on a decentralised ledger. It would require you use the mnemonic phrase on a new device to re-create your wallet,
@@ -133,145 +186,8 @@ on Android. This introduces a few risks that need to be mitigated:
 3. The mnemonic phrase is lost/stolen. - The user will need to invalidate their current DID
    and create a new wallet (which will also mean the user gets a new mnemonic phrase)
 4. A user loses both their mnemonic phrase and their phone. - **This scenario should be prevented at all costs, since
-   everything relies on that mnemonic phrase.** It is advised to use a (maybe even redundant) paper/metal backup to keep
-   the mnemonic phrase safe.
-
-[//]: # (## 1.4 Authentication deep-dive)
-
-[//]: # ()
-
-[//]: # (Open ID Connect adds an identification layer to OAuth2. But true Open ID Connect relies on a centralised third party)
-
-[//]: # (which manages your claims. Using SSIMPL, this third party has become obsolete. But one can still perform a flow similar)
-
-[//]: # (to that of OIDC. The future receiver of the token notifies the issuer of the token which scope&#40;s&#41; they would like to)
-
-[//]: # (receive, and the issuer adds the related claims to the token. The receiver also should specify where the answer should)
-
-[//]: # (be sent.)
-
-[//]: # ()
-
-[//]: # (So how would all of this work in a real-world example? Let's set up a scenario. We start with these parties:)
-
-[//]: # ()
-
-[//]: # (- Party A. The owner of the identity, aka the issuer of the JWT.)
-
-[//]: # (- Party B. The id-wallet of the owner.)
-
-[//]: # (- Party C. A website, let's say a webshop called "foo-bar.baz".)
-
-[//]: # (- Party D. The server of "foo-bar.baz".)
-
-[//]: # (- Party E. The online storage used for the &#40;temporary&#41; storage of the 'subscription'.)
-
-[//]: # ()
-
-[//]: # ([//]: # &#40;TODO&#41;)
-
-[//]: # (Pre-requisite: both Party A/B, and Party C/D have a DID, signed by the neutral Notary server. For a non-natural person, this means a DID)
-
-[//]: # (from someone inside the legal entity, willing to represent the legal entity.)
-
-[//]: # ()
-
-[//]: # (Typically, A will visit C, which at some point requires A to identify themselves &#40;to complete an order, for example&#41;.)
-
-[//]: # ()
-
-[//]: # (Party C has to create a scannable image &#40;like a QR-code&#41;, which provides Party B all necessary information to)
-
-[//]: # (authenticate Party A:)
-
-[//]: # ()
-
-[//]: # (- The DID of Party C.)
-
-[//]: # (- The scopes of Party A that Party C requires.)
-
-[//]: # (- And endpoint, like a webhook &#40;Party D&#41; - to which the answer should be sent.)
-
-[//]: # ()
-
-[//]: # (This payload MUST be a multibase-encoded JSON message containing at least:)
-
-[//]: # ()
-
-[//]: # (```json)
-
-[//]: # ({)
-
-[//]: # (  "requestor": "did:key:a1b2c3d4e5f6g7h8ij9k0",)
-
-[//]: # (  "scopes": [)
-
-[//]: # (    "did",)
-
-[//]: # (    "private-address")
-
-[//]: # (  ],)
-
-[//]: # (  "destination": "https://some.endpoint/a1b2c3d4")
-
-[//]: # (})
-
-[//]: # (```)
-
-[//]: # ()
-
-[//]: # (### Authentication through an endpoint)
-
-[//]: # ()
-
-[//]: # (- Party A gathers all related claims and add them all to a subscription object with the related metadata:)
-
-[//]: # ()
-
-[//]: # (```json)
-
-[//]: # ({)
-
-[//]: # (})
-
-[//]: # (```)
-
-[//]: # ()
-
-[//]: # (- Party A then stores this object at Party E, which responds with its web-location.)
-
-[//]: # (- Party A creates a UCAN token for this web-location.)
-
-[//]: # (- Party A sends the UCAN to the 'destination' endpoint of Party D)
-
-[//]: # (- Party D uses the UCAN token and the web-location stored inside to actually retrieve the subscription)
-
-[//]: # (- Party E deletes the subscription)
-
-[//]: # (- Party E removes the reservation on the URL if the subscription is a one-time data exchange, otherwise it keeps it)
-
-[//]: # (  reserved for the duration of the subscription.)
-
-[//]: # (## Delegated signing using UCAN)
-
-[//]: # ()
-
-[//]: # (By creating a dedicated, short-lived and identity-bound token &#40;by setting receivers' DID as the audience of the token&#41;,)
-
-[//]: # (a user can delegate signing authority towards another)
-
-[//]: # (entity, like the website they are currently on. The UCAN token is then embedded in the signature JWT in the prf-array.)
-
-[//]: # (This is relevant if the user is adding content to the website and the)
-
-[//]: # (website wants to have this content bound to a DID.)
-
-[//]: # ()
-
-[//]: # (The implications are that all content on the internet HAS to be tied to an author, producer, etc. Which means that)
-
-[//]: # (fraudulent content, like non-consensual, AI-generated media, will have to signed as well.)
-
+   everything relies on that mnemonic phrase. And no mitigation exists for this scenario.** It is advised to use a (
+   maybe even redundant) paper/metal backup to keep the mnemonic phrase safe.
 
 [//]: # (## 1.4 Peer-to-peer)
 
