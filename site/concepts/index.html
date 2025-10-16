@@ -136,30 +136,25 @@
               </ul>
             </li>
             
-            <li class="nav-item" data-bs-level="1"><a href="#5-webrtc" class="nav-link">5. WebRTC</a>
+            <li class="nav-item" data-bs-level="1"><a href="#5-ucan-user-controlled-authorization-networks" class="nav-link">5. UCAN - User Controlled Authorization Networks</a>
               <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-bs-level="1"><a href="#6-ucan-user-controlled-authorization-networks" class="nav-link">6. UCAN - User Controlled Authorization Networks</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#61-delegated-signing-using-ucan" class="nav-link">6.1 Delegated signing using UCAN</a>
+            <li class="nav-item" data-bs-level="2"><a href="#51-delegated-signing-using-ucan" class="nav-link">5.1 Delegated signing using UCAN</a>
               <ul class="nav flex-column">
               </ul>
             </li>
               </ul>
             </li>
             
-            <li class="nav-item" data-bs-level="1"><a href="#7-cryptography" class="nav-link">7. Cryptography</a>
+            <li class="nav-item" data-bs-level="1"><a href="#6-cryptography" class="nav-link">6. Cryptography</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#71-post-quantum-disclaimer" class="nav-link">7.1 Post-Quantum disclaimer</a>
+            <li class="nav-item" data-bs-level="2"><a href="#61-post-quantum-disclaimer" class="nav-link">6.1 Post-Quantum disclaimer</a>
               <ul class="nav flex-column">
               </ul>
             </li>
               </ul>
             </li>
             
-            <li class="nav-item" data-bs-level="1"><a href="#8-multibase-encoding" class="nav-link">8. Multibase Encoding</a>
+            <li class="nav-item" data-bs-level="1"><a href="#7-multibase-encoding" class="nav-link">7. Multibase Encoding</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -257,7 +252,7 @@ ownership without relying on a centralised system.</p>
 <p>In SSIMPL, primarily the 'key' method is used. This means that each 'identifier' part is actually the public part of a
 specific cryptographic public/private keypair. Each user is responsible for their own private key, which is used to sign
 data. The public key can always be used to verify the signature. The only small deviation from the spec is that
-SSIMPL promotes the use of <a href="#8-multibase-encoding">Multibase encoding</a>, which means that even the public key part of the
+SSIMPL promotes the use of <a href="#7-multibase-encoding">Multibase encoding</a>, which means that even the public key part of the
 DID is multibase-encoded.</p>
 <p>The 'key' method also means there is no real need for a DID document, which is part of the DID spec.</p>
 <h1 id="4-european-e-passports">4. European e-Passports</h1>
@@ -309,26 +304,7 @@ DSCs)</strong>:</p>
 </ul>
 <hr />
 <p>Together, these standards form the cryptographic backbone that allows e-passports to be trusted across borders.</p>
-<h1 id="5-webrtc">5. WebRTC</h1>
-<p><strong>WebRTC (Web Real-Time Communication)</strong> is an open-source project and API standard that enables <strong>peer-to-peer
-communication</strong> directly between browsers or mobile apps, without requiring intermediate servers for media routing.</p>
-<p>Key Features:</p>
-<ul>
-<li><strong>Real-time audio and video</strong> streaming.</li>
-<li><strong>Data channels</strong> for arbitrary peer-to-peer data transfer.</li>
-<li><strong>Low latency</strong>, ideal for voice/video calls, gaming, and file sharing.</li>
-</ul>
-<p>How It Works:</p>
-<ol>
-<li><strong>Signaling (out of scope for the WebRTC-spec):</strong> Exchanging connection info (e.g., IPs, codecs) between peers using
-   a separate method (like WebSocket).</li>
-<li><strong>ICE (Interactive Connectivity Establishment):</strong> Finds the best path through NATs/firewalls.</li>
-<li><strong>DTLS/SRTP:</strong> Ensures <strong>encryption</strong> and <strong>secure transport</strong>.</li>
-<li><strong>STUN/TURN servers:</strong> Help peers connect when direct connections are blocked.</li>
-</ol>
-<p>WebRTC is supported by all major browsers and is a core building block for modern real-time web applications.</p>
-<hr />
-<h1 id="6-ucan-user-controlled-authorization-networks">6. UCAN - User Controlled Authorization Networks</h1>
+<h1 id="5-ucan-user-controlled-authorization-networks">5. UCAN - User Controlled Authorization Networks</h1>
 <p>To align with Web3 standards, SSIMPL has adopted UCAN. UCAN challenges the traditional client-server model, shifting
 control to the client.</p>
 <p>Clients generate their own JWTs, specifying the request and resource they intend to access. Each JWT is signed with the
@@ -337,7 +313,7 @@ essentially reverses the OAuth 2.0 flow, where clients request a server-issued J
 <p>It should be noted that UCAN was originally designed for "delegated authorization". Meaning, an issuer creates a token
 that allows the bearer of the token to perform certain actions on certain resources. For authentication, an addition is
 required.</p>
-<h2 id="61-delegated-signing-using-ucan">6.1 Delegated signing using UCAN</h2>
+<h2 id="51-delegated-signing-using-ucan">5.1 Delegated signing using UCAN</h2>
 <p>By creating a dedicated, short-lived and identity-bound token (by setting receivers' DID as the audience of the token),
 a user can delegate signing authority towards another
 entity, like the website they are currently on. The UCAN token is then embedded in the signature JWT in the prf-array.
@@ -346,7 +322,7 @@ website wants to have this content bound to a DID.</p>
 <p>The implications are that all content on the internet HAS to be tied to an author, producer, etc. Which means that
 fraudulent content, like non-consensual, AI-generated media, will have to signed as well.</p>
 <hr />
-<h1 id="7-cryptography">7. Cryptography</h1>
+<h1 id="6-cryptography">6. Cryptography</h1>
 <p>Achieving true decentralization requires users to handle complex cryptographic operations. To make this accessible, all
 cryptographic functionality should be encapsulated within a user-friendly interface — a ‘wallet’.</p>
 <p>This wallet contains at least one cryptographic keypair:</p>
@@ -360,7 +336,7 @@ for that.</p>
 over their information.</p>
 <p>In the subscription system, an additional key pair is introduced. This keypair facilitates sharing a derived
 AES key—not the root AES key, but a deterministically generated AES key unique to each subscription.</p>
-<h2 id="71-post-quantum-disclaimer">7.1 Post-Quantum disclaimer</h2>
+<h2 id="61-post-quantum-disclaimer">6.1 Post-Quantum disclaimer</h2>
 <p>With the inevitable advent of quantum computing, these algorithms will change eventually. Currently, there are several
 candidates which could potentially take over the aforementioned algorithms. SSIMPL will adopt them as soon as they are
 ripe.</p>
@@ -371,7 +347,7 @@ time.</p>
 <p>The other concern is in the symmetric encryption, for which exclusively AES is used. SSIMPL is already post-quantum
 proof in this area, since it used AES-256. Which is overkill in the current day and time, but will be equivalent to
 AES-128 when quantum computing becomes more prevalent.</p>
-<h1 id="8-multibase-encoding">8. Multibase Encoding</h1>
+<h1 id="7-multibase-encoding">7. Multibase Encoding</h1>
 <p>On the internet, a lot of raw data (bytes) is transported using something called base encoding. These encodings
 essentially turn the raw bytes into a piece of transportable and near-readable text. But when you wish to access the raw
 bytes again on the receiving side, you need to know which encoding was used in order to decode it. But there are a lot

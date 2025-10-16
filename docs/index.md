@@ -74,7 +74,7 @@ past date. So the first one to sign something, always can proof they were the or
 - The root public key MUST be used to generate a [DID](./concepts.md#3-did) (decentralised Identifier), which is then
   signed by the neutral third party.
 - All encoded data, like the cryptographic keys, MUST be encoded
-  using [Multibase-encoding](./concepts.md#8-multibase-encoding) to ensure all peers of all possible future
+  using [Multibase-encoding](./concepts.md#7-multibase-encoding) to ensure all peers of all possible future
   implementations always know which encoding is used.
 - The wallet MUST have one or many associated online storages where the 'subscription' can be stored.
 - The wallet MUST have the ability to encrypt claims and store them as a 'subscription' object on an online storage.

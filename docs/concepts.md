@@ -108,7 +108,7 @@ A DID follows this format:
 In SSIMPL, primarily the 'key' method is used. This means that each 'identifier' part is actually the public part of a
 specific cryptographic public/private keypair. Each user is responsible for their own private key, which is used to sign
 data. The public key can always be used to verify the signature. The only small deviation from the spec is that
-SSIMPL promotes the use of [Multibase encoding](#8-multibase-encoding), which means that even the public key part of the
+SSIMPL promotes the use of [Multibase encoding](#7-multibase-encoding), which means that even the public key part of the
 DID is multibase-encoded.
 
 The 'key' method also means there is no real need for a DID document, which is part of the DID spec.
@@ -170,30 +170,44 @@ DSCs)**:
 
 Together, these standards form the cryptographic backbone that allows e-passports to be trusted across borders.
 
-# 5. WebRTC
+[//]: # (# 5. WebRTC)
 
-**WebRTC (Web Real-Time Communication)** is an open-source project and API standard that enables **peer-to-peer
-communication** directly between browsers or mobile apps, without requiring intermediate servers for media routing.
+[//]: # ()
+[//]: # (**WebRTC &#40;Web Real-Time Communication&#41;** is an open-source project and API standard that enables **peer-to-peer)
 
-Key Features:
+[//]: # (communication** directly between browsers or mobile apps, without requiring intermediate servers for media routing.)
 
-- **Real-time audio and video** streaming.
-- **Data channels** for arbitrary peer-to-peer data transfer.
-- **Low latency**, ideal for voice/video calls, gaming, and file sharing.
+[//]: # ()
+[//]: # (Key Features:)
 
-How It Works:
+[//]: # ()
+[//]: # (- **Real-time audio and video** streaming.)
 
-1. **Signaling (out of scope for the WebRTC-spec):** Exchanging connection info (e.g., IPs, codecs) between peers using
-   a separate method (like WebSocket).
-2. **ICE (Interactive Connectivity Establishment):** Finds the best path through NATs/firewalls.
-3. **DTLS/SRTP:** Ensures **encryption** and **secure transport**.
-4. **STUN/TURN servers:** Help peers connect when direct connections are blocked.
+[//]: # (- **Data channels** for arbitrary peer-to-peer data transfer.)
 
-WebRTC is supported by all major browsers and is a core building block for modern real-time web applications.
+[//]: # (- **Low latency**, ideal for voice/video calls, gaming, and file sharing.)
 
----
+[//]: # ()
+[//]: # (How It Works:)
 
-# 6. UCAN - User Controlled Authorization Networks
+[//]: # ()
+[//]: # (1. **Signaling &#40;out of scope for the WebRTC-spec&#41;:** Exchanging connection info &#40;e.g., IPs, codecs&#41; between peers using)
+
+[//]: # (   a separate method &#40;like WebSocket&#41;.)
+
+[//]: # (2. **ICE &#40;Interactive Connectivity Establishment&#41;:** Finds the best path through NATs/firewalls.)
+
+[//]: # (3. **DTLS/SRTP:** Ensures **encryption** and **secure transport**.)
+
+[//]: # (4. **STUN/TURN servers:** Help peers connect when direct connections are blocked.)
+
+[//]: # ()
+[//]: # (WebRTC is supported by all major browsers and is a core building block for modern real-time web applications.)
+
+[//]: # ()
+[//]: # (---)
+
+# 5. UCAN - User Controlled Authorization Networks
 
 To align with Web3 standards, SSIMPL has adopted UCAN. UCAN challenges the traditional client-server model, shifting
 control to the client.
@@ -206,7 +220,7 @@ It should be noted that UCAN was originally designed for "delegated authorizatio
 that allows the bearer of the token to perform certain actions on certain resources. For authentication, an addition is
 required.
 
-## 6.1 Delegated signing using UCAN
+## 5.1 Delegated signing using UCAN
 
 By creating a dedicated, short-lived and identity-bound token (by setting receivers' DID as the audience of the token),
 a user can delegate signing authority towards another
@@ -219,7 +233,7 @@ fraudulent content, like non-consensual, AI-generated media, will have to signed
 
 ---
 
-# 7. Cryptography
+# 6. Cryptography
 
 Achieving true decentralization requires users to handle complex cryptographic operations. To make this accessible, all
 cryptographic functionality should be encapsulated within a user-friendly interface — a ‘wallet’.
@@ -238,7 +252,7 @@ over their information.
 In the subscription system, an additional key pair is introduced. This keypair facilitates sharing a derived
 AES key—not the root AES key, but a deterministically generated AES key unique to each subscription.
 
-## 7.1 Post-Quantum disclaimer
+## 6.1 Post-Quantum disclaimer
 
 With the inevitable advent of quantum computing, these algorithms will change eventually. Currently, there are several
 candidates which could potentially take over the aforementioned algorithms. SSIMPL will adopt them as soon as they are
@@ -255,7 +269,7 @@ AES-128 when quantum computing becomes more prevalent.
 
 [//]: # (One of the candidates is CRYSTALS &#40;Kyber-512 & Dilithium&#41;)
 
-# 8. Multibase Encoding
+# 7. Multibase Encoding
 
 On the internet, a lot of raw data (bytes) is transported using something called base encoding. These encodings
 essentially turn the raw bytes into a piece of transportable and near-readable text. But when you wish to access the raw
