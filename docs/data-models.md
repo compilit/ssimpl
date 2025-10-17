@@ -2,6 +2,9 @@
 
 ## Root Claim
 
+This data model defines the basic ingredients to be able to proof that a certain wallet is associated with a certain
+passport.
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
@@ -101,9 +104,9 @@
 }
 ```
 
-
 ## Subscription request payload
 
+With this payload, any entity can request a subscription on one or more scopes (one or more related claims) of someone's identity.
 ```json
 
 {
@@ -139,7 +142,9 @@
 
 ## Signed wrapper
 
-This model is used to associate some data to your DID by signing it, and then letting that result be signed by a notary server.
+This model is used to associate some data to your DID by signing it, and then letting that result be signed by a notary
+server.
+
 ```json
 
 {

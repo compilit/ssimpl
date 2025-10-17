@@ -1,6 +1,6 @@
 # Concepts
 
-## 1. BIP
+# 1. BIP
 
 BIP stands for Bitcoin Improvement Proposal — it’s a formal design document used to propose changes or additions to
 Bitcoin’s protocol, processes, or tools.

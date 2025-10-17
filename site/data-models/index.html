@@ -103,6 +103,8 @@
 
 <h1 id="data-models">Data Models</h1>
 <h2 id="root-claim">Root Claim</h2>
+<p>This data model defines the basic ingredients to be able to proof that a certain wallet is associated with a certain
+passport.</p>
 <pre><code class="language-json">{
   &quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
   &quot;type&quot;: &quot;object&quot;,
@@ -201,6 +203,7 @@
 }
 </code></pre>
 <h2 id="subscription-request-payload">Subscription request payload</h2>
+<p>With this payload, any entity can request a subscription on one or more scopes (one or more related claims) of someone's identity.</p>
 <pre><code class="language-json">
 {
   &quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
@@ -233,7 +236,8 @@
 
 </code></pre>
 <h2 id="signed-wrapper">Signed wrapper</h2>
-<p>This model is used to associate some data to your DID by signing it, and then letting that result be signed by a notary server.</p>
+<p>This model is used to associate some data to your DID by signing it, and then letting that result be signed by a notary
+server.</p>
 <pre><code class="language-json">
 {
   &quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
