@@ -1,4 +1,6 @@
-### Root Claim
+# Data Models
+
+## Root Claim
 
 ```json
 {
@@ -100,7 +102,7 @@
 ```
 
 
-### Subscription request payload
+## Subscription request payload
 
 ```json
 
@@ -135,7 +137,7 @@
 
 ```
 
-### Signed wrapper
+## Signed wrapper
 
 This model is used to associate some data to your DID by signing it, and then letting that result be signed by a notary server.
 ```json

@@ -80,14 +80,29 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            
-            
+            <li class="nav-item" data-bs-level="1"><a href="#data-models" class="nav-link">Data Models</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#root-claim" class="nav-link">Root Claim</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#subscription-request-payload" class="nav-link">Subscription request payload</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#signed-wrapper" class="nav-link">Signed wrapper</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h3 id="root-claim">Root Claim</h3>
+<h1 id="data-models">Data Models</h1>
+<h2 id="root-claim">Root Claim</h2>
 <pre><code class="language-json">{
   &quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
   &quot;type&quot;: &quot;object&quot;,
@@ -185,7 +200,7 @@
   ]
 }
 </code></pre>
-<h3 id="subscription-request-payload">Subscription request payload</h3>
+<h2 id="subscription-request-payload">Subscription request payload</h2>
 <pre><code class="language-json">
 {
   &quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
@@ -217,7 +232,7 @@
 }
 
 </code></pre>
-<h3 id="signed-wrapper">Signed wrapper</h3>
+<h2 id="signed-wrapper">Signed wrapper</h2>
 <p>This model is used to associate some data to your DID by signing it, and then letting that result be signed by a notary server.</p>
 <pre><code class="language-json">
 {
