@@ -41,6 +41,9 @@
                             <li class="nav-item">
                                 <a href="./" class="nav-link active" aria-current="page">Concepts</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="../data-models/" class="nav-link">Data models</a>
+                            </li>
                         </ul>
 
                     <ul class="nav navbar-nav ms-md-auto">
@@ -55,7 +58,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" class="nav-link disabled">
+                                <a rel="next" href="../data-models/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -155,11 +158,6 @@
             </li>
             
             <li class="nav-item" data-bs-level="1"><a href="#7-multibase-encoding" class="nav-link">7. Multibase Encoding</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-bs-level="1"><a href="#9-notary-server" class="nav-link">9. Notary server</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -354,12 +352,7 @@ bytes again on the receiving side, you need to know which encoding was used in o
 of different encodings to choose from. This means that encoding and decoding must be well-documented. With Multibase
 encoding, a special reserved character for each specific encoding is appended to the encoded value which indicates which
 encoding was used. This means that anyone receiving the encoded bytes can always decode it. More can be read
-<a href="https://w3c-ccg.github.io/multibase/">here</a>.</p>
-<h1 id="9-notary-server">9. Notary server</h1>
-<p>In order to keep the SSIMPL network trustworthy, certain open-source checkpoints have to be available which can verify
-someone's root claims purely based on cryptography. These servers are stateless in essence, but it needs to check the
-ledger to see if a DID hasn't been invalidated yet. For this reason, a supporter of the SSIMPL network is allowed to
-combine both functionalities </p></div>
+<a href="https://w3c-ccg.github.io/multibase/">here</a>.</p></div>
             </div>
         </div>
 

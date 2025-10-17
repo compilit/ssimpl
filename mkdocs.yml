@@ -3,6 +3,7 @@ site_name: SSIMPL
 nav:
   - Home: index.md
   - Concepts: concepts.md
+  - Data models: data-models.md
 
 extra_css:
   - normalise.css

@@ -278,10 +278,3 @@ of different encodings to choose from. This means that encoding and decoding mus
 encoding, a special reserved character for each specific encoding is appended to the encoded value which indicates which
 encoding was used. This means that anyone receiving the encoded bytes can always decode it. More can be read
 <a href="https://w3c-ccg.github.io/multibase/">here</a>.
-
-# 9. Notary server
-
-In order to keep the SSIMPL network trustworthy, certain open-source checkpoints have to be available which can verify
-someone's root claims purely based on cryptography. These servers are stateless in essence, but it needs to check the
-ledger to see if a DID hasn't been invalidated yet. For this reason, a supporter of the SSIMPL network is allowed to
-combine both functionalities 
