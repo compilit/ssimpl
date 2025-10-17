@@ -182,8 +182,7 @@ this means a DID from someone inside the legal entity, willing to represent the 
 
 In order to keep the SSIMPL network trustworthy, certain open-source checkpoints have to be available which can verify
 someone's root claims purely based on cryptography. These servers are stateless in essence, but it needs to check the
-ledger to see if a DID hasn't been invalidated yet. For this reason, a supporter of the SSIMPL network is allowed to
-combine both functionalities.
+ledger to see if a DID hasn't been invalidated yet.
 
 - A SSIMPL notary MUST have their own DID, registered in the ledger as 'notary'
 - A SSIMPL notary MUST have their own signing keypair (implicit, since a DID is already required)
