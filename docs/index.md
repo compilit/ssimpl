@@ -178,7 +178,7 @@ this means a DID from someone inside the legal entity, willing to represent the 
 11. Party B uses the token to retrieve the subscription
 12. Party C deletes the data
 
-# 1.5. SSIMPL Notary
+## 1.5. SSIMPL Notary
 
 In order to keep the SSIMPL network trustworthy, certain open-source checkpoints have to be available which can verify
 someone's root claims purely based on cryptography. These servers are stateless in essence, but it needs to check the
@@ -189,7 +189,7 @@ combine both functionalities.
 - A SSIMPL notary MUST have their own signing keypair (implicit, since a DID is already required)
 - A SSIMPL notary MUST have an endpoint which accepts a signed [root claim](data-models.md#root-claim)
 
-# 1.6 SSIMPL Storage
+## 1.6 SSIMPL Storage
 
 In order to support the subscription system, we need to be able to store these subscriptions in a way that anyone can
 access them. Peer-to-peer would be the most ideal situation, and with static peers this could be done. But since wallets

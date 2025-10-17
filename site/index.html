@@ -98,16 +98,14 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-bs-level="1"><a href="#15-ssimpl-notary" class="nav-link">1.5. SSIMPL Notary</a>
+            <li class="nav-item" data-bs-level="2"><a href="#15-ssimpl-notary" class="nav-link">1.5. SSIMPL Notary</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-bs-level="1"><a href="#16-ssimpl-storage" class="nav-link">1.6 SSIMPL Storage</a>
+            <li class="nav-item" data-bs-level="2"><a href="#16-ssimpl-storage" class="nav-link">1.6 SSIMPL Storage</a>
               <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-bs-level="2"><a href="#17-security" class="nav-link">1.7 Security</a>
               <ul class="nav flex-column">
               </ul>
@@ -280,7 +278,7 @@ this means a DID from someone inside the legal entity, willing to represent the 
 <li>Party B uses the token to retrieve the subscription</li>
 <li>Party C deletes the data</li>
 </ol>
-<h1 id="15-ssimpl-notary">1.5. SSIMPL Notary</h1>
+<h2 id="15-ssimpl-notary">1.5. SSIMPL Notary</h2>
 <p>In order to keep the SSIMPL network trustworthy, certain open-source checkpoints have to be available which can verify
 someone's root claims purely based on cryptography. These servers are stateless in essence, but it needs to check the
 ledger to see if a DID hasn't been invalidated yet. For this reason, a supporter of the SSIMPL network is allowed to
@@ -290,7 +288,7 @@ combine both functionalities.</p>
 <li>A SSIMPL notary MUST have their own signing keypair (implicit, since a DID is already required)</li>
 <li>A SSIMPL notary MUST have an endpoint which accepts a signed <a href="data-models/#root-claim">root claim</a></li>
 </ul>
-<h1 id="16-ssimpl-storage">1.6 SSIMPL Storage</h1>
+<h2 id="16-ssimpl-storage">1.6 SSIMPL Storage</h2>
 <p>In order to support the subscription system, we need to be able to store these subscriptions in a way that anyone can
 access them. Peer-to-peer would be the most ideal situation, and with static peers this could be done. But since wallets
 are tied to mobile devices, it would become overly complex to force peer-to-peer communication. Each time the claims
@@ -405,5 +403,5 @@ KeyStore on Android. This introduces a few risks that need to be mitigated:</p>
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-10-17 09:08:18.946515+00:00
+Build Date UTC : 2025-10-17 09:14:00.241950+00:00
 -->
