@@ -80,29 +80,29 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#1-ssimpl-specification" class="nav-link">1. SSIMPL - Specification</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ssimpl-specification" class="nav-link">SSIMPL - Specification</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#11-the-wallet" class="nav-link">1.1 The wallet</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-bs-level="2"><a href="#12-means-of-identification" class="nav-link">1.2 Means of identification</a>
+            <li class="nav-item" data-bs-level="2"><a href="#the-wallet" class="nav-link">The wallet</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-bs-level="2"><a href="#13-ssimpl-ledger-capability" class="nav-link">1.3 SSIMPL Ledger Capability</a>
+            <li class="nav-item" data-bs-level="2"><a href="#means-of-identification" class="nav-link">Means of identification</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-bs-level="2"><a href="#15-ssimpl-notary-capability" class="nav-link">1.5. SSIMPL Notary Capability</a>
+            <li class="nav-item" data-bs-level="2"><a href="#ssimpl-ledger-capability" class="nav-link">SSIMPL Ledger Capability</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-bs-level="2"><a href="#16-ssimpl-subscription-capability" class="nav-link">1.6 SSIMPL Subscription Capability</a>
+            <li class="nav-item" data-bs-level="2"><a href="#ssimpl-notary-capability" class="nav-link">SSIMPL Notary Capability</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-bs-level="2"><a href="#17-security" class="nav-link">1.7 Security</a>
+            <li class="nav-item" data-bs-level="2"><a href="#ssimpl-subscription-capability" class="nav-link">SSIMPL Subscription Capability</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#security" class="nav-link">Security</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -113,7 +113,7 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="1-ssimpl-specification">1. SSIMPL - Specification</h1>
+<h1 id="ssimpl-specification">SSIMPL - Specification</h1>
 <p>The SSIMPL protocol described in the following specification addresses a few problems that have existed since the early
 days of the internet — certainly since Web 2.0:</p>
 <p><strong>How do you keep the owner of the online identity in control of their identity data?</strong></p>
@@ -123,7 +123,7 @@ however, has never been implemented in a way that anyone can truly rely on. It r
 is provided in the form of billion-dollar companies saying "this data belongs to the person who just logged in". But it
 adds no guarantees about the validity of those claims. In order to minimize the amount of trust necessary for
 identification, it is essential that individuals are capable of managing their digital identity themselves, this is
-known as <a href="concepts/#2-self-sovereign-identity">SSI - Self-Sovereign-Identity</a>. But a self-issued identity still
+known as <a href="concepts/#self-sovereign-identity">SSI - Self-Sovereign-Identity</a>. But a self-issued identity still
 isn't worth much if it is not verified.</p>
 <p><strong>How do you verify someone’s digital identity?</strong></p>
 <p>Online, everyone can claim to anyone. For some systems - like social media - that could be fine. But for professional
@@ -141,7 +141,7 @@ one-time, cryptography-based identification for individuals.</p>
 <h3 id="api-reference">API reference</h3>
 <p>DoaToa has implemented the mentioned LEDGER, NOTARY and SUBSCRIPTION capabilities in once instance. You can look at the API reference <a href="https://doatoa.io/public/swagger-ui/index.html">here</a></p>
 <p><img alt="SSIMPL" src="ssimpl.png" /></p>
-<h2 id="11-the-wallet">1.1 The wallet</h2>
+<h2 id="the-wallet">The wallet</h2>
 <p>The wallet is the core component that holds the owners most important data: their 'claims' and the means to support
 those claims. A wallet can be defined as a secure means to store digital data that can only be accessed by its owner.</p>
 <p>In the spirit of Open ID Connect, the wallet gives a user all the components needed to authenticate themselves
@@ -162,20 +162,20 @@ they would need to do is sign it. Other people could sign it as well, of course,
 past date. So the first one to sign something, always can proof they were the original creator.</p>
 <ul>
 <li>The wallet MUST be able to scan the NFC of an e-passport.</li>
-<li>The wallet MUST perform an <a href="concepts/#41-icao-doc-9303">Active-Authentication challenge</a>.</li>
-<li>The wallet MUST request a <a href="#15-ssimpl-notary-capability">SSIMPL notary</a> to sign their <a href="data-models/#root-claim">root claim</a>.</li>
+<li>The wallet MUST perform an <a href="concepts/#icao-doc-9303">Active-Authentication challenge</a>.</li>
+<li>The wallet MUST request a <a href="#ssimpl-notary-capability">SSIMPL notary</a> to sign their <a href="data-models/#root-claim">root claim</a>.</li>
 <li>The wallet SHOULD store the DG11, which contains the personal details of the owner which can be the first basic,
   verified claims.</li>
-<li>The wallet MUST be a decentralised <a href="concepts/#11-bip32">BIP32-compliant</a> implementation.</li>
-<li>The wallet MUST be backed-up up with a <a href="concepts/#12-bip39">BIP39-compliant</a> mnemonic phrase (stored offline).</li>
+<li>The wallet MUST be a decentralised <a href="concepts/#bip32">BIP32-compliant</a> implementation.</li>
+<li>The wallet MUST be backed-up up with a <a href="concepts/#bip39">BIP39-compliant</a> mnemonic phrase (stored offline).</li>
 <li>The wallet MUST be able to store both a root keypair that can be used to sign and verify data and to
   authorize the bearer online, and all claims of the owner.</li>
-<li>The root public key MUST be used to generate a <a href="concepts/#3-did">DID</a> (decentralised Identifier), which is then
+<li>The root public key MUST be used to generate a <a href="concepts/#did">DID</a> (decentralised Identifier), which is then
   signed by the neutral third party.</li>
 <li>All encoded data, like the cryptographic keys, MUST be encoded
-  using <a href="concepts/#7-multibase-encoding">Multibase-encoding</a> to ensure all peers of all possible (future)
+  using <a href="concepts/#multibase-encoding">Multibase-encoding</a> to ensure all peers of all possible (future)
   implementations always know which encoding is used.</li>
-<li>The wallet MUST have one or many associated online <a href="#16-ssimpl-subscription-capability">SSIMPL subscription providers</a> where the 'subscription' can be stored.</li>
+<li>The wallet MUST have one or many associated online <a href="#ssimpl-subscription-capability">SSIMPL subscription providers</a> where the 'subscription' can be stored.</li>
 <li>The wallet MUST have the ability to encrypt claims and store them as a 'subscription' object on an online storage.</li>
 <li>The wallet MUST have the ability to generate a JWT (Authentication &amp; UCAN).</li>
 <li>The wallet MUST be able to perform asymmetric encryption in order to share a (or establish a mutual) secret.</li>
@@ -193,28 +193,27 @@ past date. So the first one to sign something, always can proof they were the or
 <li>The wallet then signs the root claim</li>
 <li>The wallet requests a signature from a SSIMPL notary by presenting the necessary proof</li>
 <li>The wallet stores the signed root claim</li>
-<li></li>
 </ol>
-<h2 id="12-means-of-identification">1.2 Means of identification</h2>
+<h2 id="means-of-identification">Means of identification</h2>
 <p>Online identities are usually based upon a certain amount of trust. In it's worst form this trust is based on the user
 filling in their own identity-details in an open form. At its best, it's based on some authority having determined you
 are who you say you are. By scanning your passport for example.</p>
 <p>In order to establish a truly trustworthy online identity, we must somehow match an actual person to some digital
 claims. All this is done in the wallet itself. But to be able to achieve that, there is one requirement:</p>
 <ul>
-<li>All users of the SSIMPL protocol MUST possess a <a href="concepts/#4-european-e-passports">Standardised e-passport</a>.</li>
+<li>All users of the SSIMPL protocol MUST possess a <a href="concepts/#european-e-passports">Standardised e-passport</a>.</li>
 </ul>
-<h2 id="13-ssimpl-ledger-capability">1.3 SSIMPL Ledger Capability</h2>
+<h2 id="ssimpl-ledger-capability">SSIMPL Ledger Capability</h2>
 <p>In order to protect users from misuse, fraud and identity-theft, each wallet (and specifically the related public keys),
 must have a mechanism that allows them to be invalidated. These invalidated public keys must be published to a publicly
 accessible, append-only, preferably decentralized, data storage. Anytime someone suspects their identity has been
 compromised, they're required to add their public keys to the ledger. This way, everyone can check whether the identity
 they're dealing with is actually valid.</p>
-<p>The ledger also contains the public keys of so-called <a href="#15-ssimpl-notary-capability">SSIMPL notary</a>'s. Each entity
+<p>The ledger also contains the public keys of so-called <a href="#ssimpl-notary-capability">SSIMPL notary</a>'s. Each entity
 that is allowed to sign newly created DIDs. This signature serves as proof that the owner of the DID successfully has
 authenticated themselves using
 their e-passport.</p>
-<p>Finally, the ledger also contains the public keys of so-called <a href="#16-ssimpl-subscription-capability">SSIMPL Subscription Capability</a>'s. Each entity
+<p>Finally, the ledger also contains the public keys of so-called <a href="#ssimpl-subscription-capability">SSIMPL Subscription Capability</a>'s. Each entity
 that is allowed to temporarily store subscriptions.</p>
 <ul>
 <li>The ledger MUST contain an append-only list for all its invalidated entries.</li>
@@ -226,7 +225,7 @@ that is allowed to temporarily store subscriptions.</p>
   providing a signed version of the DID.</li>
 <li>The ledger SHOULD be decentralised.</li>
 </ul>
-<h2 id="15-ssimpl-notary-capability">1.5. SSIMPL Notary Capability</h2>
+<h2 id="ssimpl-notary-capability">SSIMPL Notary Capability</h2>
 <p>In order to keep the SSIMPL network trustworthy, certain open-source checkpoints have to be available which can verify
 someone's root claims purely based on cryptography. These servers are stateless in essence, but it needs to check the
 ledger to see if a DID hasn't been invalidated yet.</p>
@@ -235,7 +234,7 @@ ledger to see if a DID hasn't been invalidated yet.</p>
 <li>A SSIMPL Notary Capability MUST have their own signing keypair (implicit, since a DID is already required)</li>
 <li>A SSIMPL Notary Capability MUST have an endpoint which accepts a signed <a href="data-models/#root-claim">root claim</a></li>
 </ul>
-<h2 id="16-ssimpl-subscription-capability">1.6 SSIMPL Subscription Capability</h2>
+<h2 id="ssimpl-subscription-capability">SSIMPL Subscription Capability</h2>
 <p>The ability to establish a verified, digital identity is only part of the equation of an id-wallet. It is essential that
 parts of this
 identity can be shared with other entities on the internet. A simple example would be 'signing in' on a website.
@@ -264,9 +263,9 @@ share our claims with something like a webshop? Let's set up a scenario. We star
 <ul>
 <li>Party A. The owner of the identity with their id-wallet.</li>
 <li>Party B. A website (front- and backend), let's say a webshop called "foo-bar.baz".</li>
-<li>Party C. The <a href="#16-ssimpl-subscription-capability">SSIMPL Subscription Capability</a> used for the (temporary) storage of the 'subscription'.</li>
+<li>Party C. The <a href="#ssimpl-subscription-capability">SSIMPL Subscription Capability</a> used for the (temporary) storage of the 'subscription'.</li>
 </ul>
-<p>Pre-requisite: all parties have a DID, signed by a neutral '<a href="#15-ssimpl-notary-capability">notary</a>' server. For a non-natural
+<p>Pre-requisite: all parties have a DID, signed by a neutral '<a href="#ssimpl-notary-capability">notary</a>' server. For a non-natural
 person,
 this means a DID from someone inside the legal entity, willing to represent the legal entity.</p>
 <ol>
@@ -300,7 +299,7 @@ latest version of the subscription at their leisure. If the subscription has not
 <li>A SSIMPL Subscription Capability MUST have their own DID, registered in the ledger as 'storage'</li>
 <li>A SSIMPL Subscription Capability MUST have their own signing keypair (implicit, since a DID is already required)</li>
 </ul>
-<h2 id="17-security">1.7 Security</h2>
+<h2 id="security">Security</h2>
 <p>In order to fully implement SSI, a user needs to have full control over their own data. There are several ways to
 accomplish this (using a hardware wallet for example), but SSIMPL relies on a somewhat controversial take: most people
 have a smartphone and treat it with more respect than their passport. Smartphones these days lack true HSMs (Hardware
@@ -401,5 +400,5 @@ KeyStore on Android. This introduces a few risks that need to be mitigated:</p>
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-11-01 07:57:20.960269+00:00
+Build Date UTC : 2025-11-01 13:21:19.000948+00:00
 -->
