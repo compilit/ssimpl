@@ -1,0 +1,269 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "SSIMPL",
+    "description": "A reference API specification for the Relay Peers of the SSIMPL protocol",
+    "contact": {
+      "name": "SSIMPL",
+      "url": "https://ssimpl.org",
+      "email": "harvey.rabbit@protonmail.com"
+    },
+    "version": "0.1.0"
+  },
+  "security": [
+    {
+      "Authorization": [
+        "Bearer <Signed DID in SignatureDocument format, multibase-encoded>"
+      ]
+    }
+  ],
+  "paths": {
+    "/ledger/delta": {
+      "post": {
+        "summary": "Request ledger delta",
+        "description": "Returns ledger entries newer than the provided epoch if the caller is out of sync.",
+        "operationId": "requestLedgerDelta",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LedgerDeltaRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ledger delta response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LedgerDeltaResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ledger": {
+      "post": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Register a DID",
+        "operationId": "registerDID",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LedgerEntry"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Revoke a DID.",
+        "operationId": "revokeDID",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LedgerEntryRevocation"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SignatureDocument": {
+        "type": "object",
+        "required": ["message", "signature", "signer"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Canonical serialized representation of the signed data"
+          },
+          "signature": {
+            "$ref": "#/components/schemas/Signature"
+          },
+          "signer": {
+            "type": "string",
+            "description": "DID or public key identifier of the signer"
+          }
+        }
+      },
+      "Signature": {
+        "type": "object",
+        "required": ["publicKey", "algorithm", "value"],
+        "properties": {
+          "publicKey": {
+            "type": "string"
+          },
+          "algorithm": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "LedgerEntry": {
+        "type": "object",
+        "required": [
+          "data",
+          "signatureDocument"
+        ],
+        "properties": {
+          "data": {
+            "type": "object",
+            "required": [
+              "verifiableCredentialRoot",
+              "proof"
+            ],
+            "properties": {
+              "verifiableCredentialRoot": {
+                "$ref": "#/components/schemas/VerifiableCredentialRoot"
+              },
+              "proof": {
+                "$ref": "#/components/schemas/DataGroupProof"
+              }
+            }
+          },
+          "signatureDocument": {
+            "$ref": "#/components/schemas/SignatureDocument"
+          }
+        }
+      },
+      "VerifiableCredentialRoot": {
+        "type": "object",
+        "required": [
+          "data",
+          "signatureDocument"
+        ],
+        "properties": {
+          "data": {
+            "type": "object",
+            "required": [
+              "did",
+              "identityDocumentHash"
+            ],
+            "properties": {
+              "did": {
+                "type": "string"
+              },
+              "identityDocumentHash": {
+                "type": "string"
+              }
+            }
+          },
+          "signatureDocument": {
+            "$ref": "#/components/schemas/SignatureDocument"
+          }
+        }
+      },
+      "DataGroupProof": {
+        "type": "object",
+        "required": [
+          "DG15",
+          "AASignature",
+          "AAChallenge",
+          "SOD"
+        ],
+        "properties": {
+          "DG15": {
+            "type": "string"
+          },
+          "AASignature": {
+            "type": "string"
+          },
+          "AAChallenge": {
+            "type": "string"
+          },
+          "SOD": {
+            "type": "string"
+          }
+        }
+      },
+      "LedgerEntryRevocation": {
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "did": {
+                "type": "string"
+              }
+            }
+          },
+          "signatureDocument": {
+            "$ref": "#/components/schemas/SignatureDocument"
+          }
+        }
+      },
+      "LedgerDeltaRequest": {
+        "type": "object",
+        "required": [
+          "lastEpoch",
+          "rootHash"
+        ],
+        "properties": {
+          "lastEpoch": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Last ledger epoch known to the peer"
+          },
+          "rootHash": {
+            "type": "string",
+            "description": "Merkle root hash of the peer's current ledger state"
+          }
+        }
+      },
+      "LedgerDeltaResponse": {
+        "type": "object",
+        "required": [
+          "currentEpoch",
+          "authoritativeRootHash",
+          "entries"
+        ],
+        "properties": {
+          "currentEpoch": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Current epoch of the relay peer ledger"
+          },
+          "authoritativeRootHash": {
+            "type": "string",
+            "description": "Merkle root hash after applying returned entries"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LedgerEntry"
+            },
+            "description": "Ordered ledger entries newer than lastEpoch"
+          }
+        }
+      }
+    }
+  }
+}
