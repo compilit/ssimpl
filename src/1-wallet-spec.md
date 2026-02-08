@@ -36,12 +36,12 @@ Wallets **SHOULD**:
 ## Canonical Signature Object Pattern
 
 All cryptographically signed objects in SSIMPL **MUST** follow a uniform, canonical structure, known as the *
-*SignatureDocument**. This ensures consistency across all signed data, including ledger entries, Verifiable Credential
+*SignatureEnvelope**. This ensures consistency across all signed data, including ledger entries, Verifiable Credential
 Roots (VCR), revocations, and delta payloads.
 
 ### Structure
 
-Each signed object **MUST** include a `signatureDocument` with the following structure:
+Each signed object **MUST** include a `SignatureEnvelope` with the following structure:
 
 - **`message`** — The cryptographic hash of the canonical serialization of the `data` object. See §Canonicalization
   Rules.
@@ -68,7 +68,7 @@ Example (in JSON for clarity):
 ### Usage
 
 * Every signed object in SSIMPL, including LedgerEntry, VerifiableCredentialRoot, revocation entries, and delta updates,
-  MUST include a signatureDocument.
+  MUST include a signatureEnvelope.
 * The message field MUST be derived from the canonical serialization of the associated data object, ensuring that
   identical logical objects produce identical hashes.
 * This pattern guarantees interoperability, verifiability, and deterministic ordering for all signed objects across the
@@ -85,4 +85,5 @@ Example (in JSON for clarity):
 This canonical signature object pattern provides a single, consistent approach for proving authorship and integrity
 across all SSIMPL objects.
 
----
+
+

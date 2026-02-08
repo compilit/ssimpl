@@ -48,7 +48,7 @@ The SSIMPL ledger uses a **Merkle tree** to enable efficient verification of led
 
 An entry is valid if:
 
-1. `current_time < did_expiry + GRACE_PERIOD`.
+1. `current_time` < `did_expiry` + `GRACE_PERIOD`.
 2. `hash(verifiable_credential_root.data)` equals `verifiable_credential_root.signature_document.message`.
 3. The public key in the DID matches `signature_document.signature.public_key`.
 4. Signature verification succeeds:
@@ -67,8 +67,8 @@ Expired or invalid entries are ignored and removed during canonical construction
 
 * Peers **MAY** remove their own entries and expired entries. To revoke a DID:
 
-1. Remove the DID from the local ledger.
-2. Store and submit a revocation payload to (Relay) Peers.
+  1. Store a revocation payload on the local Ledger.
+  2. Store and submit a revocation payload to (Relay) Peers.
 
 * Peers **MUST NOT** remove valid entries or modify others' entries.
 * Deterministic pruning ensures consistent ledger state across peers.
@@ -144,4 +144,3 @@ A mismatch indicates ledger tampering or divergence, and the peer MUST reject th
 * Bounded state growth.
 * Eventual convergence under client/server synchronization.
 
----

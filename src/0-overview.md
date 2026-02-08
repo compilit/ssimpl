@@ -38,4 +38,3 @@ This ensures only owners of verified physical credentials can create valid DIDs.
 * **Peers:** Mobile devices with the Wallet installed.
 * **Relay Peers:** Servers that act both as Peers and distribution points, allowing other Peers to sync their ledger.
 
----

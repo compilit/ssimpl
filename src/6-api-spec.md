@@ -4,11 +4,24 @@ This section defines the reference API for Relay Peers in the SSIMPL protocol. I
 registration**, **revocation**, and **ledger synchronization**.
 
 All requests **MUST** be authenticated using a `Bearer` token, containing a **signed DID in the canonical
-SignatureDocument format, multibase-encoded**.
+SignatureEnvelope format, multibase-encoded**.
 
----
+
 
 ## Endpoints
+
+### Perform a handshake
+
+**POST** `/identity`
+
+**Purpose:** Allows (Relay) Peers to check the health an initial validity of the Relay Peer
+
+**Request payload (`LedgerDeltaRequest`):**
+
+| Field             | Type    | Description                                         |
+|-------------------|---------|-----------------------------------------------------|
+| data              | integer | Last ledger epoch known to the peer                 |
+| signatureEnvleope | string  | Merkle root hash of the peer's current ledger state |
 
 ### Request Ledger Delta
 
@@ -54,7 +67,7 @@ Example:
           ...
         }
       },
-      "signatureDocument": {
+      "signatureEnvelope": {
         ...
       }
     }
@@ -84,7 +97,7 @@ Example:
       ...
     }
   },
-  "signatureDocument": {
+  "signatureEnvelope": {
     ...
   }
 }
@@ -109,7 +122,7 @@ Example:
   "data": {
     "did": "did:key:z6Mkw...example"
   },
-  "signatureDocument": {
+  "signatureEnvelope": {
     ...
   }
 }
@@ -121,34 +134,43 @@ Response: 200 OK on success.
 
 Shared Object Schemas
 
-### LedgerEntry
+### SignedObject (Signed<T>)
+
+| Field             | Type   | Description                                       |
+|-------------------|--------|---------------------------------------------------|
+| data              | object | Contains the actual fields used for the signature |
+| signatureEnvelope | object | Signature verifying the `data`                    |
+
+
+
+### SignedObject: LedgerEntry
 
 | Field             | Type   | Description                                     |
 |-------------------|--------|-------------------------------------------------|
 | data              | object | Contains `verifiableCredentialRoot` and `proof` |
-| signatureDocument | object | Signature verifying the integrity of `data`     |
+| signatureEnvelope | object | Signature verifying the integrity of `data`     |
 
----
 
-### LedgerEntryRevocation
+
+### VerifiableCredentialRoot
+
+| Field                | Type   | Description                               |
+|----------------------|--------|-------------------------------------------|
+| did                  | object | Contains `did` and `identityDocumentHash` |
+| identityDocumentHash | object | Signature verifying the `data`            |
+
+
+
+### SignedObject: LedgerEntryRevocation
 
 | Field             | Type   | Description                        |
 |-------------------|--------|------------------------------------|
 | data              | object | Contains the DID being revoked     |
-| signatureDocument | object | Signature verifying the revocation |
+| signatureEnvelope | object | Signature verifying the revocation |
 
----
 
-### VerifiableCredentialRoot
 
-| Field             | Type   | Description                               |
-|-------------------|--------|-------------------------------------------|
-| data              | object | Contains `did` and `identityDocumentHash` |
-| signatureDocument | object | Signature verifying the `data`            |
-
----
-
-### DataGroupProof
+### Proof
 
 | Field       | Type   | Description                     |
 |-------------|--------|---------------------------------|
@@ -157,9 +179,9 @@ Shared Object Schemas
 | AAChallenge | string | Active Authentication challenge |
 | SOD         | string | Security Object Document        |
 
----
 
-### SignatureDocument
+
+### SignatureEnvelope
 
 | Field     | Type   | Description                                                         |
 |-----------|--------|---------------------------------------------------------------------|
@@ -167,7 +189,7 @@ Shared Object Schemas
 | signature | object | `Signature` object containing `algorithm`, `publicKey`, and `value` |
 | signer    | string | DID or public key identifier of the signer                          |
 
----
+
 
 ### Signature
 

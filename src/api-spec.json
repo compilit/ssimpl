@@ -13,11 +13,40 @@
   "security": [
     {
       "Authorization": [
-        "Bearer <Signed DID in SignatureDocument format, multibase-encoded>"
+        "Bearer <Signed DID in SignatureEnvelope format, multibase-encoded>"
       ]
     }
   ],
   "paths": {
+    "/hi": {
+      "post": {
+        "summary": "Verify whether this Relay Peer exists and is healthy",
+        "description": "Returns a signed DID matching",
+        "operationId": "pingRelayPeer",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignedDID"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Relay Peer ping response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignedDID"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/ledger/delta": {
       "post": {
         "summary": "Request ledger delta",
@@ -48,6 +77,18 @@
       }
     },
     "/ledger": {
+      "get": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Get the current state of the Ledger",
+        "operationId": "getLedgerMetadata",
+        "responses": {
+          "200": {
+            "$ref": "#/components/schemas/LedgerMetadata"
+          }
+        }
+      },
       "post": {
         "tags": [
           "Ledger"
@@ -80,7 +121,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LedgerEntryRevocation"
+                "$ref": "#/components/schemas/SignedDID"
               }
             }
           },
@@ -96,9 +137,13 @@
   },
   "components": {
     "schemas": {
-      "SignatureDocument": {
+      "SignatureEnvelope": {
         "type": "object",
-        "required": ["message", "signature", "signer"],
+        "required": [
+          "message",
+          "signature",
+          "signer"
+        ],
         "properties": {
           "message": {
             "type": "string",
@@ -115,7 +160,11 @@
       },
       "Signature": {
         "type": "object",
-        "required": ["publicKey", "algorithm", "value"],
+        "required": [
+          "publicKey",
+          "algorithm",
+          "value"
+        ],
         "properties": {
           "publicKey": {
             "type": "string"
@@ -132,7 +181,7 @@
         "type": "object",
         "required": [
           "data",
-          "signatureDocument"
+          "signatureEnvelope"
         ],
         "properties": {
           "data": {
@@ -146,12 +195,12 @@
                 "$ref": "#/components/schemas/VerifiableCredentialRoot"
               },
               "proof": {
-                "$ref": "#/components/schemas/DataGroupProof"
+                "$ref": "#/components/schemas/Proof"
               }
             }
           },
-          "signatureDocument": {
-            "$ref": "#/components/schemas/SignatureDocument"
+          "signatureEnvelope": {
+            "$ref": "#/components/schemas/SignatureEnvelope"
           }
         }
       },
@@ -159,7 +208,7 @@
         "type": "object",
         "required": [
           "data",
-          "signatureDocument"
+          "signatureEnvelope"
         ],
         "properties": {
           "data": {
@@ -177,12 +226,12 @@
               }
             }
           },
-          "signatureDocument": {
-            "$ref": "#/components/schemas/SignatureDocument"
+          "signatureEnvelope": {
+            "$ref": "#/components/schemas/SignatureEnvelope"
           }
         }
       },
-      "DataGroupProof": {
+      "Proof": {
         "type": "object",
         "required": [
           "DG15",
@@ -205,7 +254,7 @@
           }
         }
       },
-      "LedgerEntryRevocation": {
+      "SignedDID": {
         "properties": {
           "data": {
             "type": "object",
@@ -215,8 +264,29 @@
               }
             }
           },
-          "signatureDocument": {
-            "$ref": "#/components/schemas/SignatureDocument"
+          "signatureEnvelope": {
+            "$ref": "#/components/schemas/SignatureEnvelope"
+          }
+        }
+      },
+      "LedgerMetadata": {
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "epoch": {
+                "type": "number"
+              },
+              "root_hash": {
+                "type": "string"
+              },
+              "relay_did": {
+                "type": "string"
+              }
+            }
+          },
+          "signatureEnvelope": {
+            "$ref": "#/components/schemas/SignatureEnvelope"
           }
         }
       },
