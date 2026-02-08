@@ -33,47 +33,6 @@ Wallets **SHOULD**:
 7. Signing of the VCR.
 8. Submission of the VCR to a Relay Peer.
 
-## Canonical Signature Object Pattern
-
-All cryptographically signed objects in SSIMPL **MUST** follow a uniform, canonical structure, known as the *
-*SignatureEnvelope**. This ensures consistency across all signed data, including ledger entries, Verifiable Credential
-Roots (VCR), revocations, and delta payloads.
-
-### Structure
-
-Each signed object **MUST** include a `SignatureEnvelope` with the following structure:
-
-- **`message`** — The cryptographic hash of the canonical serialization of the `data` object. See §Canonicalization
-  Rules.
-- **`signature`** — Object containing the signature itself:
-    - `publicKey` — Base64url-encoded public key corresponding to the signing private key.
-    - `algorithm` — Signature algorithm used (e.g., EdDSA, ECDSA).
-    - `value` — Base64url-encoded signature value.
-- **`signer`** — DID of the entity producing the signature.
-
-Example (in JSON for clarity):
-
-```json
-{
-  "message": "<hash-of-canonical-data>",
-  "signature": {
-    "publicKey": "<multibase-encoded public key>",
-    "algorithm": "<algorithm identifier>",
-    "value": "<multibase-encoded signature>"
-  },
-  "signer": "<DID of signer>"
-}
-```
-
-### Usage
-
-* Every signed object in SSIMPL, including LedgerEntry, VerifiableCredentialRoot, revocation entries, and delta updates,
-  MUST include a signatureEnvelope.
-* The message field MUST be derived from the canonical serialization of the associated data object, ensuring that
-  identical logical objects produce identical hashes.
-* This pattern guarantees interoperability, verifiability, and deterministic ordering for all signed objects across the
-  network.
-
 ### Rules and Notes
 
 * Optional fields in the data object MUST NOT affect the canonical hash unless explicitly defined in the
@@ -85,5 +44,16 @@ Example (in JSON for clarity):
 This canonical signature object pattern provides a single, consistent approach for proving authorship and integrity
 across all SSIMPL objects.
 
+## Wallet Functionality
+
+In order to function properly, it is essential certain behavior is implemented:
+
+* Before any transaction, the Wallet MUST call either the Root Relay Peer, or one of it's known Relay Peers for the
+  latest delta.
+* If this Peer is new, it must first be bootstrapped. Which means acquiring the full current Ledger. This is done by
+  requesting delta's in chunks between epochs, starting with 0 (Unix Time). Until the Ledger is fully in place, the
+  Wallet MUST NOT allow any transactions.
+* Before any transaction, the Wallet MUST call either the Root Relay Peer, or one of it's known Relay Peers for the
+  latest list of known Relay Peers.
 
 
