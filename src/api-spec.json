@@ -18,7 +18,7 @@
     }
   ],
   "paths": {
-    "/hi": {
+    "/identity": {
       "post": {
         "summary": "Verify whether this Relay Peer exists and is healthy",
         "description": "Returns a signed DID matching",
