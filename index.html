@@ -123,7 +123,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 <script id="initialUserConfig" type="application/json">{
   "specStatus": "ED",
   "shortName": "ssimpl",
-  "publishDate": "2026-02-07",
+  "publishDate": "2026-02-08",
   "editors": [
     {
       "name": "Bastiën G.A. Bonsel",
@@ -131,7 +131,6 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     }
   ],
   "github": "https://github.com/compilit/ssimpl",
-  "edDraftURI": "https://ssimpl.org",
   "license": "w3c-software-doc",
   "lint": {
     "no-unused-dfns": false
@@ -144,10 +143,10 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
   "ui": {
     "showButton": false
   },
-  "_ijt": "bt8l6dpjcl8kt8627fqc3pfej",
+  "_ijt": "ivdsisct189a1tf0g2k9a7lkng",
   "_ij_reload": "RELOAD_ON_SAVE",
-  "publishISODate": "2026-02-07T00:00:00.000Z",
-  "generatedSubtitle": "W3C Editor's Draft 07 February 2026"
+  "publishISODate": "2026-02-08T00:00:00.000Z",
+  "generatedSubtitle": "W3C Editor's Draft 08 February 2026"
 }</script>
 <link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED"></head>
 
@@ -155,17 +154,17 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     <p class="logos"><a class="logo" href="https://www.w3.org/"><img crossorigin="" alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72">
   </a></p>
     <h1 id="title" class="title">SSIMPL Specification</h1> 
-    <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">W3C Editor's Draft</a> <time class="dt-published" datetime="2026-02-07">07 February 2026</time></p>
+    <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">W3C Editor's Draft</a> <time class="dt-published" datetime="2026-02-08">08 February 2026</time></p>
     <details open="">
       <summary>More details about this document</summary>
       <dl>
         <dt>This version:</dt><dd>
-                <a class="u-url" href="https://ssimpl.org">https://ssimpl.org</a>
+                <a class="u-url" href="https://compilit.github.io/ssimpl/">https://compilit.github.io/ssimpl/</a>
               </dd>
         <dt>Latest published version:</dt><dd>
                 <a href="https://www.w3.org/ssimpl/">https://www.w3.org/ssimpl/</a>
               </dd>
-        <dt>Latest editor's draft:</dt><dd><a href="https://ssimpl.org">https://ssimpl.org</a></dd>
+        <dt>Latest editor's draft:</dt><dd><a href="https://compilit.github.io/ssimpl/">https://compilit.github.io/ssimpl/</a></dd>
         <dt>History:</dt><dd>
                     <a href="https://github.com/compilit/ssimpl/commits/">Commit history</a>
                   </dd>
@@ -257,7 +256,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
   </p><p>
                       This document is governed by the
                       <a id="w3c_process_revision" href="https://www.w3.org/policies/process/20250818/">18 August 2025 <abbr title="World Wide Web Consortium">W3C</abbr> Process Document</a>.
-                    </p></section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#abstract">Abstract</a></li><li class="tocline"><a class="tocxref" href="#conformance"><bdi class="secno">1. </bdi>Conformance</a></li><li class="tocline"><a class="tocxref" href="#sotd">Status of This Document</a></li><li class="tocline"><a class="tocxref" href="#overview"><bdi class="secno">2. </bdi>Overview</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#identity-trust-model"><bdi class="secno">2.1 </bdi>Identity Trust Model</a></li><li class="tocline"><a class="tocxref" href="#levels-of-authentication"><bdi class="secno">2.2 </bdi>Levels of Authentication</a></li><li class="tocline"><a class="tocxref" href="#components"><bdi class="secno">2.3 </bdi>Components</a></li></ol></li><li class="tocline"><a class="tocxref" href="#wallet-specification"><bdi class="secno">3. </bdi>Wallet Specification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#wallet-requirements"><bdi class="secno">3.1 </bdi>Wallet Requirements</a></li><li class="tocline"><a class="tocxref" href="#activation-process"><bdi class="secno">3.2 </bdi>Activation Process</a></li><li class="tocline"><a class="tocxref" href="#canonical-signature-object-pattern"><bdi class="secno">3.3 </bdi>Canonical Signature Object Pattern</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#structure"><bdi class="secno">3.3.1 </bdi>Structure</a></li><li class="tocline"><a class="tocxref" href="#usage"><bdi class="secno">3.3.2 </bdi>Usage</a></li><li class="tocline"><a class="tocxref" href="#rules-and-notes"><bdi class="secno">3.3.3 </bdi>Rules and Notes</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#relay-peer-specification"><bdi class="secno">4. </bdi>Relay Peer Specification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#relay-peer-discovery-and-verification"><bdi class="secno">4.1 </bdi>Relay Peer Discovery and Verification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#deterministic-relay-hostnames"><bdi class="secno">4.1.1 </bdi>Deterministic Relay Hostnames</a></li><li class="tocline"><a class="tocxref" href="#relay-peer-verification-protocol"><bdi class="secno">4.1.2 </bdi>Relay Peer Verification Protocol</a></li><li class="tocline"><a class="tocxref" href="#handling-non-existing-or-offline-relay-peers"><bdi class="secno">4.1.3 </bdi>Handling Non-Existing or Offline Relay Peers</a></li><li class="tocline"><a class="tocxref" href="#security-and-trust-implications"><bdi class="secno">4.1.4 </bdi>Security and Trust Implications</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#ledger-specification"><bdi class="secno">5. </bdi>Ledger Specification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#goals"><bdi class="secno">5.1 </bdi>Goals</a></li><li class="tocline"><a class="tocxref" href="#state-and-canonical-construction"><bdi class="secno">5.2 </bdi>State and Canonical Construction</a></li><li class="tocline"><a class="tocxref" href="#merkle-tree"><bdi class="secno">5.3 </bdi>Merkle Tree</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#structure-0"><bdi class="secno">5.3.1 </bdi>Structure</a></li><li class="tocline"><a class="tocxref" href="#updates"><bdi class="secno">5.3.2 </bdi>Updates</a></li><li class="tocline"><a class="tocxref" href="#merkle-proofs"><bdi class="secno">5.3.3 </bdi>Merkle Proofs</a></li><li class="tocline"><a class="tocxref" href="#relation-to-checkpoints"><bdi class="secno">5.3.4 </bdi>Relation to Checkpoints</a></li></ol></li><li class="tocline"><a class="tocxref" href="#validation-rules"><bdi class="secno">5.4 </bdi>Validation Rules</a></li><li class="tocline"><a class="tocxref" href="#pruning-and-mutability"><bdi class="secno">5.5 </bdi>Pruning and Mutability</a></li><li class="tocline"><a class="tocxref" href="#synchronization"><bdi class="secno">5.6 </bdi>Synchronization</a></li><li class="tocline"><a class="tocxref" href="#merkle-checkpoints"><bdi class="secno">5.7 </bdi>Merkle Checkpoints</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#definition"><bdi class="secno">5.7.1 </bdi>Definition</a></li><li class="tocline"><a class="tocxref" href="#purpose"><bdi class="secno">5.7.2 </bdi>Purpose</a></li><li class="tocline"><a class="tocxref" href="#creation-and-storage"><bdi class="secno">5.7.3 </bdi>Creation and Storage</a></li><li class="tocline"><a class="tocxref" href="#verification"><bdi class="secno">5.7.4 </bdi>Verification</a></li><li class="tocline"><a class="tocxref" href="#pruning-and-expiry"><bdi class="secno">5.7.5 </bdi>Pruning and Expiry</a></li><li class="tocline"><a class="tocxref" href="#security-considerations"><bdi class="secno">5.7.6 </bdi>Security Considerations</a></li></ol></li><li class="tocline"><a class="tocxref" href="#security-properties"><bdi class="secno">5.8 </bdi>Security Properties</a></li></ol></li><li class="tocline"><a class="tocxref" href="#conclusion"><bdi class="secno">6. </bdi>Conclusion</a></li><li class="tocline"><a class="tocxref" href="#canonicalization-rules"><bdi class="secno">7. </bdi>Canonicalization Rules</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#object-serialization"><bdi class="secno">7.1 </bdi>Object Serialization</a></li><li class="tocline"><a class="tocxref" href="#nested-objects"><bdi class="secno">7.2 </bdi>Nested Objects</a></li><li class="tocline"><a class="tocxref" href="#signature-message"><bdi class="secno">7.3 </bdi>Signature Message</a></li><li class="tocline"><a class="tocxref" href="#deterministic-encoding"><bdi class="secno">7.4 </bdi>Deterministic Encoding</a></li><li class="tocline"><a class="tocxref" href="#verification-procedure"><bdi class="secno">7.5 </bdi>Verification Procedure</a></li><li class="tocline"><a class="tocxref" href="#rationale"><bdi class="secno">7.6 </bdi>Rationale</a></li></ol></li><li class="tocline"><a class="tocxref" href="#ssimpl-api-specification"><bdi class="secno">8. </bdi>SSIMPL API Specification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#endpoints"><bdi class="secno">8.1 </bdi>Endpoints</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#perform-a-handshake"><bdi class="secno">8.1.1 </bdi>Perform a handshake</a></li><li class="tocline"><a class="tocxref" href="#request-ledger-delta"><bdi class="secno">8.1.2 </bdi>Request Ledger Delta</a></li><li class="tocline"><a class="tocxref" href="#signedobject-signed"><bdi class="secno">8.1.3 </bdi>SignedObject (Signed<t>)</t></a></li><li class="tocline"><a class="tocxref" href="#signedobject-ledgerentry"><bdi class="secno">8.1.4 </bdi>SignedObject: LedgerEntry</a></li><li class="tocline"><a class="tocxref" href="#verifiablecredentialroot"><bdi class="secno">8.1.5 </bdi>VerifiableCredentialRoot</a></li><li class="tocline"><a class="tocxref" href="#signedobject-ledgerentryrevocation"><bdi class="secno">8.1.6 </bdi>SignedObject: LedgerEntryRevocation</a></li><li class="tocline"><a class="tocxref" href="#proof"><bdi class="secno">8.1.7 </bdi>Proof</a></li><li class="tocline"><a class="tocxref" href="#signatureenvelope"><bdi class="secno">8.1.8 </bdi>SignatureEnvelope</a></li><li class="tocline"><a class="tocxref" href="#signature"><bdi class="secno">8.1.9 </bdi>Signature</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#references"><bdi class="secno">A. </bdi>References</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#normative-references"><bdi class="secno">A.1 </bdi>Normative references</a></li></ol></li></ol></nav>
+                    </p></section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#abstract">Abstract</a></li><li class="tocline"><a class="tocxref" href="#conformance"><bdi class="secno">1. </bdi>Conformance</a></li><li class="tocline"><a class="tocxref" href="#sotd">Status of This Document</a></li><li class="tocline"><a class="tocxref" href="#overview"><bdi class="secno">2. </bdi>Overview</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#identity-trust-model"><bdi class="secno">2.1 </bdi>Identity Trust Model</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#considerations"><bdi class="secno">2.1.1 </bdi>Considerations</a></li></ol></li><li class="tocline"><a class="tocxref" href="#levels-of-authentication"><bdi class="secno">2.2 </bdi>Levels of Authentication</a></li><li class="tocline"><a class="tocxref" href="#roles"><bdi class="secno">2.3 </bdi>Roles</a></li></ol></li><li class="tocline"><a class="tocxref" href="#wallet-specification"><bdi class="secno">3. </bdi>Wallet Specification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#wallet-requirements"><bdi class="secno">3.1 </bdi>Wallet Requirements</a></li><li class="tocline"><a class="tocxref" href="#activation-process"><bdi class="secno">3.2 </bdi>Activation Process</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#rules-and-notes"><bdi class="secno">3.2.1 </bdi>Rules and Notes</a></li></ol></li><li class="tocline"><a class="tocxref" href="#wallet-functionality"><bdi class="secno">3.3 </bdi>Wallet Functionality</a></li></ol></li><li class="tocline"><a class="tocxref" href="#relay-peer-specification"><bdi class="secno">4. </bdi>Relay Peer Specification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#relay-peer-responsibilities"><bdi class="secno">4.1 </bdi>Relay Peer Responsibilities</a></li><li class="tocline"><a class="tocxref" href="#relay-peer-bootstrap-and-verification"><bdi class="secno">4.2 </bdi>Relay Peer Bootstrap and Verification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#relay-peer-registration"><bdi class="secno">4.2.1 </bdi>Relay Peer Registration</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#ledger-specification"><bdi class="secno">5. </bdi>Ledger Specification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#goals"><bdi class="secno">5.1 </bdi>Goals</a></li><li class="tocline"><a class="tocxref" href="#state-and-canonical-construction"><bdi class="secno">5.2 </bdi>State and Canonical Construction</a></li><li class="tocline"><a class="tocxref" href="#merkle-tree"><bdi class="secno">5.3 </bdi>Merkle Tree</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#structure"><bdi class="secno">5.3.1 </bdi>Structure</a></li><li class="tocline"><a class="tocxref" href="#updates"><bdi class="secno">5.3.2 </bdi>Updates</a></li><li class="tocline"><a class="tocxref" href="#merkle-proofs"><bdi class="secno">5.3.3 </bdi>Merkle Proofs</a></li><li class="tocline"><a class="tocxref" href="#relation-to-checkpoints"><bdi class="secno">5.3.4 </bdi>Relation to Checkpoints</a></li></ol></li><li class="tocline"><a class="tocxref" href="#validation-rules"><bdi class="secno">5.4 </bdi>Validation Rules</a></li><li class="tocline"><a class="tocxref" href="#pruning-and-mutability"><bdi class="secno">5.5 </bdi>Pruning and Mutability</a></li><li class="tocline"><a class="tocxref" href="#synchronization"><bdi class="secno">5.6 </bdi>Synchronization</a></li><li class="tocline"><a class="tocxref" href="#merkle-checkpoints"><bdi class="secno">5.7 </bdi>Merkle Checkpoints</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#definition"><bdi class="secno">5.7.1 </bdi>Definition</a></li><li class="tocline"><a class="tocxref" href="#purpose"><bdi class="secno">5.7.2 </bdi>Purpose</a></li><li class="tocline"><a class="tocxref" href="#creation-and-storage"><bdi class="secno">5.7.3 </bdi>Creation and Storage</a></li><li class="tocline"><a class="tocxref" href="#verification"><bdi class="secno">5.7.4 </bdi>Verification</a></li><li class="tocline"><a class="tocxref" href="#pruning-and-expiry"><bdi class="secno">5.7.5 </bdi>Pruning and Expiry</a></li><li class="tocline"><a class="tocxref" href="#security-considerations"><bdi class="secno">5.7.6 </bdi>Security Considerations</a></li></ol></li><li class="tocline"><a class="tocxref" href="#security-properties"><bdi class="secno">5.8 </bdi>Security Properties</a></li></ol></li><li class="tocline"><a class="tocxref" href="#conclusion"><bdi class="secno">6. </bdi>Conclusion</a></li><li class="tocline"><a class="tocxref" href="#canonicalization-rules"><bdi class="secno">7. </bdi>Canonicalization Rules</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#object-serialization"><bdi class="secno">7.1 </bdi>Object Serialization</a></li><li class="tocline"><a class="tocxref" href="#nested-objects"><bdi class="secno">7.2 </bdi>Nested Objects</a></li><li class="tocline"><a class="tocxref" href="#signature-message"><bdi class="secno">7.3 </bdi>Signature Message</a></li><li class="tocline"><a class="tocxref" href="#deterministic-encoding"><bdi class="secno">7.4 </bdi>Deterministic Encoding</a></li><li class="tocline"><a class="tocxref" href="#verification-procedure"><bdi class="secno">7.5 </bdi>Verification Procedure</a></li><li class="tocline"><a class="tocxref" href="#rationale"><bdi class="secno">7.6 </bdi>Rationale</a></li><li class="tocline"><a class="tocxref" href="#canonical-signature-object-pattern"><bdi class="secno">7.7 </bdi>Canonical Signature Object Pattern</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#structure-0"><bdi class="secno">7.7.1 </bdi>Structure</a></li><li class="tocline"><a class="tocxref" href="#usage"><bdi class="secno">7.7.2 </bdi>Usage</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#ssimpl-api-specification"><bdi class="secno">8. </bdi>SSIMPL API Specification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#endpoints"><bdi class="secno">8.1 </bdi>Endpoints</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#perform-a-handshake"><bdi class="secno">8.1.1 </bdi>Perform a handshake</a></li><li class="tocline"><a class="tocxref" href="#request-ledger-delta"><bdi class="secno">8.1.2 </bdi>Request Ledger Delta</a></li><li class="tocline"><a class="tocxref" href="#signedobject-signed"><bdi class="secno">8.1.3 </bdi>SignedObject (Signed<t>)</t></a></li><li class="tocline"><a class="tocxref" href="#signedobject-ledgerentry"><bdi class="secno">8.1.4 </bdi>SignedObject: LedgerEntry</a></li><li class="tocline"><a class="tocxref" href="#verifiablecredentialroot"><bdi class="secno">8.1.5 </bdi>VerifiableCredentialRoot</a></li><li class="tocline"><a class="tocxref" href="#signedobject-ledgerentryrevocation"><bdi class="secno">8.1.6 </bdi>SignedObject: LedgerEntryRevocation</a></li><li class="tocline"><a class="tocxref" href="#proof"><bdi class="secno">8.1.7 </bdi>Proof</a></li><li class="tocline"><a class="tocxref" href="#signatureenvelope"><bdi class="secno">8.1.8 </bdi>SignatureEnvelope</a></li><li class="tocline"><a class="tocxref" href="#signature"><bdi class="secno">8.1.9 </bdi>Signature</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#references"><bdi class="secno">A. </bdi>References</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#normative-references"><bdi class="secno">A.1 </bdi>Normative references</a></li></ol></li></ol></nav>
 
 <section data-format="markdown" id="overview"><div class="header-wrapper"><h2 id="x2-overview"><bdi class="secno">2. </bdi>Overview</h2><a class="self-link" href="#overview" aria-label="Permalink for Section 2."></a></div>
 <p>The SSIMPL protocol defines a <strong>Self-Sovereign Identity &amp; Mondial Pseudonymous Ledger</strong> framework that allows
@@ -271,7 +270,8 @@ verification without reliance on centralized authorities.</p>
 proofs.</li>
 </ol>
 <p>The protocol balances decentralization, peer authority, and optional server-assisted synchronization for efficiency
-and availability.</p>
+and availability. Everything is made to be deterministic by default, so no authorities whatsoever are required except
+the one that signed the Trust Anchor.</p>
 <section id="identity-trust-model"><div class="header-wrapper"><h3 id="x2-1-identity-trust-model"><bdi class="secno">2.1 </bdi>Identity Trust Model</h3><a class="self-link" href="#identity-trust-model" aria-label="Permalink for Section 2.1"></a></div>
 <p>SSIMPL identities are rooted in cryptographically verifiable credentials derived from <strong>Trust Anchors (TA)</strong>, such as
 government-issued ePassports. A valid wallet:</p>
@@ -282,15 +282,19 @@ government-issued ePassports. A valid wallet:</p>
 <li>Publishes this Verifiable Credential Root to Relay Peers.</li>
 </ul>
 <p>This ensures only owners of verified physical credentials can create valid DIDs.</p>
-</section><section id="levels-of-authentication"><div class="header-wrapper"><h3 id="x2-2-levels-of-authentication"><bdi class="secno">2.2 </bdi>Levels of Authentication</h3><a class="self-link" href="#levels-of-authentication" aria-label="Permalink for Section 2.2"></a></div>
+<section id="considerations"><div class="header-wrapper"><h4 id="x2-1-1-considerations"><bdi class="secno">2.1.1 </bdi>Considerations</h4><a class="self-link" href="#considerations" aria-label="Permalink for Section 2.1.1"></a></div>
+<p>Identity is hard to verify by nature. Using a state-issued TA is not a perfect solution, but it's the best
+deterministic proof of identity available at the moment.</p>
+</section></section><section id="levels-of-authentication"><div class="header-wrapper"><h3 id="x2-2-levels-of-authentication"><bdi class="secno">2.2 </bdi>Levels of Authentication</h3><a class="self-link" href="#levels-of-authentication" aria-label="Permalink for Section 2.2"></a></div>
 <ul>
 <li><strong>Level 0:</strong> DID confirms human ownership (bot detection).</li>
 <li><strong>Level 1:</strong> Level 0 + unverified attributes requested via scope.</li>
 <li><strong>Level 2:</strong> Level 1 + verified credentials requested via scope.</li>
 </ul>
-</section><section id="components"><div class="header-wrapper"><h3 id="x2-3-components"><bdi class="secno">2.3 </bdi>Components</h3><a class="self-link" href="#components" aria-label="Permalink for Section 2.3"></a></div>
+</section><section id="roles"><div class="header-wrapper"><h3 id="x2-3-roles"><bdi class="secno">2.3 </bdi>Roles</h3><a class="self-link" href="#roles" aria-label="Permalink for Section 2.3"></a></div>
 <ul>
-<li><strong>Wallet:</strong> The actual software responsible for encapsulating the owners credentials and cryptographic material.</li>
+<li><strong>Identity</strong> The owner of the TA.</li>
+<li><strong>Wallet:</strong> The actual software responsible for encapsulating the owners TA.</li>
 <li><strong>Peers:</strong> Mobile devices with the Wallet installed.</li>
 <li><strong>Relay Peers:</strong> Servers that act both as Peers and distribution points, allowing other Peers to sync their ledger.</li>
 </ul>
@@ -328,44 +332,7 @@ to lack of true HSMs in mobile devices).</li>
 <li>Signing of the VCR.</li>
 <li>Submission of the VCR to a Relay Peer.</li>
 </ol>
-</section><section id="canonical-signature-object-pattern"><div class="header-wrapper"><h3 id="x3-3-canonical-signature-object-pattern"><bdi class="secno">3.3 </bdi>Canonical Signature Object Pattern</h3><a class="self-link" href="#canonical-signature-object-pattern" aria-label="Permalink for Section 3.3"></a></div>
-<p>All cryptographically signed objects in SSIMPL <strong><em class="rfc2119">MUST</em></strong> follow a uniform, canonical structure, known as the *
-<em>SignatureEnvelope</em>*. This ensures consistency across all signed data, including ledger entries, Verifiable Credential
-Roots (VCR), revocations, and delta payloads.</p>
-<section id="structure"><div class="header-wrapper"><h4 id="x3-3-1-structure"><bdi class="secno">3.3.1 </bdi>Structure</h4><a class="self-link" href="#structure" aria-label="Permalink for Section 3.3.1"></a></div>
-<p>Each signed object <strong><em class="rfc2119">MUST</em></strong> include a <code>SignatureEnvelope</code> with the following structure:</p>
-<ul>
-<li><strong><code>message</code></strong> — The cryptographic hash of the canonical serialization of the <code>data</code> object. See §Canonicalization
-Rules.</li>
-<li><strong><code>signature</code></strong> — Object containing the signature itself:<ul>
-<li><code>publicKey</code> — Base64url-encoded public key corresponding to the signing private key.</li>
-<li><code>algorithm</code> — Signature algorithm used (e.g., EdDSA, ECDSA).</li>
-<li><code>value</code> — Base64url-encoded signature value.</li>
-</ul>
-</li>
-<li><strong><code>signer</code></strong> — DID of the entity producing the signature.</li>
-</ul>
-<p>Example (in JSON for clarity):</p>
-<pre><code class="json hljs" aria-busy="false"><span class="hljs-punctuation">{</span>
-  <span class="hljs-attr">"message"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"&lt;hash-of-canonical-data&gt;"</span><span class="hljs-punctuation">,</span>
-  <span class="hljs-attr">"signature"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
-    <span class="hljs-attr">"publicKey"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"&lt;multibase-encoded public="</span><span class="hljs-string">" key="</span><span class="hljs-string">"&gt;"</span><span class="hljs-punctuation">,</span>
-    <span class="hljs-attr">"algorithm"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"&lt;algorithm identifier="</span><span class="hljs-string">"&gt;"</span><span class="hljs-punctuation">,</span>
-    <span class="hljs-attr">"value"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"&lt;multibase-encoded signature="</span><span class="hljs-string">"&gt;"</span>
-  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
-  <span class="hljs-attr">"signer"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"&lt;did of="</span><span class="hljs-string">" signer="</span><span class="hljs-string">"&gt;"</span>
-<span class="hljs-punctuation">}</span>
-</code></pre>
-</section><section id="usage"><div class="header-wrapper"><h4 id="x3-3-2-usage"><bdi class="secno">3.3.2 </bdi>Usage</h4><a class="self-link" href="#usage" aria-label="Permalink for Section 3.3.2"></a></div>
-<ul>
-<li>Every signed object in SSIMPL, including LedgerEntry, VerifiableCredentialRoot, revocation entries, and delta updates,
-<em class="rfc2119">MUST</em> include a signatureEnvelope.</li>
-<li>The message field <em class="rfc2119">MUST</em> be derived from the canonical serialization of the associated data object, ensuring that
-identical logical objects produce identical hashes.</li>
-<li>This pattern guarantees interoperability, verifiability, and deterministic ordering for all signed objects across the
-network.</li>
-</ul>
-</section><section id="rules-and-notes"><div class="header-wrapper"><h4 id="x3-3-3-rules-and-notes"><bdi class="secno">3.3.3 </bdi>Rules and Notes</h4><a class="self-link" href="#rules-and-notes" aria-label="Permalink for Section 3.3.3"></a></div>
+<section id="rules-and-notes"><div class="header-wrapper"><h4 id="x3-2-1-rules-and-notes"><bdi class="secno">3.2.1 </bdi>Rules and Notes</h4><a class="self-link" href="#rules-and-notes" aria-label="Permalink for Section 3.2.1"></a></div>
 <ul>
 <li>Optional fields in the data object <em class="rfc2119">MUST NOT</em> affect the canonical hash unless explicitly defined in the
 canonicalization rules.</li>
@@ -375,68 +342,49 @@ processing.</li>
 </ul>
 <p>This canonical signature object pattern provides a single, consistent approach for proving authorship and integrity
 across all SSIMPL objects.</p>
-<p></p>
-</section></section></section>
+</section></section><section id="wallet-functionality"><div class="header-wrapper"><h3 id="x3-3-wallet-functionality"><bdi class="secno">3.3 </bdi>Wallet Functionality</h3><a class="self-link" href="#wallet-functionality" aria-label="Permalink for Section 3.3"></a></div>
+<p>In order to function properly, it is essential certain behavior is implemented:</p>
+<ul>
+<li>Before any transaction, the Wallet <em class="rfc2119">MUST</em> call either the Root Relay Peer, or one of it's known Relay Peers for the
+latest delta.</li>
+<li>If this Peer is new, it must first be bootstrapped. Which means acquiring the full current Ledger. This is done by
+requesting delta's in chunks between epochs, starting with 0 (Unix Time). Until the Ledger is fully in place, the
+Wallet <em class="rfc2119">MUST NOT</em> allow any transactions.</li>
+<li>Before any transaction, the Wallet <em class="rfc2119">MUST</em> call either the Root Relay Peer, or one of it's known Relay Peers for the
+latest list of known Relay Peers.</li>
+</ul>
+</section></section>
 
 <section data-format="markdown" id="relay-peer-specification"><div class="header-wrapper"><h2 id="x4-relay-peer-specification"><bdi class="secno">4. </bdi>Relay Peer Specification</h2><a class="self-link" href="#relay-peer-specification" aria-label="Permalink for Section 4."></a></div>
 <p>The Relay Peer is a special kind of Peer in the sense that it is static and reachable over the internet on a fixed
 hostname. It acts like any other Peer, but it also adds a storage layer for the Ledger and serves as distribution point
-for the Ledger.</p>
-<section id="relay-peer-discovery-and-verification"><div class="header-wrapper"><h3 id="x4-1-relay-peer-discovery-and-verification"><bdi class="secno">4.1 </bdi>Relay Peer Discovery and Verification</h3><a class="self-link" href="#relay-peer-discovery-and-verification" aria-label="Permalink for Section 4.1"></a></div>
-<p>To enable robust peer-to-peer synchronization while maintaining decentralization, SSIMPL defines a <strong>Relay Peer
-Discovery and Verification Protocol</strong>. This allows new Peers to bootstrap securely and verify that Relay Peers are
-implementing the protocol correctly.</p>
-<section id="deterministic-relay-hostnames"><div class="header-wrapper"><h4 id="x4-1-1-deterministic-relay-hostnames"><bdi class="secno">4.1.1 </bdi>Deterministic Relay Hostnames</h4><a class="self-link" href="#deterministic-relay-hostnames" aria-label="Permalink for Section 4.1.1"></a></div>
-<p>Relay Peers are discoverable via a <strong>canonical hostname scheme</strong>:</p>
+for the Ledger. All Relay Peers together form a subnetwork on which all other (mobile) Peers 'ride'. This is purely
+infrastructural to help communication between Peers. It doesn't give any special privileges or authorities to any of
+the Relay Peers and does therefor still fulfill all requirements to be called decentralized.</p>
+<section id="relay-peer-responsibilities"><div class="header-wrapper"><h3 id="x4-1-relay-peer-responsibilities"><bdi class="secno">4.1 </bdi>Relay Peer Responsibilities</h3><a class="self-link" href="#relay-peer-responsibilities" aria-label="Permalink for Section 4.1"></a></div>
 <ul>
-<li>Hostnames are deterministic, e.g., <code>0.ssimpl.org</code> … <code>9999.ssimpl.org</code>.</li>
-<li>Each Relay Peer implements a fixed set of endpoints defined by the SSIMPL specification.</li>
-<li>Peers attempt to connect sequentially or via pseudo-randomized probing across the deterministic range.</li>
+<li>Receive, validate and store new LedgerEntries.</li>
+<li>Receive, validate and store new LedgerEntryRevocations.</li>
+<li>Providing and storing a list of known Relay Peers for discovery.</li>
+<li>Responding to registration attempts from new Relay Peers.</li>
+<li>Gossiping about newly registered Relay Peers.</li>
 </ul>
-<blockquote>
-<p><strong>Rationale:</strong> Deterministic hostnames avoid the need for a centralized list, while still enabling Peers to discover
-Relay Peers without prior trust assumptions.</p>
-</blockquote>
-</section><section id="relay-peer-verification-protocol"><div class="header-wrapper"><h4 id="x4-1-2-relay-peer-verification-protocol"><bdi class="secno">4.1.2 </bdi>Relay Peer Verification Protocol</h4><a class="self-link" href="#relay-peer-verification-protocol" aria-label="Permalink for Section 4.1.2"></a></div>
+</section><section id="relay-peer-bootstrap-and-verification"><div class="header-wrapper"><h3 id="x4-2-relay-peer-bootstrap-and-verification"><bdi class="secno">4.2 </bdi>Relay Peer Bootstrap and Verification</h3><a class="self-link" href="#relay-peer-bootstrap-and-verification" aria-label="Permalink for Section 4.2"></a></div>
+<p>To enable deterministic network formation and secure onboarding of Relay Peers, the SSIMPL protocol defines a bootstrap
+and verification procedure.</p>
+<p>The first time a new Relay Peer is bootstrapped, it <em class="rfc2119">MUST</em> make itself known to a known (or a well-known Relay Peer,
+e.g., <code>root.ssimpl.org</code>) to
+obtain the first list of known Relay Peers. This is a hard-coded node that allows the network to kickstart itself and to
+have zero knowledge upfront when adding a new Relay Peer.</p>
+<section id="relay-peer-registration"><div class="header-wrapper"><h4 id="x4-2-1-relay-peer-registration"><bdi class="secno">4.2.1 </bdi>Relay Peer Registration</h4><a class="self-link" href="#relay-peer-registration" aria-label="Permalink for Section 4.2.1"></a></div>
+<p>Upon first contact with the network, a new Relay Peer:</p>
 <ol>
-<li><strong>Connection:</strong> Peer attempts a connection to a candidate Relay Peer.</li>
-<li><strong>Metadata Exchange:</strong> Relay Peer returns:<ul>
-<li><code>last_epoch</code> (latest ledger epoch)</li>
-<li><code>root_hash</code> (canonical ledger root)</li>
-<li>Timestamp</li>
-<li><code>signature_document</code> - Signature over the metadata using the Relay Peer’s DID key</li>
-</ul>
-</li>
-<li><strong>Validation:</strong> Peer verifies:<ul>
-<li><code>root_hash</code> corresponds to canonical ledger rules</li>
-<li>Timestamp is within an acceptable window</li>
-<li>Signature is valid and matches the DID key</li>
-</ul>
-</li>
-<li><strong>Challenge-Response (Optional):</strong><ul>
-<li>Peer sends a nonce to the Relay Peer</li>
-<li>Relay Peer signs the nonce and returns the signature</li>
-<li>Peer validates the signature to ensure possession of the claimed DID key</li>
-</ul>
-</li>
-<li><strong>Trust Establishment:</strong> Peer marks Relay Peer as verified if all checks pass; otherwise, the peer discards the
-candidate.</li>
+<li>Contacts the Root Relay Peer (or another known Relay Peer) to announce its presence.</li>
+<li>Provides its signed DID using the canonical <strong>SignatureEnvelope</strong> format.</li>
+<li>Receives information about other Relay Peers in the network for further connections.</li>
+<li>Requests delta's from one (or more) of the Relay Peers in the network in chunks based on the time between two epochs.
+Starting with 0 (Unix Time) if it has never been online and otherwise starting with the epoch it was last online.</li>
 </ol>
-</section><section id="handling-non-existing-or-offline-relay-peers"><div class="header-wrapper"><h4 id="x4-1-3-handling-non-existing-or-offline-relay-peers"><bdi class="secno">4.1.3 </bdi>Handling Non-Existing or Offline Relay Peers</h4><a class="self-link" href="#handling-non-existing-or-offline-relay-peers" aria-label="Permalink for Section 4.1.3"></a></div>
-<ul>
-<li>Peers <strong>iterate</strong> through deterministic hostnames.</li>
-<li>Temporarily unreachable hosts are retried after a backoff period.</li>
-<li>Optionally, a <strong>seed CID on IPFS</strong> may provide an initial snapshot of active Relay Peers to bootstrap discovery.</li>
-</ul>
-</section><section id="security-and-trust-implications"><div class="header-wrapper"><h4 id="x4-1-4-security-and-trust-implications"><bdi class="secno">4.1.4 </bdi>Security and Trust Implications</h4><a class="self-link" href="#security-and-trust-implications" aria-label="Permalink for Section 4.1.4"></a></div>
-<ul>
-<li>Deterministic discovery combined with cryptographic verification ensures that peers <strong>cannot be misled</strong> by malicious
-Relay Peers.</li>
-<li>Relay Peers are <strong>auditable</strong>: any failure to implement endpoints correctly or return invalid data can be detected.</li>
-<li>Peers remain authoritative for ledger validation; Relay Peers are <strong>relays, not arbiters</strong>.</li>
-</ul>
-<p><strong>Summary:</strong><br>This protocol allows new Peers to bootstrap without centralized coordination, ensures Relay Peers can be trusted, and
-maintains the integrity and decentralization of the SSIMPL ledger.</p>
 </section></section></section>
 
 <section data-format="markdown" id="ledger-specification"><div class="header-wrapper"><h2 id="x5-ledger-specification"><bdi class="secno">5. </bdi>Ledger Specification</h2><a class="self-link" href="#ledger-specification" aria-label="Permalink for Section 5."></a></div>
@@ -459,7 +407,7 @@ Peers and Relay Peers.</p>
 </ol>
 </section><section id="merkle-tree"><div class="header-wrapper"><h3 id="x5-3-merkle-tree"><bdi class="secno">5.3 </bdi>Merkle Tree</h3><a class="self-link" href="#merkle-tree" aria-label="Permalink for Section 5.3"></a></div>
 <p>The SSIMPL ledger uses a <strong>Merkle tree</strong> to enable efficient verification of ledger state and individual entries.</p>
-<section id="structure-0"><div class="header-wrapper"><h4 id="x5-3-1-structure"><bdi class="secno">5.3.1 </bdi>Structure</h4><a class="self-link" href="#structure-0" aria-label="Permalink for Section 5.3.1"></a></div>
+<section id="structure"><div class="header-wrapper"><h4 id="x5-3-1-structure"><bdi class="secno">5.3.1 </bdi>Structure</h4><a class="self-link" href="#structure" aria-label="Permalink for Section 5.3.1"></a></div>
 <ul>
 <li><strong>Leaves:</strong> Hashes of canonical ledger entries.</li>
 <li><strong>Branches:</strong> Hashes of concatenated child nodes.</li>
@@ -644,7 +592,44 @@ remove ambiguity in encoding and field ordering, preventing mismatches between p
 <li>Peers can independently verify credentials, ledger entries, and revocations.</li>
 <li>Forks, replay attacks, and accidental divergence due to encoding differences are prevented.</li>
 </ul>
-</section></section>
+</section><section id="canonical-signature-object-pattern"><div class="header-wrapper"><h3 id="x7-7-canonical-signature-object-pattern"><bdi class="secno">7.7 </bdi>Canonical Signature Object Pattern</h3><a class="self-link" href="#canonical-signature-object-pattern" aria-label="Permalink for Section 7.7"></a></div>
+<p>All cryptographically signed objects in SSIMPL <strong><em class="rfc2119">MUST</em></strong> follow a uniform, canonical structure, known as the *
+<em>SignatureEnvelope</em>*. This ensures consistency across all signed data, including ledger entries, Verifiable Credential
+Roots (VCR), revocations, and delta payloads.</p>
+<section id="structure-0"><div class="header-wrapper"><h4 id="x7-7-1-structure"><bdi class="secno">7.7.1 </bdi>Structure</h4><a class="self-link" href="#structure-0" aria-label="Permalink for Section 7.7.1"></a></div>
+<p>Each signed object <strong><em class="rfc2119">MUST</em></strong> include a <code>SignatureEnvelope</code> with the following structure:</p>
+<ul>
+<li><strong><code>message</code></strong> — The cryptographic hash of the canonical serialization of the <code>data</code> object.</li>
+<li><strong><code>signature</code></strong> — Object containing the signature itself:<ul>
+<li><code>publicKey</code> — Base64url-encoded public key corresponding to the signing private key.</li>
+<li><code>algorithm</code> — Signature algorithm used (e.g., EdDSA, ECDSA).</li>
+<li><code>value</code> — Base64url-encoded signature value.</li>
+</ul>
+</li>
+<li><strong><code>signer</code></strong> — DID of the entity producing the signature.</li>
+</ul>
+<p>Example (in JSON for clarity):</p>
+<pre><code class="json hljs" aria-busy="false"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"message"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"&lt;hash-of-canonical-data&gt;"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"signature"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"publicKey"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"&lt;multibase-encoded public="</span><span class="hljs-string">" key="</span><span class="hljs-string">"&gt;"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"algorithm"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"&lt;algorithm identifier="</span><span class="hljs-string">"&gt;"</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"value"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"&lt;multibase-encoded signature="</span><span class="hljs-string">"&gt;"</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"signer"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"&lt;did of="</span><span class="hljs-string">" signer="</span><span class="hljs-string">"&gt;"</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</section><section id="usage"><div class="header-wrapper"><h4 id="x7-7-2-usage"><bdi class="secno">7.7.2 </bdi>Usage</h4><a class="self-link" href="#usage" aria-label="Permalink for Section 7.7.2"></a></div>
+<ul>
+<li>Every signed object in SSIMPL, including LedgerEntry, VerifiableCredentialRoot, revocation entries, and delta updates,
+<em class="rfc2119">MUST</em> include a signatureEnvelope.</li>
+<li>The message field <em class="rfc2119">MUST</em> be derived from the canonical serialization of the associated data object, ensuring that
+identical logical objects produce identical hashes.</li>
+<li>This pattern guarantees interoperability, verifiability, and deterministic ordering for all signed objects across the
+network.
+</li>
+</ul>
+</section></section></section>
 
 <section data-format="markdown" id="ssimpl-api-specification"><div class="header-wrapper"><h2 id="x8-ssimpl-api-specification"><bdi class="secno">8. </bdi>SSIMPL API Specification</h2><a class="self-link" href="#ssimpl-api-specification" aria-label="Permalink for Section 8."></a></div>
 <p>This section defines the reference API for Relay Peers in the SSIMPL protocol. It provides endpoints for <strong>DID
@@ -966,7 +951,7 @@ authoritativeRootHash string Merkle root hash after applying returned entries ar
       }
   };
 })();
-</script><protonpass-root-20ee data-protonpass-role="root" data-protonpass-theme="dark"></protonpass-root-20ee><section id="references" class="appendix"><div class="header-wrapper"><h2 id="a-references"><bdi class="secno">A. </bdi>References</h2><a class="self-link" href="#references" aria-label="Permalink for Appendix A."></a></div><section id="normative-references"><div class="header-wrapper"><h3 id="a-1-normative-references"><bdi class="secno">A.1 </bdi>Normative references</h3><a class="self-link" href="#normative-references" aria-label="Permalink for Appendix A.1"></a></div>
+</script><section id="references" class="appendix"><div class="header-wrapper"><h2 id="a-references"><bdi class="secno">A. </bdi>References</h2><a class="self-link" href="#references" aria-label="Permalink for Appendix A."></a></div><section id="normative-references"><div class="header-wrapper"><h3 id="a-1-normative-references"><bdi class="secno">A.1 </bdi>Normative references</h3><a class="self-link" href="#normative-references" aria-label="Permalink for Appendix A.1"></a></div>
     
     <dl class="bibliography"><dt id="bib-rfc2119">[RFC2119]</dt><dd>
       <a href="https://www.rfc-editor.org/rfc/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. S. Bradner.  IETF. March 1997. Best Current Practice. URL: <a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>
@@ -1294,4 +1279,4 @@ function hidePanel(panel) {
   panel.hidden = true;
   panel.classList.remove("docked");
 }
-})()</script><script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script><protonpass-root-20ee data-protonpass-role="root"></protonpass-root-20ee></body></html>
+})()</script><script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script><protonpass-root-9bdf data-protonpass-role="root" data-protonpass-theme="dark"></protonpass-root-9bdf></body></html>

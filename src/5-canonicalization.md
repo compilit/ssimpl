@@ -59,3 +59,42 @@ Canonicalization guarantees that:
 * Peers can independently verify credentials, ledger entries, and revocations.
 * Forks, replay attacks, and accidental divergence due to encoding differences are prevented.
 
+## Canonical Signature Object Pattern
+
+All cryptographically signed objects in SSIMPL **MUST** follow a uniform, canonical structure, known as the *
+*SignatureEnvelope**. This ensures consistency across all signed data, including ledger entries, Verifiable Credential
+Roots (VCR), revocations, and delta payloads.
+
+### Structure
+
+Each signed object **MUST** include a `SignatureEnvelope` with the following structure:
+
+- **`message`** — The cryptographic hash of the canonical serialization of the `data` object.
+- **`signature`** — Object containing the signature itself:
+   - `publicKey` — Base64url-encoded public key corresponding to the signing private key.
+   - `algorithm` — Signature algorithm used (e.g., EdDSA, ECDSA).
+   - `value` — Base64url-encoded signature value.
+- **`signer`** — DID of the entity producing the signature.
+
+Example (in JSON for clarity):
+
+```json
+{
+  "message": "<hash-of-canonical-data>",
+  "signature": {
+    "publicKey": "<multibase-encoded public key>",
+    "algorithm": "<algorithm identifier>",
+    "value": "<multibase-encoded signature>"
+  },
+  "signer": "<DID of signer>"
+}
+```
+
+### Usage
+
+* Every signed object in SSIMPL, including LedgerEntry, VerifiableCredentialRoot, revocation entries, and delta updates,
+  MUST include a signatureEnvelope.
+* The message field MUST be derived from the canonical serialization of the associated data object, ensuring that
+  identical logical objects produce identical hashes.
+* This pattern guarantees interoperability, verifiability, and deterministic ordering for all signed objects across the
+  network.

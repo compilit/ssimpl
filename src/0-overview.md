@@ -12,7 +12,8 @@ SSIMPL addresses two key problems:
    proofs.
 
 The protocol balances decentralization, peer authority, and optional server-assisted synchronization for efficiency
-and availability.
+and availability. Everything is made to be deterministic by default, so no authorities whatsoever are required except
+the one that signed the Trust Anchor.
 
 ## Identity Trust Model
 
@@ -26,15 +27,21 @@ government-issued ePassports. A valid wallet:
 
 This ensures only owners of verified physical credentials can create valid DIDs.
 
+### Considerations
+
+Identity is hard to verify by nature. Using a state-issued TA is not a perfect solution, but it's the best
+deterministic proof of identity available at the moment.
+
 ## Levels of Authentication
 
 * **Level 0:** DID confirms human ownership (bot detection).
 * **Level 1:** Level 0 + unverified attributes requested via scope.
 * **Level 2:** Level 1 + verified credentials requested via scope.
 
-## Components
+## Roles
 
-* **Wallet:** The actual software responsible for encapsulating the owners credentials and cryptographic material.
+* **Identity** The owner of the TA.
+* **Wallet:** The actual software responsible for encapsulating the owners TA.
 * **Peers:** Mobile devices with the Wallet installed.
 * **Relay Peers:** Servers that act both as Peers and distribution points, allowing other Peers to sync their ledger.
 
