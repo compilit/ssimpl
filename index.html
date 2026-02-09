@@ -5,10 +5,9 @@
   <title>SSIMPL Specification</title>
 
   <script class="remove">
-    var respecConfig = {
+    const respecConfig = {
       specStatus: "ED",                // Editor’s Draft
       shortName: "ssimpl",
-      publishDate: "2026-02-08",
       editors: [
         {
           name: "Bastiën G.A. Bonsel",
@@ -19,6 +18,28 @@
       license: "w3c-software-doc",
       group: ["vc", "did", "webauthn"],
       profile: "publication",
+      localBiblio: {
+        "DID": {
+          "title": "Decentralized Identifiers (DIDs) v1.0",
+          "href": "https://www.w3.org/TR/did-core/",
+        },
+        "VC": {
+          title: "Verifiable Credentials Data Model v2.0",
+          href: "https://www.w3.org/TR/vc-data-model-2.0/",
+        },
+        "BIP32": {
+          "title": "BIP32",
+          "href": "https://en.bitcoin.it/wiki/BIP_0032",
+        },
+        "BIP39": {
+          "title": "BIP39",
+          "href": "https://en.bitcoin.it/wiki/BIP_0039",
+        },
+        "MULTIBASE": {
+          "title": "The Multibase Data Format",
+          "href": "https://www.ietf.org/archive/id/draft-multiformats-multibase-07.html",
+        }
+      }
     };
   </script>
 
@@ -59,18 +80,17 @@
   <p>The protocol balances decentralization, peer authority, and optional server-assisted synchronization for efficiency
     and availability. Everything is made to be deterministic by default, so no authorities whatsoever are required
     except
-    the one that signed the Trust Anchor.</p>
+    the one that signed the Trust Anchor (TA).</p>
   <h2 id="identity-trust-model">Identity Trust Model</h2>
-  <p>SSIMPL identities are rooted in cryptographically verifiable credentials derived from <strong>Trust Anchors
-    (TA)</strong>, such as
+  <p>SSIMPL identities are rooted in cryptographically verifiable credentials derived from <strong>Trust
+    Anchors</strong>, such as
     government-issued ePassports. A valid wallet:</p>
   <ul>
-    <li>MUST extract cryptographic material from a Trust Anchor (TA)</li>
+    <li>MUST extract cryptographic material from a TA</li>
     <li>MUST perform an Active Authentication (AA) challenge.</li>
-    <li>MUST derive a <strong>Verifiable Credential Root (VCR)</strong> tied to the user’s <a
-        href="https://www.w3.org/TR/did-1.1/">DID</a>.
+    <li>MUST derive a <strong>Verifiable Credential Root (<a href="#vcr">VCR</a>)</strong> tied to the user’s DID, as
+      defined in [[DID]].
     </li>
-    <li>SHOULD publish this VCR to Relay Peers.</li>
   </ul>
   <p>This ensures only owners of verifiable physical credentials can create valid DIDs.</p>
   <h3 id="considerations">Considerations</h3>
@@ -83,6 +103,10 @@
     </li>
     <li><strong>Level 2:</strong> Level 1 + verifiable credentials requested via scope.</li>
   </ul>
+  <p>These different levels allow people to authenticate themselves on several levels, depending on the context. Say a
+    person would like to order a product from a website. Using SSIMPL, the webshop could request a certain scope of
+    credentials (like a shipping address). The owner of the identity could then approve or disapprove this request. This
+    flow is very similar to Open ID Connect, except that there is no need for a 3rd party.</p>
   <h2 id="roles">Roles</h2>
   <ul>
     <li><strong>Identity</strong> The owner of the TA.</li>
@@ -92,26 +116,27 @@
       sync their ledger.
     </li>
   </ul>
-
 </section>
 <hr/>
 <section>
   <h1 id="wallet-specification">Wallet Specification</h1>
   <p>The wallet is a Self-Sovereign means of identification that can be installed and bootstrapped entirely independent
     of
-    any authority. It solely relies on cryptographic proof.</p>
-  <h2 id="vcr">VCR</h2>
-  <p>The Verifiable Credential Root is a <a href="https://www.w3.org/TR/vc-data-model-2.0/">VC</a> that contains all
-    data and cryptographic proof
-    necessary to link the signer of this VC to the related public key & <a href="https://www.w3.org/TR/did-1.1/">DID</a>.
-  </p>
+    any authority. It solely relies on cryptographic proof. This cryptographic proof is contained within the so-called
+    VCR. The Verifiable Credential Root is a VC, as defined in [[VC]], necessary to link the signer of this VC to the
+    related public key & DID.</p>
+  <p>
+  <p>The VCR can also be used as the root of a chain of VCs. This way it can, either explicitly or implicitly, verify
+    association
+    to other credentials further up in the chain.</p>
   <h2 id="wallet-requirements">Wallet Requirements</h2>
   <p>Wallets <strong>MUST</strong>:</p>
   <ul>
     <li>Extract cryptographic material from a Trust Anchor (TA).</li>
     <li>Support Active Authentication challenge verification.</li>
-    <li>Derive BIP32 keypairs from the BIP39 mnemonic.</li>
-    <li>Present the BIP39 mnemonic to the owner.</li>
+    <li>Derive BIP32 keypairs (as defined in [[BIP32]]), from the BIP39 mnemonic (as defined in [[BIP39]]).</li>
+    <li>Present the BIP39 mnemonic to the owner. <i>Note: the BIP39 mnemonic should be stored redundantly, preferably
+      offline.</i></note></li>
     <li>Store the master BIP32 keypair in a secure storage section of their device (e.g. Apple Keychain, Android
       Keystore).
     </li>
@@ -122,9 +147,8 @@
   <p>Wallets <strong>SHOULD</strong>:</p>
   <ul>
     <li>Encrypt credentials for local storage.</li>
-    <li>Extract and store additional <a href="https://www.w3.org/TR/vc-data-model-2.0/">VC</a>s such as DG11 for user
+    <li>Extract and store additional VCs such as DG11 for user
       convenience.
-      Other <a href="https://www.w3.org/TR/vc-data-model-2.0/">VC</a>s can be verified by the VCR
     </li>
     <li>Send their signed VCR to Relay Peers.</li>
   </ul>
@@ -140,7 +164,6 @@
     <li>Submission of the VCR to a Relay Peer.</li>
   </ol>
   <h2 id="wallet-functionality">Wallet Functionality</h2>
-  <p>In order to function properly, it is essential certain behavior is implemented:</p>
   <ul>
     <li>Before any transaction, the Wallet MUST call either the Well-known Relay Peer, or one of it's known Relay Peers
       for the
@@ -168,7 +191,8 @@
       Wallet on a new device, then the owner MUST revoke their current DID and reinitialize their wallet.
     </li>
     <li><strong>The owners BIP39 mnemonic is lost/stolen</strong>: The owner MUST revoke their current DID and
-      reinitialize their wallet.
+      reinitialize their wallet. This will result in a double entry in respect to the same TA. But the 'older' one will
+      be invalid.
     </li>
     <li><strong>The owners BIP39 mnemonic AND TA is lost/stolen</strong>: The owner MUST revoke their current DID
       (through delegation) and reinitialize their wallet.
@@ -180,7 +204,7 @@
     has a simple solution: a trusted Peer (like a close relative) exchange a complete LedgerEntryRevocation from each
     other. In case of emergency, either Peer can always revoke the other Peers DID. This is a two-sided solution of
     course: it provides a nice safety net, but also introduces another safety risk. For these kind of scenario's, there
-    are rarely perfect solutions. Owners are therefor advised to try and avoid this one at all cost.</p>
+    are rarely perfect solutions. Owners are therefore advised to try and avoid this one at all cost.</p>
 </section>
 <hr/>
 <section>
@@ -189,7 +213,7 @@
     hostname. It acts like any other Peer, but it also adds a storage layer for the Ledger and serves as distribution
     point for the Ledger. All Relay Peers together form a subnetwork on which all other (mobile) Peers 'ride'.
     This is purely infrastructural to help communication between Peers. It doesn't give any special privileges or
-    authorities to any of the Relay Peers and does therefor still fulfill all requirements to be called
+    authorities to any of the Relay Peers and does therefore still fulfill all requirements to be called
     decentralized.</p>
   <h3 id="well-known-relay-peer">The well-known Relay Peer</h3>
   <p>In order to establish a stable network, there should always be one well-known Relay Peer, which allows another
@@ -445,6 +469,9 @@
     <li>Signing the message binds the signer cryptographically to the exact canonical representation of the object.</li>
   </ol>
   <h2 id="deterministic-encoding">Deterministic Encoding</h2>
+  <p>There are many ways to encode raw bytes or strings, and more are being invented as we speak. It is highly
+    inefficient to make these encodings contract-based. SSIMPL therefore highly recommends the use of the Multibase Data
+    Format, as defined in [[MULTIBASE]], which is deterministic.</p>
   <ul>
     <li>Multibase or Base64url encoding MUST be used consistently for any binary data (e.g., cryptographic proofs).</li>
     <li>Multibase-encoding SHOULD be used consistently for any binary data (e.g., cryptographic proofs).</li>
@@ -527,15 +554,32 @@
 </section>
 <hr/>
 <section>
-  <h1 id="ssimpl-api-specification">SSIMPL API Specification</h1>
+  <h1 id="ssimpl-api-specification">SSIMPL <a href="https://raw.githubusercontent.com/compilit/ssimpl/refs/heads/main/ssimpl-spec.json">API Specification</a></h1>
   <p>This section defines the reference API for Relay Peers in the SSIMPL protocol. It provides endpoints for <strong>DID
     registration</strong>, <strong>revocation</strong>, and <strong>ledger synchronization</strong>.</p>
   <p>All requests <strong>MUST</strong> be authenticated using a <code>Bearer</code> token, containing a <strong>signed
     DID in the canonical
     SignatureEnvelope format, multibase-encoded</strong>.</p>
   <h2 id="endpoints">Endpoints</h2>
+  <h3 id="register-relay-peer">Register a Relay Peer</h3>
+  <p><strong>POST</strong> <code>/peer</code></p>
+  <p>Purpose: Make a Relay Peer known to another Relay Peer.</p>
+  <p>Request payload: RelayPeerAnnouncement object</p>
+  <p><strong>Example:</strong></p>
+  <pre><code class="lang-json">{
+  <span class="hljs-string">"data"</span>: {
+    <span class="hljs-string">"did"</span>: did:key:1234abc...example
+    <span class="hljs-string">"hostname"</span>: some.hostname.org
+  },
+  <span class="hljs-string">"signatureEnvelope"</span>: {
+    ...
+  }
+}
+</code></pre>
+  <p><strong>Response: 201 OK</strong></p>
+  <hr/>
   <h3 id="perform-a-handshake">Perform a handshake</h3>
-  <p><strong>POST</strong> <code>/identity</code></p>
+  <p><strong>POST</strong> <code>/peer/identity</code></p>
   <p><strong>Purpose:</strong> Allows (Relay) Peers to check the health an initial validity of the Relay Peer</p>
   <p><strong>Request payload SignedObject:</strong></p>
   <table>
@@ -694,23 +738,6 @@
 }
 </code></pre>
   <p><strong>Response: 204 OK</strong></p>
-  <hr/>
-  <h3 id="register-relay-peer">Register a Relay Peer</h3>
-  <p><strong>POST</strong> <code>/relay-peer</code></p>
-  <p>Purpose: Make a Relay Peer known to another Relay Peer.</p>
-  <p>Request payload: RelayPeerAnnouncement object</p>
-  <p><strong>Example:</strong></p>
-  <pre><code class="lang-json">{
-  <span class="hljs-string">"data"</span>: {
-    <span class="hljs-string">"did"</span>: did:key:1234abc...example
-    <span class="hljs-string">"hostname"</span>: some.hostname.org
-  },
-  <span class="hljs-string">"signatureEnvelope"</span>: {
-    ...
-  }
-}
-</code></pre>
-  <p><strong>Response: 201 OK</strong></p>
   <hr/>
   <h2 id="shared-object-schemas">Shared Object Schemas</h2>
   <h3 id="signedobject-signed-t-">SignedObject (Signed&lt;T&gt;)</h3>
@@ -888,7 +915,6 @@
     </tr>
     </tbody>
   </table>
-
 </section>
 </body>
 </html>

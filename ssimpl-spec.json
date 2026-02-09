@@ -18,8 +18,36 @@
     }
   ],
   "paths": {
-    "/identity": {
+    "/peer": {
       "post": {
+        "tags": [
+          "Relay Peer"
+        ],
+        "summary": "Announce that the calling Relay Peer is active",
+        "description": "Returns a signed DID matching",
+        "operationId": "announceRelayPeer",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignedRelayPeerAnnouncement"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/peer/identity": {
+      "post": {
+        "tags": [
+          "Relay Peer"
+        ],
         "summary": "Verify whether this Relay Peer exists and is healthy",
         "description": "Returns a signed DID matching",
         "operationId": "pingRelayPeer",
@@ -49,6 +77,9 @@
     },
     "/ledger/delta": {
       "post": {
+        "tags": [
+          "Ledger"
+        ],
         "summary": "Request ledger delta",
         "description": "Returns ledger entries newer than the provided epoch if the caller is out of sync.",
         "operationId": "requestLedgerDelta",
@@ -260,6 +291,24 @@
             "type": "object",
             "properties": {
               "did": {
+                "type": "string"
+              }
+            }
+          },
+          "signatureEnvelope": {
+            "$ref": "#/components/schemas/SignatureEnvelope"
+          }
+        }
+      },
+      "SignedRelayPeerAnnouncement": {
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "did": {
+                "type": "string"
+              },
+              "hostname": {
                 "type": "string"
               }
             }
