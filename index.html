@@ -38,7 +38,7 @@
 </section>
 
 <section id="sotd"></section>
-
+<hr/>
 <section>
   <h1 id="overview">Overview</h1>
   <p>The SSIMPL protocol defines a <strong>Self-Sovereign Identity &amp; Mondial Pseudonymous Ledger</strong> framework
@@ -94,7 +94,7 @@
   </ul>
 
 </section>
-
+<hr/>
 <section>
   <h1 id="wallet-specification">Wallet Specification</h1>
   <p>The wallet is a Self-Sovereign means of identification that can be installed and bootstrapped entirely independent
@@ -102,7 +102,7 @@
     any authority. It solely relies on cryptographic proof.</p>
   <h2 id="vcr">VCR</h2>
   <p>The Verifiable Credential Root is a <a href="https://www.w3.org/TR/vc-data-model-2.0/">VC</a> that contains all
-     data and cryptographic proof
+    data and cryptographic proof
     necessary to link the signer of this VC to the related public key & <a href="https://www.w3.org/TR/did-1.1/">DID</a>.
   </p>
   <h2 id="wallet-requirements">Wallet Requirements</h2>
@@ -110,7 +110,8 @@
   <ul>
     <li>Extract cryptographic material from a Trust Anchor (TA).</li>
     <li>Support Active Authentication challenge verification.</li>
-    <li>Derive BIP32 keypairs from a BIP39 mnemonic.</li>
+    <li>Derive BIP32 keypairs from the BIP39 mnemonic.</li>
+    <li>Present the BIP39 mnemonic to the owner.</li>
     <li>Store the master BIP32 keypair in a secure storage section of their device (e.g. Apple Keychain, Android
       Keystore).
     </li>
@@ -127,13 +128,13 @@
     </li>
     <li>Send their signed VCR to Relay Peers.</li>
   </ul>
-  <h2 id="activation-process-in-case-of-an-e-passport-">Example activation Process (in case of an e-Passport)</h2>
+  <h2 id="activation-process-in-case-of-an-e-passport-">Example activation Process (in case of an ePassport)</h2>
   <ol>
     <li>User installs wallet.</li>
     <li>Wallet prompts for MRZ line.</li>
     <li>NFC scan and extraction of passport data.</li>
     <li>Creation of Verifiable Credential Root (VCR).</li>
-    <li>BIP39 mnemonic generation.</li>
+    <li>BIP39 mnemonic generation (and presentation to the user).</li>
     <li>BIP32 keypair derivation and storage.</li>
     <li>Signing of the VCR.</li>
     <li>Submission of the VCR to a Relay Peer.</li>
@@ -157,8 +158,31 @@
     </li>
   </ul>
 
-</section>
+  <h2 id="wallet-security">Wallet Security</h2>
+  <p>A SSIMPL Wallet has certain security scenario's that need to be addressed</p>
+  <ul>
+    <li><strong>The owners TA is lost/stolen</strong>: The owner MUST revoke their current DID - No transactions can
+      take place until a new TA has been used to bootstrap.
+    </li>
+    <li><strong>The owners device is lost/stolen</strong>: The owner MUST use their BIP39 mnemonic to restore their
+      Wallet on a new device, then the owner MUST revoke their current DID and reinitialize their wallet.
+    </li>
+    <li><strong>The owners BIP39 mnemonic is lost/stolen</strong>: The owner MUST revoke their current DID and
+      reinitialize their wallet.
+    </li>
+    <li><strong>The owners BIP39 mnemonic AND TA is lost/stolen</strong>: The owner MUST revoke their current DID
+      (through delegation) and reinitialize their wallet.
+    </li>
+  </ul>
 
+  <h3>Revocation Delegation</h3>
+  <p>In order to mitigate the most dire scenario, where the owner loses both their TA and their BIP39 mnemonic, SSIMPL
+    has a simple solution: a trusted Peer (like a close relative) exchange a complete LedgerEntryRevocation from each
+    other. In case of emergency, either Peer can always revoke the other Peers DID. This is a two-sided solution of
+    course: it provides a nice safety net, but also introduces another safety risk. For these kind of scenario's, there
+    are rarely perfect solutions. Owners are therefor advised to try and avoid this one at all cost.</p>
+</section>
+<hr/>
 <section>
   <h1 id="relay-peer-specification">Relay Peer Specification</h1>
   <p>The Relay Peer is a special kind of Peer in the sense that it is static and reachable over the internet on a fixed
@@ -202,7 +226,7 @@
   </ol>
 
 </section>
-
+<hr/>
 <section>
   <h1 id="ledger-specification">Ledger Specification</h1>
   <p>The SSIMPL ledger is a <strong>deterministically canonical, peer-replicated structure</strong> tracking valid DIDs,
@@ -358,7 +382,7 @@
   </ul>
 
 </section>
-
+<hr/>
 <section>
   <h1 id="conclusion">Conclusion</h1>
   <p>SSIMPL provides a <strong>self-sovereign identity framework</strong> with a deterministic, peer-validated ledger,
@@ -368,7 +392,7 @@
     ensuring a fully
     trustworthy and decentralized identity ecosystem.</p>
 </section>
-
+<hr/>
 <section>
   <h2 id="canonicalization-rules">Canonicalization Rules</h2>
   <p>To ensure that signatures are verifiable and consistent across all peers, every signed object in SSIMPL (including
@@ -463,7 +487,7 @@
     </li>
     <li><strong><code>signer</code></strong> — DID of the entity producing the signature.</li>
   </ul>
-  <p>Example (in JSON for clarity):</p>
+  <p><strong>Example (in JSON for clarity):</strong></p>
   <pre><code class="lang-json">{
   <span class="hljs-attr">"message"</span>: <span class="hljs-string">"&lt;hash-of-canonical-data&gt;"</span>,
   <span class="hljs-attr">"signature"</span>: {
@@ -501,7 +525,7 @@
   <p>This canonical signature object pattern provides a single, consistent approach for proving authorship and integrity
     across all SSIMPL objects.</p>
 </section>
-
+<hr/>
 <section>
   <h1 id="ssimpl-api-specification">SSIMPL API Specification</h1>
   <p>This section defines the reference API for Relay Peers in the SSIMPL protocol. It provides endpoints for <strong>DID
@@ -513,7 +537,7 @@
   <h3 id="perform-a-handshake">Perform a handshake</h3>
   <p><strong>POST</strong> <code>/identity</code></p>
   <p><strong>Purpose:</strong> Allows (Relay) Peers to check the health an initial validity of the Relay Peer</p>
-  <p><strong>Request payload (<code>SignedObject</code>):</strong></p>
+  <p><strong>Request payload SignedObject:</strong></p>
   <table>
     <thead>
     <tr>
@@ -535,7 +559,7 @@
     </tr>
     </tbody>
   </table>
-  <p><strong>Response payload (<code>SignedObject</code>):</strong></p>
+  <p><strong>Response: 200 OK + SignedObject:</strong></p>
   <table>
     <thead>
     <tr>
@@ -561,7 +585,7 @@
   <p><strong>POST</strong> <code>/ledger/delta</code></p>
   <p><strong>Purpose:</strong> Allows a Peer to request ledger entries that are newer than a given epoch, if the peer is
     out of sync.</p>
-  <p><strong>Request payload (<code>LedgerDeltaRequest</code>):</strong></p>
+  <p><strong>Request payload LedgerDeltaRequest:</strong></p>
   <table>
     <thead>
     <tr>
@@ -597,12 +621,12 @@
   <span class="hljs-attr">"rootHash"</span>: <span class="hljs-string">"abcdef1234567890"</span>
 }
 </code></pre>
-  <p>Response payload (LedgerDeltaResponse):</p>
+  <p><strong>Response: 200 OK + LedgerDeltaResponse:</strong></p>
   <p>Field Type Description
     currentEpoch integer Current epoch of the relay peer ledger
     authoritativeRootHash string Merkle root hash after applying returned entries array Ordered ledger entries newer
     than lastEpoch</p>
-  <p>Example:</p>
+  <p><strong>Example:</strong></p>
   <pre><code class="lang-json">{
   <span class="hljs-string">"currentEpoch"</span>: <span class="hljs-number">43</span>,
   <span class="hljs-string">"authoritativeRootHash"</span>: <span class="hljs-string">"1234abcd5678ef90"</span>,
@@ -633,12 +657,12 @@
   ]
 }
 </code></pre>
-  <p>⸻</p>
-  <p>Register a DID</p>
+  <hr/>
+  <h3 id="register-did">Register a DID</h3>
   <p><strong>POST</strong> <code>/ledger</code></p>
   <p>Purpose: Register a new DID on the ledger.</p>
-  <p>Request payload: LedgerEntry object</p>
-  <p>Example:</p>
+  <p><strong>Request payload: LedgerEntry</strong></p>
+  <p><strong>Example:</strong></p>
   <pre><code class="lang-json">{
   <span class="hljs-string">"data"</span>: {
     <span class="hljs-string">"verifiableCredentialRoot"</span>: {
@@ -653,13 +677,13 @@
   }
 }
 </code></pre>
-  <p>Response: 200 OK on success.</p>
-  <p>⸻</p>
-  <p>Revoke a DID</p>
+  <p><strong>Response: 201 OK</strong></p>
+  <hr/>
+  <h3 id="revoke-did">Revoke a DID</h3>
   <p><strong>PUT</strong> <code>/ledger</code></p>
   <p>Purpose: Revoke a DID by submitting a revocation payload.</p>
   <p>Request payload: LedgerEntryRevocation object</p>
-  <p>Example:</p>
+  <p><strong>Example:</strong></p>
   <pre><code class="lang-json">{
   <span class="hljs-string">"data"</span>: {
     <span class="hljs-string">"did"</span>: <span class="hljs-string">"did:key:z6Mkw...example"</span>
@@ -669,13 +693,13 @@
   }
 }
 </code></pre>
-  <p>Response: 200 OK on success.</p>
-  <p>⸻</p>
-  <p>Register a Relay Peer</p>
+  <p><strong>Response: 204 OK</strong></p>
+  <hr/>
+  <h3 id="register-relay-peer">Register a Relay Peer</h3>
   <p><strong>POST</strong> <code>/relay-peer</code></p>
   <p>Purpose: Make a Relay Peer known to another Relay Peer.</p>
   <p>Request payload: RelayPeerAnnouncement object</p>
-  <p>Example:</p>
+  <p><strong>Example:</strong></p>
   <pre><code class="lang-json">{
   <span class="hljs-string">"data"</span>: {
     <span class="hljs-string">"did"</span>: did:key:1234abc...example
@@ -686,25 +710,9 @@
   }
 }
 </code></pre>
-  <p>Response: 200 OK on success.</p>
-  <p>⸻</p>
-  <p>Revoke a DID</p>
-  <p><strong>PUT</strong> <code>/ledger</code></p>
-  <p>Purpose: Revoke a DID by submitting a revocation payload.</p>
-  <p>Request payload: LedgerEntryRevocation object</p>
-  <p>Example:</p>
-  <pre><code class="lang-json">{
-  <span class="hljs-string">"data"</span>: {
-    <span class="hljs-string">"did"</span>: <span class="hljs-string">"did:key:z6Mkw...example"</span>
-  },
-  <span class="hljs-string">"signatureEnvelope"</span>: {
-    ...
-  }
-}
-</code></pre>
-  <p>Response: 200 OK on success.</p>
-  <p>⸻</p>
-  <p>Shared Object Schemas</p>
+  <p><strong>Response: 201 OK</strong></p>
+  <hr/>
+  <h2 id="shared-object-schemas">Shared Object Schemas</h2>
   <h3 id="signedobject-signed-t-">SignedObject (Signed&lt;T&gt;)</h3>
   <table>
     <thead>
@@ -762,10 +770,10 @@
     <tr>
       <td>did</td>
       <td>object</td>
-      <td>Contains <code>did</code> and <code>taHash</code> (hash of the Trust Anchor)</td>
+      <td>Contains <code>did</code> and <code>taId</code> (id of the Trust Anchor, e.g. the documentNumber)</td>
     </tr>
     <tr>
-      <td>taHash</td>
+      <td>taId</td>
       <td>object</td>
       <td>Signature verifying the <code>data</code></td>
     </tr>
@@ -793,7 +801,7 @@
     </tr>
     </tbody>
   </table>
-  <h3 id="proof">Proof</h3>
+  <h3 id="proof">Proof (Example, in case an ePassport is used as TA)</h3>
   <table>
     <thead>
     <tr>
