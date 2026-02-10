@@ -35,7 +35,7 @@
           "title": "BIP39",
           "href": "https://en.bitcoin.it/wiki/BIP_0039",
         },
-        "MULTIBASE": {
+        "Multibase": {
           "title": "The Multibase Data Format",
           "href": "https://www.ietf.org/archive/id/draft-multiformats-multibase-07.html",
         }
@@ -54,12 +54,32 @@
   </p>
 </section>
 
-<section id="conformance">
-
-</section>
+<section id="conformance"></section>
 
 <section id="sotd"></section>
+
 <hr/>
+
+<section>
+  <h1 id="introduction">Introduction</h1>
+
+  <p>The internet has evolved rapidly, but with each iteration new challenges have emerged in protecting
+    personal data. While legislation attempts to safeguard users’ rights, technical solutions are
+    often necessary to prevent misuse and unauthorized access to sensitive information.</p>
+
+  <p>Current authentication and authorization methods rely heavily on centralized providers. OpenID Connect
+    flows and other single sign-on mechanisms place identity management in the hands of commercial
+    services, which cannot always guarantee the trustworthiness or privacy of the credentials they issue.</p>
+
+  <p>In contrast, physical-world identity verification relies on standardized, verifiable documents such
+    as passports or driver’s licenses. Informal authorization uses signatures or initials, which provide
+    contextually appropriate trust without centralized control. SSIMPL was designed to replicate these
+    principles in the digital realm, providing self-sovereign, verifiable credentials while minimizing
+    reliance on third-party intermediaries.</p>
+</section>
+
+<hr/>
+
 <section>
   <h1 id="overview">Overview</h1>
   <p>The SSIMPL protocol defines a <strong>Self-Sovereign Identity &amp; Mondial Pseudonymous Ledger</strong> framework
@@ -68,7 +88,7 @@
     revocation. It bridges physical trust anchors (e.g., ePassports) with digital identity systems, ensuring
     cryptographic
     verification without reliance on centralized authorities.</p>
-  <p>SSIMPL addresses two key problems:</p>
+  <p>SSIMPL addresses several key problems:</p>
   <ol>
     <li><strong>User control over digital identity</strong> – eliminating reliance on centralized identity providers.
     </li>
@@ -76,6 +96,7 @@
       cryptographic
       proofs.
     </li>
+    <li><strong>Sharing of identity-related data</strong> - allowing secure and transparent sharing of data</li>
   </ol>
   <p>The protocol balances decentralization, peer authority, and optional server-assisted synchronization for efficiency
     and availability. Everything is made to be deterministic by default, so no authorities whatsoever are required
@@ -118,7 +139,9 @@
     </li>
   </ul>
 </section>
+
 <hr/>
+
 <section>
   <h1 id="wallet-specification">Wallet Specification</h1>
   <p>The wallet is a Self-Sovereign means of identification that can be installed and bootstrapped entirely independent
@@ -153,17 +176,6 @@
     </li>
     <li>Send their signed VCR to Relay Peers.</li>
   </ul>
-  <h2 id="activation-process-in-case-of-an-e-passport-">Example activation Process (in case of an ePassport)</h2>
-  <ol>
-    <li>User installs wallet.</li>
-    <li>Wallet prompts for MRZ line.</li>
-    <li>NFC scan and extraction of passport data.</li>
-    <li>Creation of Verifiable Credential Root (VCR).</li>
-    <li>BIP39 mnemonic generation (and presentation to the user).</li>
-    <li>BIP32 keypair derivation and storage.</li>
-    <li>Signing of the VCR.</li>
-    <li>Submission of the VCR to a Relay Peer.</li>
-  </ol>
   <h2 id="wallet-functionality">Wallet Functionality</h2>
   <ul>
     <li>Before any transaction, the Wallet MUST call either the Well-known Relay Peer, or one of it's known Relay Peers
@@ -201,20 +213,34 @@
     <li><strong>⚠️The owners BIP39 mnemonic AND TA is lost/stolen AND Delegated Revocation hasn't been
       configured</strong>:
       There is currently no way to come back from this scenario. For 10 years since the VCR registration, a malicious
-      actor could potentially impersonate the owner of the original Identity.
+      actor could potentially impersonate the owner of the original Identity. SSIMPL implementations MUST therefore have
+      a mandatory Delegated Revocation exchange flow.
     </li>
   </ul>
 
-  <h3>Delegated Revocation</h3>
-  <p>In order to mitigate the most dire scenario, where the owner loses both their TA and their BIP39 mnemonic, SSIMPL
-    has a simple solution: two Peers (you and someone you trust, like a close relative) exchange a complete
-    <a href="#signedobject-ledgerentryrevocation">LedgerEntryRevocation</a> from each
-    other. In case of emergency, either Peer can always revoke the other Peers DID. This is a two-sided solution of
+  <h2>Delegated Revocation</h2>
+  <p>In order to mitigate the most dire scenario, SSIMPL
+    offers a relatively straight-forward solution: two Peers (you and someone you trust, like a close relative) exchange a complete
+    <a href="#signedobject-ledgerentryrevocation">LedgerEntryRevocation</a>. In case of emergency, either Peer can always revoke the other Peers DID. This is a two-sided solution of
     course: it provides a nice safety net, but also introduces another safety risk. For these kind of scenario's, there
-    are rarely perfect solutions. Owners are therefore advised to try and avoid this one at all cost.</p>
-  <p>To support Delegated Revocation, an extra (optional) field is added to the</p>
+    are rarely perfect solutions.</p>
+  <p>To support Delegated Revocation, an extra (otherwise optional) field is present: taId. Which allows future deny-listing of the use taId (e.g. the document number of the passport)</p>
+
+  <h2 id="activation-process-in-case-of-an-e-passport-">Example activation Process (in case of an ePassport)</h2>
+  <ol>
+    <li>User installs wallet.</li>
+    <li>Wallet prompts for MRZ line.</li>
+    <li>NFC scan and extraction of passport data.</li>
+    <li>Creation of Verifiable Credential Root (VCR).</li>
+    <li>BIP39 mnemonic generation (and presentation to the user).</li>
+    <li>BIP32 keypair derivation and storage.</li>
+    <li>Signing of the VCR.</li>
+    <li>Submission of the VCR to a Relay Peer.</li>
+  </ol>
 </section>
+
 <hr/>
+
 <section>
   <h1 id="relay-peer-specification">Relay Peer Specification</h1>
   <p>The Relay Peer is a special kind of Peer in the sense that it is static and reachable over the internet on a fixed
@@ -258,7 +284,9 @@
   </ol>
 
 </section>
+
 <hr/>
+
 <section>
   <h1 id="ledger-specification">Ledger Specification</h1>
   <p>The SSIMPL ledger is a <strong>deterministically canonical, peer-replicated structure</strong> tracking valid DIDs,
@@ -414,7 +442,9 @@
   </ul>
 
 </section>
+
 <hr/>
+
 <section>
   <h1 id="conclusion">Conclusion</h1>
   <p>SSIMPL provides a <strong>self-sovereign identity framework</strong> with a deterministic, peer-validated ledger,
@@ -424,7 +454,9 @@
     ensuring a fully
     trustworthy and decentralized identity ecosystem.</p>
 </section>
+
 <hr/>
+
 <section>
   <h2 id="canonicalization-rules">Canonicalization Rules</h2>
   <p>To ensure that signatures are verifiable and consistent across all peers, every signed object in SSIMPL (including
@@ -479,7 +511,7 @@
   <h2 id="deterministic-encoding">Deterministic Encoding</h2>
   <p>There are many ways to encode raw bytes or strings, and more are being invented as we speak. It is highly
     inefficient to make these encodings contract-based. SSIMPL therefore highly recommends the use of the Multibase Data
-    Format, as defined in [[MULTIBASE]], which is deterministic.</p>
+    Format, as defined in [[Multibase]], which is deterministic.</p>
   <ul>
     <li>Multibase or Base64url encoding MUST be used consistently for any binary data (e.g., cryptographic proofs).</li>
     <li>Multibase-encoding SHOULD be used consistently for any binary data (e.g., cryptographic proofs).</li>
@@ -564,14 +596,15 @@
 <hr/>
 
 <section>
-  <h1 id="ssimpl-api-specification">SSIMPL <a
-      href="https://raw.githubusercontent.com/compilit/ssimpl/refs/heads/main/ssimpl-spec.json">API Specification</a>
+  <h1 id="ssimpl-api-specification">SSIMPL API Specification
   </h1>
   <p>This section defines the reference API for Relay Peers in the SSIMPL protocol. It provides endpoints for <strong>DID
     registration</strong>, <strong>revocation</strong>, and <strong>ledger synchronization</strong>.</p>
   <p>All requests <strong>MUST</strong> be authenticated using a <code>Bearer</code> token, containing a <strong>signed
     DID in the canonical
     SignatureEnvelope format, multibase-encoded</strong>.</p>
+  <p>You can also check the open-api spec <a
+      href="https://raw.githubusercontent.com/compilit/ssimpl/refs/heads/main/ssimpl-spec.json">here</a>.</p>
   <h2 id="endpoints">Endpoints</h2>
 
   <h3 id="register-relay-peer">Register a Relay Peer</h3>
@@ -694,7 +727,8 @@
   <hr/>
   <h3 id="revoke-did">Revoke a DID</h3>
   <p><strong>PUT</strong> <code>/ledger</code></p>
-  <p>Purpose: Revoke a DID by submitting a revocation payload. Providing the taId means that the related TA can NEVER be used again to initialize a Wallet/register a DID. The taId is mandatory for Delegated Revocation.</p>
+  <p>Purpose: Revoke a DID by submitting a revocation payload. Providing the taId means that the related TA can NEVER be
+    used again to initialize a Wallet/register a DID. The taId is mandatory for Delegated Revocation.</p>
   <p><strong>Request payload: <a href="#signedobject-ledgerentryrevocation">LedgerEntryRevocation</a></strong></p>
   <p><strong>Example:</strong></p>
   <pre><code class="lang-json">{
@@ -750,7 +784,8 @@
     <tr>
       <td>signatureEnvelope</td>
       <td>object</td>
-      <td>Signature verifying the integrity of <code>data</code>. See <a href="#signatureenvelope">SignatureEnvelope</a></td>
+      <td>Signature verifying the integrity of <code>data</code>. See <a href="#signatureenvelope">SignatureEnvelope</a>
+      </td>
     </tr>
     </tbody>
   </table>
@@ -767,12 +802,14 @@
     <tr>
       <td>did</td>
       <td>string</td>
-      <td>The DID to be associated with the VCR - has to be the same as the one in the </td>
+      <td>The DID to be associated with the VCR - has to be the same as the one in the</td>
     </tr>
     <tr>
       <td>taId</td>
       <td>string</td>
-      <td>The id related to the TA (e.g. the documentNumber). Prevents double registration and allows for deny-listing the TA for future registrations.</td>
+      <td>The id related to the TA (e.g. the documentNumber). Prevents double registration and allows for deny-listing
+        the TA for future registrations.
+      </td>
     </tr>
     </tbody>
   </table>
@@ -968,6 +1005,122 @@
     </tr>
     </tbody>
   </table>
+</section>
+<section class="appendix informative">
+  <h2>Subscription-Based Credential Distribution</h2>
+
+  <p>
+    This appendix defines an optional mechanism for scoped, push-based credential
+    distribution between peers. Subscriptions allow a peer to receive updates
+    to specific verifiable credentials issued by another peer, without granting
+    access to the full identity or affecting ledger state.
+  </p>
+
+  <p>
+    Subscriptions are <strong>off-ledger</strong> and do not participate in DID
+    registration, ledger consensus, Merkle state construction, or revocation
+    semantics. They are purely a delivery mechanism for already valid,
+    cryptographically signed credentials.
+  </p>
+
+  <h3>Subscription Model</h3>
+
+  <p>
+    A subscription represents a unidirectional relationship from a
+    <em>Subject</em> to a <em>Subscriber</em>, granting the subscriber access to
+    a bounded scope of credentials for a finite duration.
+  </p>
+
+  <p>
+    The Subject retains full control over:
+  </p>
+
+  <ul>
+    <li>Which credentials are shared</li>
+    <li>The duration of the subscription</li>
+    <li>The delivery mechanism</li>
+    <li>Revocation of the subscription</li>
+  </ul>
+
+  <h3>Subscription Properties</h3>
+
+  <p>
+    A subscription is defined by the following conceptual properties:
+  </p>
+
+  <ul>
+    <li><strong>subject_did</strong> – The DID of the credential holder</li>
+    <li><strong>subscriber_did</strong> – The DID of the receiving peer</li>
+    <li><strong>scope</strong> – A bounded set of credential identifiers or claim types</li>
+    <li><strong>expires_at</strong> – Expiration timestamp of the subscription</li>
+    <li><strong>delivery_endpoint</strong> – Endpoint or channel used for push delivery</li>
+    <li><strong>signature_by_subject</strong> – Signature authorizing the subscription</li>
+  </ul>
+
+  <p>
+    The exact wire format of subscription objects is implementation-defined and
+    outside the scope of this specification.
+  </p>
+  <p>As far as authentication goes: it is recommended to use a Multibase encoded SignedObject&lt;DID&gt;.</p>
+
+  <h3>Subscription Flow</h3>
+
+  <ol>
+    <li>The Subscriber requests access to a scoped set of credentials.</li>
+    <li>The Subject evaluates the request and, if accepted, signs a subscription grant.</li>
+    <li>The Subject stores the subscription locally.</li>
+    <li>When a scoped credential is created, updated, or reissued, the Subject
+      pushes the new signed credential to the Subscriber.
+    </li>
+    <li>The Subscriber verifies the credential signature and scope independently.</li>
+  </ol>
+
+  <h3>Verification</h3>
+
+  <p>
+    Subscription-delivered credentials are verified in the same way as any other
+    SSIMPL verifiable credential:
+  </p>
+
+  <ul>
+    <li>Signature verification using the issuer’s DID key</li>
+    <li>Scope validation against the subscription grant</li>
+    <li>Expiration and revocation checks as defined by the credential type</li>
+  </ul>
+
+  <p>
+    No ledger interaction is required to validate a subscription or its delivered
+    credentials.
+  </p>
+
+  <h3>Revocation and Expiry</h3>
+
+  <p>
+    Subscriptions are revoked by the Subject by ceasing delivery of credentials
+    and optionally notifying the Subscriber. Expired subscriptions MUST NOT be
+    used to deliver new credentials.
+  </p>
+
+  <p>
+    Subscription revocation does not affect the validity of previously issued
+    credentials, which remain verifiable according to their own signatures and
+    expiry rules.
+  </p>
+
+  <h3>Security Considerations</h3>
+
+  <ul>
+    <li>Subscriptions MUST be explicitly authorized by the Subject via signature.</li>
+    <li>Subscribers MUST verify credential signatures independently.</li>
+    <li>Relay Peers MUST NOT interpret or enforce subscription semantics.</li>
+    <li>Subscriptions MUST NOT be used to infer global identity state.</li>
+  </ul>
+
+  <p>
+    Implementations SHOULD take care to minimize metadata leakage through
+    delivery endpoints and timing correlations.
+  </p>
+
 </section>
 </body>
 </html>
