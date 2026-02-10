@@ -88,7 +88,8 @@
   <ul>
     <li>MUST extract cryptographic material from a TA</li>
     <li>MUST perform an Active Authentication (AA) challenge.</li>
-    <li>MUST derive a <strong>Verifiable Credential Root (<a href="#vcr">VCR</a>)</strong> tied to the user’s DID, as
+    <li>MUST derive a <strong>Verifiable Credential Root (<a href="#wallet-specification">VCR</a>)</strong> tied to the
+      user’s DID, as
       defined in [[DID]].
     </li>
   </ul>
@@ -192,19 +193,26 @@
     </li>
     <li><strong>The owners BIP39 mnemonic is lost/stolen</strong>: The owner MUST revoke their current DID and
       reinitialize their wallet. This will result in a double entry in respect to the same TA. But the 'older' one will
-      be invalid.
+      be automatically ignored.
     </li>
     <li><strong>The owners BIP39 mnemonic AND TA is lost/stolen</strong>: The owner MUST revoke their current DID
-      (through delegation) and reinitialize their wallet.
+      (through Delegated Revocation) and reinitialize their wallet on a new device using a new TA.
+    </li>
+    <li><strong>⚠️The owners BIP39 mnemonic AND TA is lost/stolen AND Delegated Revocation hasn't been
+      configured</strong>:
+      There is currently no way to come back from this scenario. For 10 years since the VCR registration, a malicious
+      actor could potentially impersonate the owner of the original Identity.
     </li>
   </ul>
 
-  <h3>Revocation Delegation</h3>
+  <h3>Delegated Revocation</h3>
   <p>In order to mitigate the most dire scenario, where the owner loses both their TA and their BIP39 mnemonic, SSIMPL
-    has a simple solution: a trusted Peer (like a close relative) exchange a complete LedgerEntryRevocation from each
+    has a simple solution: two Peers (you and someone you trust, like a close relative) exchange a complete
+    <a href="#signedobject-ledgerentryrevocation">LedgerEntryRevocation</a> from each
     other. In case of emergency, either Peer can always revoke the other Peers DID. This is a two-sided solution of
     course: it provides a nice safety net, but also introduces another safety risk. For these kind of scenario's, there
     are rarely perfect solutions. Owners are therefore advised to try and avoid this one at all cost.</p>
+  <p>To support Delegated Revocation, an extra (optional) field is added to the</p>
 </section>
 <hr/>
 <section>
@@ -552,112 +560,63 @@
   <p>This canonical signature object pattern provides a single, consistent approach for proving authorship and integrity
     across all SSIMPL objects.</p>
 </section>
+
 <hr/>
+
 <section>
-  <h1 id="ssimpl-api-specification">SSIMPL <a href="https://raw.githubusercontent.com/compilit/ssimpl/refs/heads/main/ssimpl-spec.json">API Specification</a></h1>
+  <h1 id="ssimpl-api-specification">SSIMPL <a
+      href="https://raw.githubusercontent.com/compilit/ssimpl/refs/heads/main/ssimpl-spec.json">API Specification</a>
+  </h1>
   <p>This section defines the reference API for Relay Peers in the SSIMPL protocol. It provides endpoints for <strong>DID
     registration</strong>, <strong>revocation</strong>, and <strong>ledger synchronization</strong>.</p>
   <p>All requests <strong>MUST</strong> be authenticated using a <code>Bearer</code> token, containing a <strong>signed
     DID in the canonical
     SignatureEnvelope format, multibase-encoded</strong>.</p>
   <h2 id="endpoints">Endpoints</h2>
+
   <h3 id="register-relay-peer">Register a Relay Peer</h3>
   <p><strong>POST</strong> <code>/peer</code></p>
   <p>Purpose: Make a Relay Peer known to another Relay Peer.</p>
-  <p>Request payload: RelayPeerAnnouncement object</p>
+  <p><strong>Request payload: <a href="relaypeerannouncement">RelayPeerAnnouncement</a></strong></p>
   <p><strong>Example:</strong></p>
   <pre><code class="lang-json">{
   <span class="hljs-string">"data"</span>: {
-    <span class="hljs-string">"did"</span>: did:key:1234abc...example
-    <span class="hljs-string">"hostname"</span>: some.hostname.org
+    <span class="hljs-string">"did"</span>: "did:key:1234abc...example"
+    <span class="hljs-string">"hostname"</span>: "some.hostname.org"
   },
   <span class="hljs-string">"signatureEnvelope"</span>: {
     ...
   }
 }
 </code></pre>
-  <p><strong>Response: 201 OK</strong></p>
+  <p><strong>Response: 201 CREATED</strong></p>
   <hr/>
   <h3 id="perform-a-handshake">Perform a handshake</h3>
   <p><strong>POST</strong> <code>/peer/identity</code></p>
   <p><strong>Purpose:</strong> Allows (Relay) Peers to check the health an initial validity of the Relay Peer</p>
-  <p><strong>Request payload SignedObject:</strong></p>
-  <table>
-    <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>data</td>
-      <td>string</td>
-      <td>DID of the Peer</td>
-    </tr>
-    <tr>
-      <td>signatureEnvelope</td>
-      <td>object</td>
-      <td>Envelope containing the signature data</td>
-    </tr>
-    </tbody>
-  </table>
-  <p><strong>Response: 200 OK + SignedObject:</strong></p>
-  <table>
-    <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>data</td>
-      <td>string</td>
-      <td>DID of the Relay Peer</td>
-    </tr>
-    <tr>
-      <td>signatureEnvelope</td>
-      <td>object</td>
-      <td>Envelope containing the signature data</td>
-    </tr>
-    </tbody>
-  </table>
+  <p><strong>Request payload <a href="#signedobject-signed-t">SignedObject&lt;DID&gt;</a>:</strong></p>
+  <p><strong>Example:</strong></p>
+  <pre><code class="lang-json">{
+  <span class="hljs-string">"data"</span>:<span class="hljs-string">"did"</span>: "did:key:1234abc...example",
+  <span class="hljs-string">"signatureEnvelope"</span>: {
+    ...
+  }
+}
+</code></pre>
+  <p><strong>Response: 200 OK + <a href="#signedobject-signed-t">SignedObject&lt;DID&gt;</a>:</strong></p>
+  <pre><code class="lang-json">{
+  <span class="hljs-string">"data"</span>:<span class="hljs-string">"did"</span>: "did:key:abc1234...example",
+  <span class="hljs-string">"signatureEnvelope"</span>: {
+    ...
+  }
+}
+</code></pre>
+  <hr/>
   <h3 id="request-ledger-delta">Request Ledger Delta</h3>
   <p><strong>POST</strong> <code>/ledger/delta</code></p>
   <p><strong>Purpose:</strong> Allows a Peer to request ledger entries that are newer than a given epoch, if the peer is
     out of sync.</p>
-  <p><strong>Request payload LedgerDeltaRequest:</strong></p>
-  <table>
-    <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>from</td>
-      <td>integer</td>
-      <td>Last ledger epoch known to the peer</td>
-    </tr>
-    <tr>
-      <td>to</td>
-      <td>integer</td>
-      <td>(optional) The upper boundary - In case the Peer wants 'chunked' responses</td>
-    </tr>
-    <tr>
-      <td>rootHash</td>
-      <td>string</td>
-      <td>Merkle root hash of the peer's current ledger state - to verify the Relay Peers current Ledger is an
-        extension of the one the Peer has
-      </td>
-    </tr>
-    </tbody>
-  </table>
+  <p><strong>Request payload <a href="#ledgerdeltarequest">LedgerDeltaRequest</a>:</strong></p>
   <p><strong>Example:</strong></p>
   <pre><code class="lang-json">{
   <span class="hljs-attr">"from"</span>: <span class="hljs-number">42</span>,
@@ -665,11 +624,7 @@
   <span class="hljs-attr">"rootHash"</span>: <span class="hljs-string">"abcdef1234567890"</span>
 }
 </code></pre>
-  <p><strong>Response: 200 OK + LedgerDeltaResponse:</strong></p>
-  <p>Field Type Description
-    currentEpoch integer Current epoch of the relay peer ledger
-    authoritativeRootHash string Merkle root hash after applying returned entries array Ordered ledger entries newer
-    than lastEpoch</p>
+  <p><strong>Response: 200 OK + <a href="#ledgerdeltaresponse">LedgerDeltaResponse</a>:</strong></p>
   <p><strong>Example:</strong></p>
   <pre><code class="lang-json">{
   <span class="hljs-string">"currentEpoch"</span>: <span class="hljs-number">43</span>,
@@ -677,17 +632,31 @@
   <span class="hljs-string">"entries"</span>: [
     {
       <span class="hljs-string">"data"</span>: {
-        <span class="hljs-string">"verifiableCredentialRoot"</span>: {
-          ...
+        <span class="hljs-string">"type"</span>:<span class="hljs-string">"ENTRY"</span>,
+        <span class="hljs-string">"payload"</span>: {
+          <span class="hljs-string">"verifiableCredentialRoot"</span>: {
+            ...
+          },
+          <span class="hljs-string">"proof"</span>: {
+            ...
+          }
         },
-        <span class="hljs-string">"proof"</span>: {
-          ...
-        }
       },
       <span class="hljs-string">"signatureEnvelope"</span>: {
         ...
       }
     },
+    <span class="hljs-string">"data"</span>: {
+        <span class="hljs-string">"type"</span>:<span class="hljs-string">"REVOCATION"</span>,
+        <span class="hljs-string">"payload"</span>: {
+          <span class="hljs-string">"did"</span>: <span class="hljs-string">"did:key:1234abc...example"</span>,
+          <span class="hljs-string">"taId"</span>: <span class="hljs-string">"ABC1234XYZ"</span>,
+        },
+      },
+      <span class="hljs-string">"signatureEnvelope"</span>: {
+        ...
+      }
+    }
     <span class="hljs-string">"relayPeers"</span>: [
     {
       <span class="hljs-string">"data"</span>: {
@@ -705,7 +674,7 @@
   <h3 id="register-did">Register a DID</h3>
   <p><strong>POST</strong> <code>/ledger</code></p>
   <p>Purpose: Register a new DID on the ledger.</p>
-  <p><strong>Request payload: LedgerEntry</strong></p>
+  <p><strong>Request payload: <a href="signedobject-ledgerentry">LedgerEntry</a></strong></p>
   <p><strong>Example:</strong></p>
   <pre><code class="lang-json">{
   <span class="hljs-string">"data"</span>: {
@@ -721,26 +690,27 @@
   }
 }
 </code></pre>
-  <p><strong>Response: 201 OK</strong></p>
+  <p><strong>Response: 201 CREATED</strong></p>
   <hr/>
   <h3 id="revoke-did">Revoke a DID</h3>
   <p><strong>PUT</strong> <code>/ledger</code></p>
-  <p>Purpose: Revoke a DID by submitting a revocation payload.</p>
-  <p>Request payload: LedgerEntryRevocation object</p>
+  <p>Purpose: Revoke a DID by submitting a revocation payload. Providing the taId means that the related TA can NEVER be used again to initialize a Wallet/register a DID. The taId is mandatory for Delegated Revocation.</p>
+  <p><strong>Request payload: <a href="#signedobject-ledgerentryrevocation">LedgerEntryRevocation</a></strong></p>
   <p><strong>Example:</strong></p>
   <pre><code class="lang-json">{
   <span class="hljs-string">"data"</span>: {
-    <span class="hljs-string">"did"</span>: <span class="hljs-string">"did:key:z6Mkw...example"</span>
+    <span class="hljs-string">"did"</span>: <span class="hljs-string">"did:key:z6Mkw...example"</span>,
+    <span class="hljs-string">"taId"</span>: <span class="hljs-string">"(optional) ABC123XYZ"</span>
   },
   <span class="hljs-string">"signatureEnvelope"</span>: {
     ...
   }
 }
 </code></pre>
-  <p><strong>Response: 204 OK</strong></p>
+  <p><strong>Response: 204 NO CONTENT</strong></p>
   <hr/>
   <h2 id="shared-object-schemas">Shared Object Schemas</h2>
-  <h3 id="signedobject-signed-t-">SignedObject (Signed&lt;T&gt;)</h3>
+  <h3 id="signedobject-signed-t">SignedObject (Signed&lt;T&gt;)</h3>
   <table>
     <thead>
     <tr>
@@ -752,13 +722,13 @@
     <tbody>
     <tr>
       <td>data</td>
-      <td>object</td>
-      <td>Contains the actual fields used for the signature</td>
+      <td>object/string</td>
+      <td>Contains the actual data this payload represents</td>
     </tr>
     <tr>
       <td>signatureEnvelope</td>
       <td>object</td>
-      <td>Signature verifying the <code>data</code></td>
+      <td>Signature verifying the <code>data</code>. See <a href="#signatureenvelope">SignatureEnvelope</a></td>
     </tr>
     </tbody>
   </table>
@@ -780,7 +750,7 @@
     <tr>
       <td>signatureEnvelope</td>
       <td>object</td>
-      <td>Signature verifying the integrity of <code>data</code></td>
+      <td>Signature verifying the integrity of <code>data</code>. See <a href="#signatureenvelope">SignatureEnvelope</a></td>
     </tr>
     </tbody>
   </table>
@@ -796,13 +766,13 @@
     <tbody>
     <tr>
       <td>did</td>
-      <td>object</td>
-      <td>Contains <code>did</code> and <code>taId</code> (id of the Trust Anchor, e.g. the documentNumber)</td>
+      <td>string</td>
+      <td>The DID to be associated with the VCR - has to be the same as the one in the </td>
     </tr>
     <tr>
       <td>taId</td>
-      <td>object</td>
-      <td>Signature verifying the <code>data</code></td>
+      <td>string</td>
+      <td>The id related to the TA (e.g. the documentNumber). Prevents double registration and allows for deny-listing the TA for future registrations.</td>
     </tr>
     </tbody>
   </table>
@@ -819,15 +789,16 @@
     <tr>
       <td>data</td>
       <td>object</td>
-      <td>Contains the DID being revoked</td>
+      <td>Contains the DID (and optionally the taId) being revoked</td>
     </tr>
     <tr>
       <td>signatureEnvelope</td>
       <td>object</td>
-      <td>Signature verifying the revocation</td>
+      <td>Signature verifying the revocation. See <a href="#signatureenvelope">SignatureEnvelope</a></td>
     </tr>
     </tbody>
   </table>
+
   <h3 id="proof">Proof (Example, in case an ePassport is used as TA)</h3>
   <table>
     <thead>
@@ -878,8 +849,7 @@
     <tr>
       <td>signature</td>
       <td>object</td>
-      <td><code>Signature</code> object containing <code>algorithm</code>, <code>publicKey</code>, and
-        <code>value</code></td>
+      <td>Signature object containing algorithm, publicKey, and value. See <a href="#signature">Signature</a></td>
     </tr>
     <tr>
       <td>signer</td>
@@ -912,6 +882,89 @@
       <td>value</td>
       <td>string</td>
       <td>Multibase-encoded signature value</td>
+    </tr>
+    </tbody>
+  </table>
+  <h3 id="ledgerdeltarequest">LedgerDeltaRequest</h3>
+  <table>
+    <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>from</td>
+      <td>integer</td>
+      <td>Last ledger epoch known to the peer</td>
+    </tr>
+    <tr>
+      <td>to</td>
+      <td>integer</td>
+      <td>(optional) The upper boundary - In case the Peer wants 'chunked' responses</td>
+    </tr>
+    <tr>
+      <td>rootHash</td>
+      <td>string</td>
+      <td>Merkle root hash of the peer's current ledger state - to verify the Relay Peers current Ledger is an
+        extension of the one the Peer has
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <h3 id="ledgerdeltaresponse">LedgerDeltaResponse</h3>
+  <table>
+    <thead>
+    <th>Field</th>
+    <th>Type</th>
+    <th>Description</th>
+    </thead>
+    <tbody>
+    <tr>
+      <td>currentEpoch</td>
+      <td>integer</td>
+      <td>Current epoch of the relay peer ledger</td>
+    </tr>
+    <tr>
+      <td>authoritativeRootHash</td>
+      <td>string</td>
+      <td>Merkle root hash after applying returned entries array Ordered ledger entries newer
+        than lastEpoch
+      </td>
+    </tr>
+    <tr>
+      <td>entries</td>
+      <td>array</td>
+      <td>The entries missing from your ledger based on the provided epoch</td>
+    </tr>
+    </tbody>
+  </table>
+  <h3 id="relaypeerannouncement">RelayPeerAnnouncement</h3>
+  <table>
+    <thead>
+    <th>Field</th>
+    <th>Type</th>
+    <th>Description</th>
+    </thead>
+    <tbody>
+    <tr>
+      <td>data</td>
+      <td>object</td>
+      <td>Containing the DID and the hostname of the Relay Peer</td>
+    </tr>
+    <tr>
+      <td>authoritativeRootHash</td>
+      <td>string</td>
+      <td>Merkle root hash after applying returned entries array Ordered ledger entries newer
+        than lastEpoch
+      </td>
+    </tr>
+    <tr>
+      <td>entries</td>
+      <td>array</td>
+      <td>The entries missing from your ledger based on the provided epoch</td>
     </tr>
     </tbody>
   </table>
