@@ -121,7 +121,7 @@ var[data-type]::after{content:attr(data-type);transform:translateX(-50%) transla
 var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 </style>
 <script id="initialUserConfig" type="application/json">{
-  "specStatus": "ED",
+  "specStatus": "unofficial",
   "shortName": "ssimpl",
   "editors": [
     {
@@ -130,13 +130,8 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     }
   ],
   "github": "https://github.com/compilit/ssimpl",
-  "license": "w3c-software-doc",
-  "group": [
-    "vc",
-    "did",
-    "webauthn"
-  ],
-  "profile": "publication",
+  "additionalCopyrightHolders": "Bastiën G.A. Bonsel",
+  "latestVersion": null,
   "localBiblio": {
     "DID": {
       "title": "Decentralized Identifiers (DIDs) v1.0",
@@ -165,23 +160,20 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     }
   },
   "publishISODate": "2026-02-16T00:00:00.000Z",
-  "generatedSubtitle": "W3C Editor's Draft 16 February 2026"
+  "generatedSubtitle": "Unofficial Draft 16 February 2026"
 }</script>
-<link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED"></head>
+<link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2021/W3C-UD"></head>
 
 <body class="h-entry"><div class="head">
-    <p class="logos"><a class="logo" href="https://www.w3.org/"><img crossorigin="" alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72">
-  </a></p>
+    
     <h1 id="title" class="title">SSIMPL Specification</h1> 
-    <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">W3C Editor's Draft</a> <time class="dt-published" datetime="2026-02-16">16 February 2026</time></p>
+    <p id="w3c-state">Unofficial Draft <time class="dt-published" datetime="2026-02-16">16 February 2026</time></p>
     <details open="">
       <summary>More details about this document</summary>
       <dl>
-        <dt>This version:</dt><dd>
-                <a class="u-url" href="https://compilit.github.io/ssimpl/">https://compilit.github.io/ssimpl/</a>
-              </dd>
+        
         <dt>Latest published version:</dt><dd>
-                <a href="https://www.w3.org/ssimpl/">https://www.w3.org/ssimpl/</a>
+                none
               </dd>
         <dt>Latest editor's draft:</dt><dd><a href="https://compilit.github.io/ssimpl/">https://compilit.github.io/ssimpl/</a></dd>
         <dt>History:</dt><dd>
@@ -210,16 +202,12 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     
     
     <p class="copyright">
-    <a href="https://www.w3.org/policies/#copyright">Copyright</a>
-    ©
-    2026
-    
-    <a href="https://www.w3.org/">World Wide Web Consortium</a>.
-    <abbr title="World Wide Web Consortium">W3C</abbr><sup>®</sup>
-    <a href="https://www.w3.org/policies/#Legal_Disclaimer">liability</a>,
-    <a href="https://www.w3.org/policies/#W3C_Trademarks">trademark</a> and
-    <a rel="license" href="https://www.w3.org/copyright/software-license-2023/" title="W3C Software and Document Notice and License">permissive document license</a> rules apply.
-  </p>
+      Copyright ©
+      2026
+      the document editors/authors.
+      Text is available under the
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/legalcode">Creative Commons Attribution 4.0 International Public License</a>; additional terms may apply.
+    </p>
     <hr title="Separator for header">
   </div>
 <section id="abstract" class="introductory"><h2>Abstract</h2>
@@ -227,57 +215,21 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     SSIMPL defines a self-sovereign identity framework backed by
     government-issued trust anchors and a peer-validated ledger.
   </p>
-</section>
+</section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#abstract">Abstract</a></li><li class="tocline"><a class="tocxref" href="#document-status"><bdi class="secno">1. </bdi>Document Status</a></li><li class="tocline"><a class="tocxref" href="#conformance"><bdi class="secno">2. </bdi>Conformance</a></li><li class="tocline"><a class="tocxref" href="#introduction"><bdi class="secno">3. </bdi>Introduction</a></li><li class="tocline"><a class="tocxref" href="#overview"><bdi class="secno">4. </bdi>Overview</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#identity-trust-model"><bdi class="secno">4.1 </bdi>Identity Trust Model</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#considerations"><bdi class="secno">4.1.1 </bdi>Considerations</a></li></ol></li><li class="tocline"><a class="tocxref" href="#levels-of-authentication"><bdi class="secno">4.2 </bdi>Levels of Authentication</a></li><li class="tocline"><a class="tocxref" href="#roles"><bdi class="secno">4.3 </bdi>Roles</a></li></ol></li><li class="tocline"><a class="tocxref" href="#wallet-specification"><bdi class="secno">5. </bdi>Wallet Specification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#wallet-requirements"><bdi class="secno">5.1 </bdi>Wallet Requirements</a></li><li class="tocline"><a class="tocxref" href="#wallet-functionality"><bdi class="secno">5.2 </bdi>Wallet Functionality</a></li><li class="tocline"><a class="tocxref" href="#wallet-security"><bdi class="secno">5.3 </bdi>Wallet Security</a></li><li class="tocline"><a class="tocxref" href="#delegated-revocation"><bdi class="secno">5.4 </bdi>Delegated Revocation</a></li><li class="tocline"><a class="tocxref" href="#activation-process-in-case-of-an-e-passport-"><bdi class="secno">5.5 </bdi>Example activation Process (in case of an ePassport)</a></li></ol></li><li class="tocline"><a class="tocxref" href="#relay-peer-specification"><bdi class="secno">6. </bdi>Relay Peer Specification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#well-known-relay-peer"><bdi class="secno">6.1 </bdi>The well-known Relay Peer</a></li><li class="tocline"><a class="tocxref" href="#relay-peer-responsibilities"><bdi class="secno">6.2 </bdi>Relay Peer Responsibilities</a></li><li class="tocline"><a class="tocxref" href="#relay-peer-bootstrap-and-verification"><bdi class="secno">6.3 </bdi>Relay Peer Bootstrap and Verification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#relay-peer-registration"><bdi class="secno">6.3.1 </bdi>Relay Peer Registration</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#ledger-specification"><bdi class="secno">7. </bdi>Ledger Specification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#goals"><bdi class="secno">7.1 </bdi>Goals</a></li><li class="tocline"><a class="tocxref" href="#state-and-canonical-construction"><bdi class="secno">7.2 </bdi>State and Canonical Construction</a></li><li class="tocline"><a class="tocxref" href="#merkle-tree"><bdi class="secno">7.3 </bdi>Merkle Tree</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#mt-structure"><bdi class="secno">7.3.1 </bdi>Structure</a></li><li class="tocline"><a class="tocxref" href="#updates"><bdi class="secno">7.3.2 </bdi>Updates</a></li><li class="tocline"><a class="tocxref" href="#merkle-proofs"><bdi class="secno">7.3.3 </bdi>Merkle Proofs</a></li><li class="tocline"><a class="tocxref" href="#relation-to-checkpoints"><bdi class="secno">7.3.4 </bdi>Relation to Checkpoints</a></li></ol></li><li class="tocline"><a class="tocxref" href="#validation-rules"><bdi class="secno">7.4 </bdi>Validation Rules</a></li><li class="tocline"><a class="tocxref" href="#pruning-and-mutability"><bdi class="secno">7.5 </bdi>Pruning and Mutability</a></li><li class="tocline"><a class="tocxref" href="#synchronization"><bdi class="secno">7.6 </bdi>Synchronization</a></li><li class="tocline"><a class="tocxref" href="#merkle-checkpoints"><bdi class="secno">7.7 </bdi>Merkle Checkpoints</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#definition"><bdi class="secno">7.7.1 </bdi>Definition</a></li><li class="tocline"><a class="tocxref" href="#purpose"><bdi class="secno">7.7.2 </bdi>Purpose</a></li><li class="tocline"><a class="tocxref" href="#creation-and-storage"><bdi class="secno">7.7.3 </bdi>Creation and Storage</a></li><li class="tocline"><a class="tocxref" href="#verification"><bdi class="secno">7.7.4 </bdi>Verification</a></li><li class="tocline"><a class="tocxref" href="#pruning-and-expiry"><bdi class="secno">7.7.5 </bdi>Pruning and Expiry</a></li><li class="tocline"><a class="tocxref" href="#security-considerations"><bdi class="secno">7.7.6 </bdi>Security Considerations</a></li></ol></li><li class="tocline"><a class="tocxref" href="#security-properties"><bdi class="secno">7.8 </bdi>Security Properties</a></li></ol></li><li class="tocline"><a class="tocxref" href="#conclusion"><bdi class="secno">8. </bdi>Conclusion</a></li><li class="tocline"><a class="tocxref" href="#canonicalization-rules"><bdi class="secno">9. </bdi>Canonicalization Rules</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#object-serialization"><bdi class="secno">9.1 </bdi>Object Serialization</a></li><li class="tocline"><a class="tocxref" href="#nested-objects"><bdi class="secno">9.2 </bdi>Nested Objects</a></li><li class="tocline"><a class="tocxref" href="#signature-message"><bdi class="secno">9.3 </bdi>Signature Message</a></li><li class="tocline"><a class="tocxref" href="#deterministic-encoding"><bdi class="secno">9.4 </bdi>Deterministic Encoding</a></li><li class="tocline"><a class="tocxref" href="#verification-procedure"><bdi class="secno">9.5 </bdi>Verification Procedure</a></li><li class="tocline"><a class="tocxref" href="#rationale"><bdi class="secno">9.6 </bdi>Rationale</a></li><li class="tocline"><a class="tocxref" href="#canonical-signature-object-pattern"><bdi class="secno">9.7 </bdi>Canonical Signature Object Pattern</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#structure"><bdi class="secno">9.7.1 </bdi>Structure</a></li><li class="tocline"><a class="tocxref" href="#usage"><bdi class="secno">9.7.2 </bdi>Usage</a></li><li class="tocline"><a class="tocxref" href="#rules-and-notes"><bdi class="secno">9.7.3 </bdi>Rules and Notes</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#ssimpl-api-specification"><bdi class="secno">10. </bdi>SSIMPL API Specification
+  </a><ol class="toc"><li class="tocline"><a class="tocxref" href="#endpoints"><bdi class="secno">10.1 </bdi>Endpoints</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#register-relay-peer"><bdi class="secno">10.1.1 </bdi>Register a Relay Peer</a></li><li class="tocline"><a class="tocxref" href="#perform-a-handshake"><bdi class="secno">10.1.2 </bdi>Perform a handshake</a></li><li class="tocline"><a class="tocxref" href="#request-ledger-delta"><bdi class="secno">10.1.3 </bdi>Request Ledger Delta</a></li><li class="tocline"><a class="tocxref" href="#register-did"><bdi class="secno">10.1.4 </bdi>Register a DID</a></li><li class="tocline"><a class="tocxref" href="#revoke-did"><bdi class="secno">10.1.5 </bdi>Revoke a DID</a></li></ol></li><li class="tocline"><a class="tocxref" href="#shared-object-schemas"><bdi class="secno">10.2 </bdi>Shared Object Schemas</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#signedobject-signed-t"><bdi class="secno">10.2.1 </bdi>SignedObject (Signed&lt;T&gt;)</a></li><li class="tocline"><a class="tocxref" href="#signedobject-ledgerentry"><bdi class="secno">10.2.2 </bdi>SignedObject: LedgerEntry</a></li><li class="tocline"><a class="tocxref" href="#verifiablecredentialroot"><bdi class="secno">10.2.3 </bdi>VerifiableCredentialRoot</a></li><li class="tocline"><a class="tocxref" href="#signedobject-ledgerentryrevocation"><bdi class="secno">10.2.4 </bdi>SignedObject: LedgerEntryRevocation</a></li><li class="tocline"><a class="tocxref" href="#proof"><bdi class="secno">10.2.5 </bdi>Proof (Example, in case an ePassport is used as TA)</a></li><li class="tocline"><a class="tocxref" href="#signatureenvelope"><bdi class="secno">10.2.6 </bdi>SignatureEnvelope</a></li><li class="tocline"><a class="tocxref" href="#signature"><bdi class="secno">10.2.7 </bdi>Signature</a></li><li class="tocline"><a class="tocxref" href="#ledgerdeltarequest"><bdi class="secno">10.2.8 </bdi>LedgerDeltaRequest</a></li><li class="tocline"><a class="tocxref" href="#ledgerdeltaresponse"><bdi class="secno">10.2.9 </bdi>LedgerDeltaResponse</a></li><li class="tocline"><a class="tocxref" href="#relaypeerannouncement"><bdi class="secno">10.2.10 </bdi>RelayPeerAnnouncement</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#subscription-based-credential-distribution"><bdi class="secno">A. </bdi>Subscription-Based Credential Distribution</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#subscription-model"><bdi class="secno">A.1 </bdi>Subscription Model</a></li><li class="tocline"><a class="tocxref" href="#subscription-properties"><bdi class="secno">A.2 </bdi>Subscription Properties</a></li><li class="tocline"><a class="tocxref" href="#subscription-flow"><bdi class="secno">A.3 </bdi>Subscription Flow</a></li><li class="tocline"><a class="tocxref" href="#verification-1"><bdi class="secno">A.4 </bdi>Verification</a></li><li class="tocline"><a class="tocxref" href="#revocation-and-expiry"><bdi class="secno">A.5 </bdi>Revocation and Expiry</a></li><li class="tocline"><a class="tocxref" href="#security-considerations-1"><bdi class="secno">A.6 </bdi>Security Considerations</a></li></ol></li><li class="tocline"><a class="tocxref" href="#references"><bdi class="secno">B. </bdi>References</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#normative-references"><bdi class="secno">B.1 </bdi>Normative references</a></li></ol></li></ol></nav>
 
-
-<section id="sotd" class="introductory"><h2>Status of This Document</h2><p><em>This section describes the status of this
-      document at the time of its publication. A list of current <abbr title="World Wide Web Consortium">W3C</abbr>
-      publications and the latest revision of this technical report can be found
-      in the
-      <a href="https://www.w3.org/TR/"><abbr title="World Wide Web Consortium">W3C</abbr> standards and drafts index</a>.</em></p>
-  <section id="status-of-this-document"><div class="header-wrapper"><h3 id="status-of-this-document-0">Status of This Document</h3><a class="self-link" href="#status-of-this-document" aria-label="Permalink for this Section"></a></div>
+<section id="document-status"><div class="header-wrapper"><h2 id="x1-document-status"><bdi class="secno">1. </bdi>Document Status</h2><a class="self-link" href="#document-status" aria-label="Permalink for Section 1."></a></div>
+  
 
   <p>This document is an independent Editor’s Draft published by the SSIMPL project.
-  It is not affiliated with, endorsed by, or produced by the World Wide Web Consortium (<abbr title="World Wide Web Consortium">W3C</abbr>) or any <abbr title="World Wide Web Consortium">W3C</abbr> Working Group.</p>
+  It is not affiliated with, endorsed by, or produced by the World Wide Web Consortium (W3C) or any W3C Working Group.</p>
 
   <p>This draft may change at any time and should not be considered a stable standard.</p>
 
-  <p>No patent commitments are made through <abbr title="World Wide Web Consortium">W3C</abbr> or any standards organization.</p>
-<p>
-    This document was published by the <a href="https://www.w3.org/groups/wg/vc">Verifiable Credentials Working Group</a>, the <a href="https://www.w3.org/groups/wg/did">Decentralized Identifier Working Group</a>, and the <a href="https://www.w3.org/groups/wg/webauthn">Web Authentication Working Group</a> as
-    an Editor's Draft. 
-  </p><p>Publication as an Editor's Draft does not
-  imply endorsement by <abbr title="World Wide Web Consortium">W3C</abbr> and its Members. </p><p>
-    This is a draft document and may be updated, replaced, or obsoleted by other
-    documents at any time. It is inappropriate to cite this document as other
-    than a work in progress.
-    
-  </p><p>
-    
-        This document was produced by groups
-        operating under the
-        <a href="https://www.w3.org/policies/patent-policy/"><abbr title="World Wide Web Consortium">W3C</abbr> Patent
-          Policy</a>.
-      
-     <abbr title="World Wide Web Consortium">W3C</abbr> maintains a
-        <a rel="disclosure" href="https://www.w3.org/groups/wg/vc/ipr">public list of any patent disclosures (Verifiable Credentials Working Group)</a>, a
-        <a rel="disclosure" href="https://www.w3.org/groups/wg/did/ipr">public list of any patent disclosures (Decentralized Identifier Working Group)</a>, and a
-        <a rel="disclosure" href="https://www.w3.org/groups/wg/webauthn/ipr">public list of any patent disclosures (Web Authentication Working Group)</a>
-          made in connection with the deliverables of
-          each group; these pages also include
-          instructions for disclosing a patent. An individual who has actual
-          knowledge of a patent that the individual believes contains
-          <a href="https://www.w3.org/policies/patent-policy/#def-essential">Essential Claim(s)</a>
-          must disclose the information in accordance with
-          <a href="https://www.w3.org/policies/patent-policy/#sec-Disclosure">section 6 of the <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>.
-        
-  </p><p>
-                      This document is governed by the
-                      <a id="w3c_process_revision" href="https://www.w3.org/policies/process/20250818/">18 August 2025 <abbr title="World Wide Web Consortium">W3C</abbr> Process Document</a>.
-                    </p></section></section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#abstract">Abstract</a></li><li class="tocline"><a class="tocxref" href="#sotd">Status of This Document</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#status-of-this-document">Status of This Document</a></li></ol></li><li class="tocline"><a class="tocxref" href="#conformance"><bdi class="secno">1. </bdi>Conformance</a></li><li class="tocline"><a class="tocxref" href="#introduction"><bdi class="secno">2. </bdi>Introduction</a></li><li class="tocline"><a class="tocxref" href="#overview"><bdi class="secno">3. </bdi>Overview</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#identity-trust-model"><bdi class="secno">3.1 </bdi>Identity Trust Model</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#considerations"><bdi class="secno">3.1.1 </bdi>Considerations</a></li></ol></li><li class="tocline"><a class="tocxref" href="#levels-of-authentication"><bdi class="secno">3.2 </bdi>Levels of Authentication</a></li><li class="tocline"><a class="tocxref" href="#roles"><bdi class="secno">3.3 </bdi>Roles</a></li></ol></li><li class="tocline"><a class="tocxref" href="#wallet-specification"><bdi class="secno">4. </bdi>Wallet Specification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#wallet-requirements"><bdi class="secno">4.1 </bdi>Wallet Requirements</a></li><li class="tocline"><a class="tocxref" href="#wallet-functionality"><bdi class="secno">4.2 </bdi>Wallet Functionality</a></li><li class="tocline"><a class="tocxref" href="#wallet-security"><bdi class="secno">4.3 </bdi>Wallet Security</a></li><li class="tocline"><a class="tocxref" href="#delegated-revocation"><bdi class="secno">4.4 </bdi>Delegated Revocation</a></li><li class="tocline"><a class="tocxref" href="#activation-process-in-case-of-an-e-passport-"><bdi class="secno">4.5 </bdi>Example activation Process (in case of an ePassport)</a></li></ol></li><li class="tocline"><a class="tocxref" href="#relay-peer-specification"><bdi class="secno">5. </bdi>Relay Peer Specification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#well-known-relay-peer"><bdi class="secno">5.1 </bdi>The well-known Relay Peer</a></li><li class="tocline"><a class="tocxref" href="#relay-peer-responsibilities"><bdi class="secno">5.2 </bdi>Relay Peer Responsibilities</a></li><li class="tocline"><a class="tocxref" href="#relay-peer-bootstrap-and-verification"><bdi class="secno">5.3 </bdi>Relay Peer Bootstrap and Verification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#relay-peer-registration"><bdi class="secno">5.3.1 </bdi>Relay Peer Registration</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#ledger-specification"><bdi class="secno">6. </bdi>Ledger Specification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#goals"><bdi class="secno">6.1 </bdi>Goals</a></li><li class="tocline"><a class="tocxref" href="#state-and-canonical-construction"><bdi class="secno">6.2 </bdi>State and Canonical Construction</a></li><li class="tocline"><a class="tocxref" href="#merkle-tree"><bdi class="secno">6.3 </bdi>Merkle Tree</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#mt-structure"><bdi class="secno">6.3.1 </bdi>Structure</a></li><li class="tocline"><a class="tocxref" href="#updates"><bdi class="secno">6.3.2 </bdi>Updates</a></li><li class="tocline"><a class="tocxref" href="#merkle-proofs"><bdi class="secno">6.3.3 </bdi>Merkle Proofs</a></li><li class="tocline"><a class="tocxref" href="#relation-to-checkpoints"><bdi class="secno">6.3.4 </bdi>Relation to Checkpoints</a></li></ol></li><li class="tocline"><a class="tocxref" href="#validation-rules"><bdi class="secno">6.4 </bdi>Validation Rules</a></li><li class="tocline"><a class="tocxref" href="#pruning-and-mutability"><bdi class="secno">6.5 </bdi>Pruning and Mutability</a></li><li class="tocline"><a class="tocxref" href="#synchronization"><bdi class="secno">6.6 </bdi>Synchronization</a></li><li class="tocline"><a class="tocxref" href="#merkle-checkpoints"><bdi class="secno">6.7 </bdi>Merkle Checkpoints</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#definition"><bdi class="secno">6.7.1 </bdi>Definition</a></li><li class="tocline"><a class="tocxref" href="#purpose"><bdi class="secno">6.7.2 </bdi>Purpose</a></li><li class="tocline"><a class="tocxref" href="#creation-and-storage"><bdi class="secno">6.7.3 </bdi>Creation and Storage</a></li><li class="tocline"><a class="tocxref" href="#verification"><bdi class="secno">6.7.4 </bdi>Verification</a></li><li class="tocline"><a class="tocxref" href="#pruning-and-expiry"><bdi class="secno">6.7.5 </bdi>Pruning and Expiry</a></li><li class="tocline"><a class="tocxref" href="#security-considerations"><bdi class="secno">6.7.6 </bdi>Security Considerations</a></li></ol></li><li class="tocline"><a class="tocxref" href="#security-properties"><bdi class="secno">6.8 </bdi>Security Properties</a></li></ol></li><li class="tocline"><a class="tocxref" href="#conclusion"><bdi class="secno">7. </bdi>Conclusion</a></li><li class="tocline"><a class="tocxref" href="#canonicalization-rules"><bdi class="secno">8. </bdi>Canonicalization Rules</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#object-serialization"><bdi class="secno">8.1 </bdi>Object Serialization</a></li><li class="tocline"><a class="tocxref" href="#nested-objects"><bdi class="secno">8.2 </bdi>Nested Objects</a></li><li class="tocline"><a class="tocxref" href="#signature-message"><bdi class="secno">8.3 </bdi>Signature Message</a></li><li class="tocline"><a class="tocxref" href="#deterministic-encoding"><bdi class="secno">8.4 </bdi>Deterministic Encoding</a></li><li class="tocline"><a class="tocxref" href="#verification-procedure"><bdi class="secno">8.5 </bdi>Verification Procedure</a></li><li class="tocline"><a class="tocxref" href="#rationale"><bdi class="secno">8.6 </bdi>Rationale</a></li><li class="tocline"><a class="tocxref" href="#canonical-signature-object-pattern"><bdi class="secno">8.7 </bdi>Canonical Signature Object Pattern</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#structure"><bdi class="secno">8.7.1 </bdi>Structure</a></li><li class="tocline"><a class="tocxref" href="#usage"><bdi class="secno">8.7.2 </bdi>Usage</a></li><li class="tocline"><a class="tocxref" href="#rules-and-notes"><bdi class="secno">8.7.3 </bdi>Rules and Notes</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#ssimpl-api-specification"><bdi class="secno">9. </bdi>SSIMPL API Specification
-  </a><ol class="toc"><li class="tocline"><a class="tocxref" href="#endpoints"><bdi class="secno">9.1 </bdi>Endpoints</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#register-relay-peer"><bdi class="secno">9.1.1 </bdi>Register a Relay Peer</a></li><li class="tocline"><a class="tocxref" href="#perform-a-handshake"><bdi class="secno">9.1.2 </bdi>Perform a handshake</a></li><li class="tocline"><a class="tocxref" href="#request-ledger-delta"><bdi class="secno">9.1.3 </bdi>Request Ledger Delta</a></li><li class="tocline"><a class="tocxref" href="#register-did"><bdi class="secno">9.1.4 </bdi>Register a DID</a></li><li class="tocline"><a class="tocxref" href="#revoke-did"><bdi class="secno">9.1.5 </bdi>Revoke a DID</a></li></ol></li><li class="tocline"><a class="tocxref" href="#shared-object-schemas"><bdi class="secno">9.2 </bdi>Shared Object Schemas</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#signedobject-signed-t"><bdi class="secno">9.2.1 </bdi>SignedObject (Signed&lt;T&gt;)</a></li><li class="tocline"><a class="tocxref" href="#signedobject-ledgerentry"><bdi class="secno">9.2.2 </bdi>SignedObject: LedgerEntry</a></li><li class="tocline"><a class="tocxref" href="#verifiablecredentialroot"><bdi class="secno">9.2.3 </bdi>VerifiableCredentialRoot</a></li><li class="tocline"><a class="tocxref" href="#signedobject-ledgerentryrevocation"><bdi class="secno">9.2.4 </bdi>SignedObject: LedgerEntryRevocation</a></li><li class="tocline"><a class="tocxref" href="#proof"><bdi class="secno">9.2.5 </bdi>Proof (Example, in case an ePassport is used as TA)</a></li><li class="tocline"><a class="tocxref" href="#signatureenvelope"><bdi class="secno">9.2.6 </bdi>SignatureEnvelope</a></li><li class="tocline"><a class="tocxref" href="#signature"><bdi class="secno">9.2.7 </bdi>Signature</a></li><li class="tocline"><a class="tocxref" href="#ledgerdeltarequest"><bdi class="secno">9.2.8 </bdi>LedgerDeltaRequest</a></li><li class="tocline"><a class="tocxref" href="#ledgerdeltaresponse"><bdi class="secno">9.2.9 </bdi>LedgerDeltaResponse</a></li><li class="tocline"><a class="tocxref" href="#relaypeerannouncement"><bdi class="secno">9.2.10 </bdi>RelayPeerAnnouncement</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#subscription-based-credential-distribution"><bdi class="secno">A. </bdi>Subscription-Based Credential Distribution</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#subscription-model"><bdi class="secno">A.1 </bdi>Subscription Model</a></li><li class="tocline"><a class="tocxref" href="#subscription-properties"><bdi class="secno">A.2 </bdi>Subscription Properties</a></li><li class="tocline"><a class="tocxref" href="#subscription-flow"><bdi class="secno">A.3 </bdi>Subscription Flow</a></li><li class="tocline"><a class="tocxref" href="#verification-1"><bdi class="secno">A.4 </bdi>Verification</a></li><li class="tocline"><a class="tocxref" href="#revocation-and-expiry"><bdi class="secno">A.5 </bdi>Revocation and Expiry</a></li><li class="tocline"><a class="tocxref" href="#security-considerations-1"><bdi class="secno">A.6 </bdi>Security Considerations</a></li></ol></li><li class="tocline"><a class="tocxref" href="#references"><bdi class="secno">B. </bdi>References</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#normative-references"><bdi class="secno">B.1 </bdi>Normative references</a></li></ol></li></ol></nav>
+  <p>No patent commitments are made through W3C or any standards organization.</p>
+</section>
 
-<section id="conformance"><div class="header-wrapper"><h2 id="x1-conformance"><bdi class="secno">1. </bdi>Conformance</h2><a class="self-link" href="#conformance" aria-label="Permalink for Section 1."></a></div><p>As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.</p><p>
+<section id="conformance"><div class="header-wrapper"><h2 id="x2-conformance"><bdi class="secno">2. </bdi>Conformance</h2><a class="self-link" href="#conformance" aria-label="Permalink for Section 2."></a></div><p>As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.</p><p>
         The key words <em class="rfc2119">MAY</em>, <em class="rfc2119">MUST</em>, <em class="rfc2119">MUST NOT</em>, and <em class="rfc2119">SHOULD</em> in this document
         are to be interpreted as described in
         <a href="https://www.rfc-editor.org/info/bcp14">BCP 14</a>
@@ -288,7 +240,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 
 <hr>
 
-<section id="introduction-0"><div class="header-wrapper"><h2 id="introduction"><bdi class="secno">2. </bdi>Introduction</h2><a class="self-link" href="#introduction" aria-label="Permalink for Section 2."></a></div>
+<section id="introduction-0"><div class="header-wrapper"><h2 id="introduction"><bdi class="secno">3. </bdi>Introduction</h2><a class="self-link" href="#introduction" aria-label="Permalink for Section 3."></a></div>
   
 
   <p>The internet has evolved rapidly, but with each iteration new challenges have emerged in protecting
@@ -308,7 +260,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 
 <hr>
 
-<section id="overview-0"><div class="header-wrapper"><h2 id="overview"><bdi class="secno">3. </bdi>Overview</h2><a class="self-link" href="#overview" aria-label="Permalink for Section 3."></a></div>
+<section id="overview-0"><div class="header-wrapper"><h2 id="overview"><bdi class="secno">4. </bdi>Overview</h2><a class="self-link" href="#overview" aria-label="Permalink for Section 4."></a></div>
   
   <p>The SSIMPL protocol defines a <strong>Self-Sovereign Identity &amp; Mondial Pseudonymous Ledger</strong> framework
     that allows
@@ -330,7 +282,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     and availability. Everything is made to be deterministic by default, so no authorities whatsoever are required
     except
     the one that signed the Trust Anchor (TA).</p>
-  <section id="identity-trust-model-0"><div class="header-wrapper"><h3 id="identity-trust-model"><bdi class="secno">3.1 </bdi>Identity Trust Model</h3><a class="self-link" href="#identity-trust-model" aria-label="Permalink for Section 3.1"></a></div>
+  <section id="identity-trust-model-0"><div class="header-wrapper"><h3 id="identity-trust-model"><bdi class="secno">4.1 </bdi>Identity Trust Model</h3><a class="self-link" href="#identity-trust-model" aria-label="Permalink for Section 4.1"></a></div>
   <p>SSIMPL identities are rooted in cryptographically verifiable credentials derived from <strong>Trust
     Anchors</strong>, such as
     government-issued ePassports. A valid wallet:</p>
@@ -343,10 +295,10 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     </li>
   </ul>
   <p>This ensures only owners of verifiable physical credentials can create valid DIDs.</p>
-  <section id="considerations-0"><div class="header-wrapper"><h4 id="considerations"><bdi class="secno">3.1.1 </bdi>Considerations</h4><a class="self-link" href="#considerations" aria-label="Permalink for Section 3.1.1"></a></div>
+  <section id="considerations-0"><div class="header-wrapper"><h4 id="considerations"><bdi class="secno">4.1.1 </bdi>Considerations</h4><a class="self-link" href="#considerations" aria-label="Permalink for Section 4.1.1"></a></div>
   <p>Identity is hard to verify by nature. Using a state-issued TA is not a perfect solution, but it's the best
     deterministic proof of (human) identity available at the moment.</p>
-  </section></section><section id="levels-of-authentication-0"><div class="header-wrapper"><h3 id="levels-of-authentication"><bdi class="secno">3.2 </bdi>Levels of Authentication</h3><a class="self-link" href="#levels-of-authentication" aria-label="Permalink for Section 3.2"></a></div>
+  </section></section><section id="levels-of-authentication-0"><div class="header-wrapper"><h3 id="levels-of-authentication"><bdi class="secno">4.2 </bdi>Levels of Authentication</h3><a class="self-link" href="#levels-of-authentication" aria-label="Permalink for Section 4.2"></a></div>
   <ul>
     <li><strong>Level 0:</strong> DID confirms human ownership (bot detection).</li>
     <li><strong>Level 1:</strong> Level 0 + unverifiable attributes (e.g. the owners home address) requested via scope.
@@ -357,7 +309,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     person would like to order a product from a website. Using SSIMPL, the webshop could request a certain scope of
     credentials (like a shipping address). The owner of the identity could then approve or disapprove this request. This
     flow is very similar to Open ID Connect, except that there is no need for a 3rd party.</p>
-  </section><section id="roles-0"><div class="header-wrapper"><h3 id="roles"><bdi class="secno">3.3 </bdi>Roles</h3><a class="self-link" href="#roles" aria-label="Permalink for Section 3.3"></a></div>
+  </section><section id="roles-0"><div class="header-wrapper"><h3 id="roles"><bdi class="secno">4.3 </bdi>Roles</h3><a class="self-link" href="#roles" aria-label="Permalink for Section 4.3"></a></div>
   <ul>
     <li><strong>Identity</strong> The owner of the TA.</li>
     <li><strong>Wallet:</strong> The actual software responsible for encapsulating the owners TA.</li>
@@ -370,7 +322,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 
 <hr>
 
-<section id="wallet-specification-0"><div class="header-wrapper"><h2 id="wallet-specification"><bdi class="secno">4. </bdi>Wallet Specification</h2><a class="self-link" href="#wallet-specification" aria-label="Permalink for Section 4."></a></div>
+<section id="wallet-specification-0"><div class="header-wrapper"><h2 id="wallet-specification"><bdi class="secno">5. </bdi>Wallet Specification</h2><a class="self-link" href="#wallet-specification" aria-label="Permalink for Section 5."></a></div>
   
   <p>The wallet is a Self-Sovereign means of identification that can be installed and bootstrapped entirely independent
     of
@@ -381,7 +333,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
   </p><p>The VCR can also be used as the root of a chain of VCs. This way it can, either explicitly or implicitly, verify
     association
     to other credentials further up in the chain.</p>
-  <section id="wallet-requirements-0"><div class="header-wrapper"><h3 id="wallet-requirements"><bdi class="secno">4.1 </bdi>Wallet Requirements</h3><a class="self-link" href="#wallet-requirements" aria-label="Permalink for Section 4.1"></a></div>
+  <section id="wallet-requirements-0"><div class="header-wrapper"><h3 id="wallet-requirements"><bdi class="secno">5.1 </bdi>Wallet Requirements</h3><a class="self-link" href="#wallet-requirements" aria-label="Permalink for Section 5.1"></a></div>
   <p>Wallets <strong><em class="rfc2119">MUST</em></strong>:</p>
   <ul>
     <li>Extract cryptographic material from a Trust Anchor (TA).</li>
@@ -404,7 +356,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     </li>
     <li>Send their signed VCR to Relay Peers.</li>
   </ul>
-  </section><section id="wallet-functionality-0"><div class="header-wrapper"><h3 id="wallet-functionality"><bdi class="secno">4.2 </bdi>Wallet Functionality</h3><a class="self-link" href="#wallet-functionality" aria-label="Permalink for Section 4.2"></a></div>
+  </section><section id="wallet-functionality-0"><div class="header-wrapper"><h3 id="wallet-functionality"><bdi class="secno">5.2 </bdi>Wallet Functionality</h3><a class="self-link" href="#wallet-functionality" aria-label="Permalink for Section 5.2"></a></div>
   <ul>
     <li>Before any transaction, the Wallet <em class="rfc2119">MUST</em> call either the Well-known Relay Peer, or one of it's known Relay Peers
       for the
@@ -422,7 +374,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     </li>
   </ul>
 
-  </section><section id="wallet-security-0"><div class="header-wrapper"><h3 id="wallet-security"><bdi class="secno">4.3 </bdi>Wallet Security</h3><a class="self-link" href="#wallet-security" aria-label="Permalink for Section 4.3"></a></div>
+  </section><section id="wallet-security-0"><div class="header-wrapper"><h3 id="wallet-security"><bdi class="secno">5.3 </bdi>Wallet Security</h3><a class="self-link" href="#wallet-security" aria-label="Permalink for Section 5.3"></a></div>
   <p>A SSIMPL Wallet has certain security scenario's that need to be addressed</p>
   <ul>
     <li><strong>The owners TA is lost/stolen</strong>: The owner <em class="rfc2119">MUST</em> revoke their current DID - No transactions can
@@ -446,7 +398,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     </li>
   </ul>
 
-  </section><section id="delegated-revocation"><div class="header-wrapper"><h3 id="x4-4-delegated-revocation"><bdi class="secno">4.4 </bdi>Delegated Revocation</h3><a class="self-link" href="#delegated-revocation" aria-label="Permalink for Section 4.4"></a></div>
+  </section><section id="delegated-revocation"><div class="header-wrapper"><h3 id="x5-4-delegated-revocation"><bdi class="secno">5.4 </bdi>Delegated Revocation</h3><a class="self-link" href="#delegated-revocation" aria-label="Permalink for Section 5.4"></a></div>
   <p>In order to mitigate the most dire scenario, SSIMPL
     offers a relatively straight-forward solution: two Peers (you and someone you trust, like a close relative) exchange a complete
     <a href="#signedobject-ledgerentryrevocation">LedgerEntryRevocation</a>. In case of emergency, either Peer can always revoke the other Peers DID. This is a two-sided solution of
@@ -454,7 +406,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     are rarely perfect solutions.</p>
   <p>To support Delegated Revocation, an extra (otherwise optional) field is present: taId. Which allows future deny-listing of the use taId (e.g. the document number of the passport)</p>
 
-  </section><section id="example-activation-process-in-case-of-an-epassport"><div class="header-wrapper"><h3 id="activation-process-in-case-of-an-e-passport-"><bdi class="secno">4.5 </bdi>Example activation Process (in case of an ePassport)</h3><a class="self-link" href="#activation-process-in-case-of-an-e-passport-" aria-label="Permalink for Section 4.5"></a></div>
+  </section><section id="example-activation-process-in-case-of-an-epassport"><div class="header-wrapper"><h3 id="activation-process-in-case-of-an-e-passport-"><bdi class="secno">5.5 </bdi>Example activation Process (in case of an ePassport)</h3><a class="self-link" href="#activation-process-in-case-of-an-e-passport-" aria-label="Permalink for Section 5.5"></a></div>
   <ol>
     <li>User installs wallet.</li>
     <li>Wallet prompts for MRZ line.</li>
@@ -469,7 +421,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 
 <hr>
 
-<section id="relay-peer-specification-0"><div class="header-wrapper"><h2 id="relay-peer-specification"><bdi class="secno">5. </bdi>Relay Peer Specification</h2><a class="self-link" href="#relay-peer-specification" aria-label="Permalink for Section 5."></a></div>
+<section id="relay-peer-specification-0"><div class="header-wrapper"><h2 id="relay-peer-specification"><bdi class="secno">6. </bdi>Relay Peer Specification</h2><a class="self-link" href="#relay-peer-specification" aria-label="Permalink for Section 6."></a></div>
   
   <p>The Relay Peer is a special kind of Peer in the sense that it is static and reachable over the internet on a fixed
     hostname. It acts like any other Peer, but it also adds a storage layer for the Ledger and serves as distribution
@@ -477,11 +429,11 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     This is purely infrastructural to help communication between Peers. It doesn't give any special privileges or
     authorities to any of the Relay Peers and does therefore still fulfill all requirements to be called
     decentralized.</p>
-  <section id="the-well-known-relay-peer"><div class="header-wrapper"><h3 id="well-known-relay-peer"><bdi class="secno">5.1 </bdi>The well-known Relay Peer</h3><a class="self-link" href="#well-known-relay-peer" aria-label="Permalink for Section 5.1"></a></div>
+  <section id="the-well-known-relay-peer"><div class="header-wrapper"><h3 id="well-known-relay-peer"><bdi class="secno">6.1 </bdi>The well-known Relay Peer</h3><a class="self-link" href="#well-known-relay-peer" aria-label="Permalink for Section 6.1"></a></div>
   <p>In order to establish a stable network, there should always be one well-known Relay Peer, which allows another
     Relay Peer to find others within the network. It also serves as an entry point for freshly installed Wallets to
     bootstrap.</p>
-  </section><section id="relay-peer-responsibilities-0"><div class="header-wrapper"><h3 id="relay-peer-responsibilities"><bdi class="secno">5.2 </bdi>Relay Peer Responsibilities</h3><a class="self-link" href="#relay-peer-responsibilities" aria-label="Permalink for Section 5.2"></a></div>
+  </section><section id="relay-peer-responsibilities-0"><div class="header-wrapper"><h3 id="relay-peer-responsibilities"><bdi class="secno">6.2 </bdi>Relay Peer Responsibilities</h3><a class="self-link" href="#relay-peer-responsibilities" aria-label="Permalink for Section 6.2"></a></div>
   <ul>
     <li>Announce themselves to a known (or the well-known) Relay Peer.</li>
     <li>Receive, validate and store new LedgerEntries.</li>
@@ -490,7 +442,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     <li>Responding to registration attempts from new Relay Peers.</li>
     <li>Gossiping about active Relay Peers.</li>
   </ul>
-  </section><section id="relay-peer-bootstrap-and-verification-0"><div class="header-wrapper"><h3 id="relay-peer-bootstrap-and-verification"><bdi class="secno">5.3 </bdi>Relay Peer Bootstrap and Verification</h3><a class="self-link" href="#relay-peer-bootstrap-and-verification" aria-label="Permalink for Section 5.3"></a></div>
+  </section><section id="relay-peer-bootstrap-and-verification-0"><div class="header-wrapper"><h3 id="relay-peer-bootstrap-and-verification"><bdi class="secno">6.3 </bdi>Relay Peer Bootstrap and Verification</h3><a class="self-link" href="#relay-peer-bootstrap-and-verification" aria-label="Permalink for Section 6.3"></a></div>
   <p>To enable deterministic network formation and secure onboarding of Relay Peers, the SSIMPL protocol defines a
     bootstrap
     and verification procedure.</p>
@@ -499,7 +451,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     obtain the first list of known Relay Peers. This is a hard-coded node that allows the network to kickstart itself
     and to
     have zero knowledge upfront when adding a new Relay Peer.</p>
-  <section id="relay-peer-registration-0"><div class="header-wrapper"><h4 id="relay-peer-registration"><bdi class="secno">5.3.1 </bdi>Relay Peer Registration</h4><a class="self-link" href="#relay-peer-registration" aria-label="Permalink for Section 5.3.1"></a></div>
+  <section id="relay-peer-registration-0"><div class="header-wrapper"><h4 id="relay-peer-registration"><bdi class="secno">6.3.1 </bdi>Relay Peer Registration</h4><a class="self-link" href="#relay-peer-registration" aria-label="Permalink for Section 6.3.1"></a></div>
   <p>Upon first contact with the network, a new Relay Peer:</p>
   <ol>
     <li>Contacts the Well-known Relay Peer (or another known Relay Peer) to announce its presence.</li>
@@ -515,12 +467,12 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 
 <hr>
 
-<section id="ledger-specification-0"><div class="header-wrapper"><h2 id="ledger-specification"><bdi class="secno">6. </bdi>Ledger Specification</h2><a class="self-link" href="#ledger-specification" aria-label="Permalink for Section 6."></a></div>
+<section id="ledger-specification-0"><div class="header-wrapper"><h2 id="ledger-specification"><bdi class="secno">7. </bdi>Ledger Specification</h2><a class="self-link" href="#ledger-specification" aria-label="Permalink for Section 7."></a></div>
   
   <p>The SSIMPL ledger is a <strong>deterministically canonical, peer-replicated structure</strong> tracking valid DIDs,
     maintained across
     Peers and Relay Peers.</p>
-  <section id="goals-0"><div class="header-wrapper"><h3 id="goals"><bdi class="secno">6.1 </bdi>Goals</h3><a class="self-link" href="#goals" aria-label="Permalink for Section 6.1"></a></div>
+  <section id="goals-0"><div class="header-wrapper"><h3 id="goals"><bdi class="secno">7.1 </bdi>Goals</h3><a class="self-link" href="#goals" aria-label="Permalink for Section 7.1"></a></div>
   <ul>
     <li>Track valid DIDs without a central authority.</li>
     <li>Support bounded state and deterministic pruning.</li>
@@ -528,7 +480,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     <li>Eventual consistency via optional gossip or client/server synchronization.</li>
     <li>Mobile-friendly operation for large ledgers (5–30 GB).</li>
   </ul>
-  </section><section id="state-and-canonical-construction-0"><div class="header-wrapper"><h3 id="state-and-canonical-construction"><bdi class="secno">6.2 </bdi>State and Canonical Construction</h3><a class="self-link" href="#state-and-canonical-construction" aria-label="Permalink for Section 6.2"></a></div>
+  </section><section id="state-and-canonical-construction-0"><div class="header-wrapper"><h3 id="state-and-canonical-construction"><bdi class="secno">7.2 </bdi>State and Canonical Construction</h3><a class="self-link" href="#state-and-canonical-construction" aria-label="Permalink for Section 7.2"></a></div>
   <ol>
     <li>Filter expired entries based on <code>did_expiry</code> and <code>GRACE_PERIOD</code>.</li>
     <li>Normalize entries into canonical byte format.</li>
@@ -536,16 +488,16 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     <li>Compute <code>root_hash</code> using a <strong>Merkle tree</strong> over the current, complete, pruned ledger.
     </li>
   </ol>
-  </section><section id="merkle-tree-0"><div class="header-wrapper"><h3 id="merkle-tree"><bdi class="secno">6.3 </bdi>Merkle Tree</h3><a class="self-link" href="#merkle-tree" aria-label="Permalink for Section 6.3"></a></div>
+  </section><section id="merkle-tree-0"><div class="header-wrapper"><h3 id="merkle-tree"><bdi class="secno">7.3 </bdi>Merkle Tree</h3><a class="self-link" href="#merkle-tree" aria-label="Permalink for Section 7.3"></a></div>
   <p>The SSIMPL ledger uses a <strong>Merkle tree</strong> to enable efficient verification of ledger state and
     individual entries.</p>
-  <section id="structure-0"><div class="header-wrapper"><h4 id="mt-structure"><bdi class="secno">6.3.1 </bdi>Structure</h4><a class="self-link" href="#mt-structure" aria-label="Permalink for Section 6.3.1"></a></div>
+  <section id="structure-0"><div class="header-wrapper"><h4 id="mt-structure"><bdi class="secno">7.3.1 </bdi>Structure</h4><a class="self-link" href="#mt-structure" aria-label="Permalink for Section 7.3.1"></a></div>
   <ul>
     <li><strong>Leaves:</strong> Hashes of canonical ledger entries.</li>
     <li><strong>Branches:</strong> Hashes of concatenated child nodes.</li>
     <li><strong>Root:</strong> <code>root_hash</code> representing the current canonical ledger state.</li>
   </ul>
-  </section><section id="updates-0"><div class="header-wrapper"><h4 id="updates"><bdi class="secno">6.3.2 </bdi>Updates</h4><a class="self-link" href="#updates" aria-label="Permalink for Section 6.3.2"></a></div>
+  </section><section id="updates-0"><div class="header-wrapper"><h4 id="updates"><bdi class="secno">7.3.2 </bdi>Updates</h4><a class="self-link" href="#updates" aria-label="Permalink for Section 7.3.2"></a></div>
   <ol>
     <li>New ledger entries are appended as leaves.</li>
     <li>The affected branches are rehashed up to the root.</li>
@@ -553,7 +505,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       valid.
     </li>
   </ol>
-  </section><section id="merkle-proofs-0"><div class="header-wrapper"><h4 id="merkle-proofs"><bdi class="secno">6.3.3 </bdi>Merkle Proofs</h4><a class="self-link" href="#merkle-proofs" aria-label="Permalink for Section 6.3.3"></a></div>
+  </section><section id="merkle-proofs-0"><div class="header-wrapper"><h4 id="merkle-proofs"><bdi class="secno">7.3.3 </bdi>Merkle Proofs</h4><a class="self-link" href="#merkle-proofs" aria-label="Permalink for Section 7.3.3"></a></div>
   <ul>
     <li>To prove inclusion of a DID <code>xyz</code>, a peer can provide the leaf hash and the branch hashes up to
       <code>root_hash</code>.
@@ -561,12 +513,12 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     <li>Other peers can recompute the root from the proof and verify it matches the canonical <code>root_hash</code>.
     </li>
   </ul>
-  </section><section id="relation-to-checkpoints-0"><div class="header-wrapper"><h4 id="relation-to-checkpoints"><bdi class="secno">6.3.4 </bdi>Relation to Checkpoints</h4><a class="self-link" href="#relation-to-checkpoints" aria-label="Permalink for Section 6.3.4"></a></div>
+  </section><section id="relation-to-checkpoints-0"><div class="header-wrapper"><h4 id="relation-to-checkpoints"><bdi class="secno">7.3.4 </bdi>Relation to Checkpoints</h4><a class="self-link" href="#relation-to-checkpoints" aria-label="Permalink for Section 7.3.4"></a></div>
   <ul>
     <li>Checkpoints store a <code>root_hash</code> for a specific epoch.</li>
     <li>Peers can verify their ledger or deltas by starting from the latest checkpoint and applying updates.</li>
   </ul>
-  </section></section><section id="validation-rules-0"><div class="header-wrapper"><h3 id="validation-rules"><bdi class="secno">6.4 </bdi>Validation Rules</h3><a class="self-link" href="#validation-rules" aria-label="Permalink for Section 6.4"></a></div>
+  </section></section><section id="validation-rules-0"><div class="header-wrapper"><h3 id="validation-rules"><bdi class="secno">7.4 </bdi>Validation Rules</h3><a class="self-link" href="#validation-rules" aria-label="Permalink for Section 7.4"></a></div>
   <p>An entry is valid if:</p>
   <ol>
     <li><code>current_time</code> &lt; <code>did_expiry</code> + <code>GRACE_PERIOD</code>.</li>
@@ -582,7 +534,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
         )</code></li>
   </ol>
   <p>Expired or invalid entries are ignored and removed during canonical construction.</p>
-  </section><section id="pruning-and-mutability-0"><div class="header-wrapper"><h3 id="pruning-and-mutability"><bdi class="secno">6.5 </bdi>Pruning and Mutability</h3><a class="self-link" href="#pruning-and-mutability" aria-label="Permalink for Section 6.5"></a></div>
+  </section><section id="pruning-and-mutability-0"><div class="header-wrapper"><h3 id="pruning-and-mutability"><bdi class="secno">7.5 </bdi>Pruning and Mutability</h3><a class="self-link" href="#pruning-and-mutability" aria-label="Permalink for Section 7.5"></a></div>
   <ul>
     <li><p>Peers <strong><em class="rfc2119">MAY</em></strong> remove their own entries and expired entries. To revoke a DID:</p>
       <ol>
@@ -594,7 +546,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     </li>
     <li>Deterministic pruning ensures consistent ledger state across peers.</li>
   </ul>
-  </section><section id="synchronization-0"><div class="header-wrapper"><h3 id="synchronization"><bdi class="secno">6.6 </bdi>Synchronization</h3><a class="self-link" href="#synchronization" aria-label="Permalink for Section 6.6"></a></div>
+  </section><section id="synchronization-0"><div class="header-wrapper"><h3 id="synchronization"><bdi class="secno">7.6 </bdi>Synchronization</h3><a class="self-link" href="#synchronization" aria-label="Permalink for Section 7.6"></a></div>
   <ul>
     <li>Peers exchange <code>{ epoch, root_hash }</code> metadata.</li>
     <li><strong>Matching hash:</strong> No action required.</li>
@@ -603,13 +555,13 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     <li>Relay Peers act as distribution points while also validating entries.</li>
     <li>Stateless Relay Peers may bootstrap from peers but should persist data for efficiency.</li>
   </ul>
-  </section><section id="merkle-checkpoints-0"><div class="header-wrapper"><h3 id="merkle-checkpoints"><bdi class="secno">6.7 </bdi>Merkle Checkpoints</h3><a class="self-link" href="#merkle-checkpoints" aria-label="Permalink for Section 6.7"></a></div>
+  </section><section id="merkle-checkpoints-0"><div class="header-wrapper"><h3 id="merkle-checkpoints"><bdi class="secno">7.7 </bdi>Merkle Checkpoints</h3><a class="self-link" href="#merkle-checkpoints" aria-label="Permalink for Section 7.7"></a></div>
   <p>To enable efficient verification of ledger history and prevent forks from propagating, the SSIMPL protocol
     introduces
     Merkle checkpoints. These checkpoints allow peers to validate that their current ledger state stems from a
     previously
     agreed-upon canonical state.</p>
-  <section id="definition-0"><div class="header-wrapper"><h4 id="definition"><bdi class="secno">6.7.1 </bdi>Definition</h4><a class="self-link" href="#definition" aria-label="Permalink for Section 6.7.1"></a></div>
+  <section id="definition-0"><div class="header-wrapper"><h4 id="definition"><bdi class="secno">7.7.1 </bdi>Definition</h4><a class="self-link" href="#definition" aria-label="Permalink for Section 7.7.1"></a></div>
   <p>A Merkle checkpoint is a snapshot of the canonical ledger at a given epoch, containing:</p>
   <ul>
     <li>epoch — The deterministic epoch number of the snapshot</li>
@@ -619,7 +571,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       timestamp
     </li>
   </ul>
-  </section><section id="purpose-0"><div class="header-wrapper"><h4 id="purpose"><bdi class="secno">6.7.2 </bdi>Purpose</h4><a class="self-link" href="#purpose" aria-label="Permalink for Section 6.7.2"></a></div>
+  </section><section id="purpose-0"><div class="header-wrapper"><h4 id="purpose"><bdi class="secno">7.7.2 </bdi>Purpose</h4><a class="self-link" href="#purpose" aria-label="Permalink for Section 7.7.2"></a></div>
   <p>Merkle checkpoints serve three main purposes:</p>
   <ol>
     <li>Anchoring history — They provide a trusted reference point for peers to verify that their current ledger is an
@@ -632,13 +584,13 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       starting from the latest known checkpoint rather than from the genesis ledger.
     </li>
   </ol>
-  </section><section id="creation-and-storage-0"><div class="header-wrapper"><h4 id="creation-and-storage"><bdi class="secno">6.7.3 </bdi>Creation and Storage</h4><a class="self-link" href="#creation-and-storage" aria-label="Permalink for Section 6.7.3"></a></div>
+  </section><section id="creation-and-storage-0"><div class="header-wrapper"><h4 id="creation-and-storage"><bdi class="secno">7.7.3 </bdi>Creation and Storage</h4><a class="self-link" href="#creation-and-storage" aria-label="Permalink for Section 7.7.3"></a></div>
   <ul>
     <li>Peers <em class="rfc2119">MAY</em> create checkpoints at deterministic intervals (e.g., end of each epoch).</li>
     <li>Relay Peers <em class="rfc2119">SHOULD</em> store checkpoints for availability, enabling efficient delta requests for mobile peers.</li>
     <li>Checkpoints themselves are immutable; once created, they cannot be modified or deleted.</li>
   </ul>
-  </section><section id="verification-0"><div class="header-wrapper"><h4 id="verification"><bdi class="secno">6.7.4 </bdi>Verification</h4><a class="self-link" href="#verification" aria-label="Permalink for Section 6.7.4"></a></div>
+  </section><section id="verification-0"><div class="header-wrapper"><h4 id="verification"><bdi class="secno">7.7.4 </bdi>Verification</h4><a class="self-link" href="#verification" aria-label="Permalink for Section 7.7.4"></a></div>
   <p>To verify a ledger using a checkpoint:</p>
   <ol>
     <li>Obtain the checkpoint for the target epoch (epoch, root_hash).</li>
@@ -647,20 +599,20 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     <li>Confirm that the recomputed root matches the current root_hash.</li>
   </ol>
   <p>A mismatch indicates ledger tampering or divergence, and the peer <em class="rfc2119">MUST</em> reject the inconsistent entries.</p>
-  </section><section id="pruning-and-expiry-0"><div class="header-wrapper"><h4 id="pruning-and-expiry"><bdi class="secno">6.7.5 </bdi>Pruning and Expiry</h4><a class="self-link" href="#pruning-and-expiry" aria-label="Permalink for Section 6.7.5"></a></div>
+  </section><section id="pruning-and-expiry-0"><div class="header-wrapper"><h4 id="pruning-and-expiry"><bdi class="secno">7.7.5 </bdi>Pruning and Expiry</h4><a class="self-link" href="#pruning-and-expiry" aria-label="Permalink for Section 7.7.5"></a></div>
   <ul>
     <li>Checkpoints older than a configurable retention window <em class="rfc2119">MAY</em> be pruned to reduce storage overhead.</li>
     <li>Retention policies <em class="rfc2119">SHOULD</em> be deterministic and consistent across peers to maintain canonical verification
       paths.
     </li>
   </ul>
-  </section><section id="security-considerations-0"><div class="header-wrapper"><h4 id="security-considerations"><bdi class="secno">6.7.6 </bdi>Security Considerations</h4><a class="self-link" href="#security-considerations" aria-label="Permalink for Section 6.7.6"></a></div>
+  </section><section id="security-considerations-0"><div class="header-wrapper"><h4 id="security-considerations"><bdi class="secno">7.7.6 </bdi>Security Considerations</h4><a class="self-link" href="#security-considerations" aria-label="Permalink for Section 7.7.6"></a></div>
   <ul>
     <li>Checkpoint integrity — Checkpoints must be signed by the creating peer using their DID key.</li>
     <li>Fork prevention — Peers must reject any checkpoint that does not extend a known valid previous checkpoint.</li>
     <li>Replay attacks — Timestamps and epoch numbers help prevent replay of stale checkpoints.</li>
   </ul>
-  </section></section><section id="security-properties-0"><div class="header-wrapper"><h3 id="security-properties"><bdi class="secno">6.8 </bdi>Security Properties</h3><a class="self-link" href="#security-properties" aria-label="Permalink for Section 6.8"></a></div>
+  </section></section><section id="security-properties-0"><div class="header-wrapper"><h3 id="security-properties"><bdi class="secno">7.8 </bdi>Security Properties</h3><a class="self-link" href="#security-properties" aria-label="Permalink for Section 7.8"></a></div>
   <ul>
     <li>Single-peer revocation verification.</li>
     <li>Privacy-preserving registration.</li>
@@ -673,7 +625,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 
 <hr>
 
-<section id="conclusion-0"><div class="header-wrapper"><h2 id="conclusion"><bdi class="secno">7. </bdi>Conclusion</h2><a class="self-link" href="#conclusion" aria-label="Permalink for Section 7."></a></div>
+<section id="conclusion-0"><div class="header-wrapper"><h2 id="conclusion"><bdi class="secno">8. </bdi>Conclusion</h2><a class="self-link" href="#conclusion" aria-label="Permalink for Section 8."></a></div>
   
   <p>SSIMPL provides a <strong>self-sovereign identity framework</strong> with a deterministic, peer-validated ledger,
     enabling secure,
@@ -685,13 +637,13 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 
 <hr>
 
-<section id="canonicalization-rules-0"><div class="header-wrapper"><h2 id="canonicalization-rules"><bdi class="secno">8. </bdi>Canonicalization Rules</h2><a class="self-link" href="#canonicalization-rules" aria-label="Permalink for Section 8."></a></div>
+<section id="canonicalization-rules-0"><div class="header-wrapper"><h2 id="canonicalization-rules"><bdi class="secno">9. </bdi>Canonicalization Rules</h2><a class="self-link" href="#canonicalization-rules" aria-label="Permalink for Section 9."></a></div>
   
   <p>To ensure that signatures are verifiable and consistent across all peers, every signed object in SSIMPL (including
     LedgerEntry and VerifiableCredentialRoot) <em class="rfc2119">MUST</em> be serialized in a canonical form before hashing and signing. These
     rules
     remove ambiguity in encoding and field ordering, preventing mismatches between peers.</p>
-  <section id="object-serialization-0"><div class="header-wrapper"><h3 id="object-serialization"><bdi class="secno">8.1 </bdi>Object Serialization</h3><a class="self-link" href="#object-serialization" aria-label="Permalink for Section 8.1"></a></div>
+  <section id="object-serialization-0"><div class="header-wrapper"><h3 id="object-serialization"><bdi class="secno">9.1 </bdi>Object Serialization</h3><a class="self-link" href="#object-serialization" aria-label="Permalink for Section 9.1"></a></div>
   <ol>
     <li>Field Ordering
       <ul>
@@ -723,20 +675,20 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     <li><p>true, false, and null <em class="rfc2119">MUST</em> use JSON literals exactly as shown (case-sensitive).</p>
     </li>
   </ol>
-  </section><section id="nested-objects-0"><div class="header-wrapper"><h3 id="nested-objects"><bdi class="secno">8.2 </bdi>Nested Objects</h3><a class="self-link" href="#nested-objects" aria-label="Permalink for Section 8.2"></a></div>
+  </section><section id="nested-objects-0"><div class="header-wrapper"><h3 id="nested-objects"><bdi class="secno">9.2 </bdi>Nested Objects</h3><a class="self-link" href="#nested-objects" aria-label="Permalink for Section 9.2"></a></div>
   <ul>
     <li>Recursion: Apply canonicalization rules recursively to all nested objects and arrays.</li>
     <li>Arrays <em class="rfc2119">MUST</em> preserve element order.</li>
     <li>Elements <em class="rfc2119">MUST</em> themselves be canonicalized if they are objects or arrays.</li>
   </ul>
-  </section><section id="signature-message-0"><div class="header-wrapper"><h3 id="signature-message"><bdi class="secno">8.3 </bdi>Signature Message</h3><a class="self-link" href="#signature-message" aria-label="Permalink for Section 8.3"></a></div>
+  </section><section id="signature-message-0"><div class="header-wrapper"><h3 id="signature-message"><bdi class="secno">9.3 </bdi>Signature Message</h3><a class="self-link" href="#signature-message" aria-label="Permalink for Section 9.3"></a></div>
   <ol>
     <li>The message field in every SignatureEnvelope <em class="rfc2119">MUST</em> be the hash of the canonical serialized data object.</li>
     <li>Recommended hash function: SHA-256.</li>
     <li>The hash input is strictly the canonical byte sequence of the data object (no additional metadata).</li>
     <li>Signing the message binds the signer cryptographically to the exact canonical representation of the object.</li>
   </ol>
-  </section><section id="deterministic-encoding-0"><div class="header-wrapper"><h3 id="deterministic-encoding"><bdi class="secno">8.4 </bdi>Deterministic Encoding</h3><a class="self-link" href="#deterministic-encoding" aria-label="Permalink for Section 8.4"></a></div>
+  </section><section id="deterministic-encoding-0"><div class="header-wrapper"><h3 id="deterministic-encoding"><bdi class="secno">9.4 </bdi>Deterministic Encoding</h3><a class="self-link" href="#deterministic-encoding" aria-label="Permalink for Section 9.4"></a></div>
   <p>There are many ways to encode raw bytes or strings, and more are being invented as we speak. It is highly
     inefficient to make these encodings contract-based. SSIMPL therefore highly recommends the use of the Multibase Data
     Format, as defined in [<cite><a class="bibref" data-link-type="biblio" href="#bib-multibase" title="The Multibase Data Format">Multibase</a></cite>], which is deterministic.</p>
@@ -745,7 +697,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     <li>Multibase-encoding <em class="rfc2119">SHOULD</em> be used consistently for any binary data (e.g., cryptographic proofs).</li>
     <li>This ensures that all peers can reproduce the exact same byte sequence for verification.</li>
   </ul>
-  </section><section id="verification-procedure-0"><div class="header-wrapper"><h3 id="verification-procedure"><bdi class="secno">8.5 </bdi>Verification Procedure</h3><a class="self-link" href="#verification-procedure" aria-label="Permalink for Section 8.5"></a></div>
+  </section><section id="verification-procedure-0"><div class="header-wrapper"><h3 id="verification-procedure"><bdi class="secno">9.5 </bdi>Verification Procedure</h3><a class="self-link" href="#verification-procedure" aria-label="Permalink for Section 9.5"></a></div>
   <p>To verify a signature:</p>
   <ol>
     <li>Peer canonicalizes the data object according to the rules above.</li>
@@ -754,20 +706,20 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     <li>Peer validates the signature using the provided publicKey and algorithm.</li>
     <li>Only if all checks pass is the object considered valid.</li>
   </ol>
-  </section><section id="rationale-0"><div class="header-wrapper"><h3 id="rationale"><bdi class="secno">8.6 </bdi>Rationale</h3><a class="self-link" href="#rationale" aria-label="Permalink for Section 8.6"></a></div>
+  </section><section id="rationale-0"><div class="header-wrapper"><h3 id="rationale"><bdi class="secno">9.6 </bdi>Rationale</h3><a class="self-link" href="#rationale" aria-label="Permalink for Section 9.6"></a></div>
   <p>Canonicalization guarantees that:</p>
   <ul>
     <li>Signatures are deterministic and portable across implementations.</li>
     <li>Peers can independently verify credentials, ledger entries, and revocations.</li>
     <li>Forks, replay attacks, and accidental divergence due to encoding differences are prevented.</li>
   </ul>
-  </section><section id="canonical-signature-object-pattern-0"><div class="header-wrapper"><h3 id="canonical-signature-object-pattern"><bdi class="secno">8.7 </bdi>Canonical Signature Object Pattern</h3><a class="self-link" href="#canonical-signature-object-pattern" aria-label="Permalink for Section 8.7"></a></div>
+  </section><section id="canonical-signature-object-pattern-0"><div class="header-wrapper"><h3 id="canonical-signature-object-pattern"><bdi class="secno">9.7 </bdi>Canonical Signature Object Pattern</h3><a class="self-link" href="#canonical-signature-object-pattern" aria-label="Permalink for Section 9.7"></a></div>
   <p>All cryptographically signed objects in SSIMPL <strong><em class="rfc2119">MUST</em></strong> follow a uniform, canonical structure, known
     as the <em>
     </em>SignatureEnvelope**. This ensures consistency across all signed data, including ledger entries, Verifiable
     Credential
     Roots (VCR), revocations, and delta payloads.</p>
-  <section id="structure-1"><div class="header-wrapper"><h4 id="structure"><bdi class="secno">8.7.1 </bdi>Structure</h4><a class="self-link" href="#structure" aria-label="Permalink for Section 8.7.1"></a></div>
+  <section id="structure-1"><div class="header-wrapper"><h4 id="structure"><bdi class="secno">9.7.1 </bdi>Structure</h4><a class="self-link" href="#structure" aria-label="Permalink for Section 9.7.1"></a></div>
   <p>Each signed object <strong><em class="rfc2119">MUST</em></strong> include a <code>SignatureEnvelope</code> with the following structure:</p>
   <ul>
     <li><strong><code>message</code></strong> — The cryptographic hash of the canonical serialization of the
@@ -793,7 +745,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
   "signer": "&lt;DID of signer&gt;"
 }
 </code></pre>
-  </section><section id="usage-0"><div class="header-wrapper"><h4 id="usage"><bdi class="secno">8.7.2 </bdi>Usage</h4><a class="self-link" href="#usage" aria-label="Permalink for Section 8.7.2"></a></div>
+  </section><section id="usage-0"><div class="header-wrapper"><h4 id="usage"><bdi class="secno">9.7.2 </bdi>Usage</h4><a class="self-link" href="#usage" aria-label="Permalink for Section 9.7.2"></a></div>
   <ul>
     <li>Every signed object in SSIMPL, including LedgerEntry, VerifiableCredentialRoot, revocation entries, and delta
       updates,
@@ -807,7 +759,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       network.
     </li>
   </ul>
-  </section><section id="rules-and-notes-0"><div class="header-wrapper"><h4 id="rules-and-notes"><bdi class="secno">8.7.3 </bdi>Rules and Notes</h4><a class="self-link" href="#rules-and-notes" aria-label="Permalink for Section 8.7.3"></a></div>
+  </section><section id="rules-and-notes-0"><div class="header-wrapper"><h4 id="rules-and-notes"><bdi class="secno">9.7.3 </bdi>Rules and Notes</h4><a class="self-link" href="#rules-and-notes" aria-label="Permalink for Section 9.7.3"></a></div>
   <ul>
     <li>Optional fields in the data object <em class="rfc2119">MUST NOT</em> affect the canonical hash unless explicitly defined in the
       canonicalization rules.
@@ -823,8 +775,8 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 
 <hr>
 
-<section id="ssimpl-api-specification-0"><div class="header-wrapper"><h2 id="ssimpl-api-specification"><bdi class="secno">9. </bdi>SSIMPL API Specification
-  </h2><a class="self-link" href="#ssimpl-api-specification" aria-label="Permalink for Section 9."></a></div>
+<section id="ssimpl-api-specification-0"><div class="header-wrapper"><h2 id="ssimpl-api-specification"><bdi class="secno">10. </bdi>SSIMPL API Specification
+  </h2><a class="self-link" href="#ssimpl-api-specification" aria-label="Permalink for Section 10."></a></div>
   
   <p>This section defines the reference API for Relay Peers in the SSIMPL protocol. It provides endpoints for <strong>DID
     registration</strong>, <strong>revocation</strong>, and <strong>ledger synchronization</strong>.</p>
@@ -832,9 +784,9 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     DID in the canonical
     SignatureEnvelope format, multibase-encoded</strong>.</p>
   <p>You can also check the open-api spec <a href="https://raw.githubusercontent.com/compilit/ssimpl/refs/heads/main/ssimpl-spec.json">here</a>.</p>
-  <section id="endpoints-0"><div class="header-wrapper"><h3 id="endpoints"><bdi class="secno">9.1 </bdi>Endpoints</h3><a class="self-link" href="#endpoints" aria-label="Permalink for Section 9.1"></a></div>
+  <section id="endpoints-0"><div class="header-wrapper"><h3 id="endpoints"><bdi class="secno">10.1 </bdi>Endpoints</h3><a class="self-link" href="#endpoints" aria-label="Permalink for Section 10.1"></a></div>
 
-  <section id="register-a-relay-peer"><div class="header-wrapper"><h4 id="register-relay-peer"><bdi class="secno">9.1.1 </bdi>Register a Relay Peer</h4><a class="self-link" href="#register-relay-peer" aria-label="Permalink for Section 9.1.1"></a></div>
+  <section id="register-a-relay-peer"><div class="header-wrapper"><h4 id="register-relay-peer"><bdi class="secno">10.1.1 </bdi>Register a Relay Peer</h4><a class="self-link" href="#register-relay-peer" aria-label="Permalink for Section 10.1.1"></a></div>
   <p><strong>POST</strong> <code>/peer</code></p>
   <p>Purpose: Make a Relay Peer known to another Relay Peer.</p>
   <p><strong>Request payload: <a href="relaypeerannouncement">RelayPeerAnnouncement</a></strong></p>
@@ -851,7 +803,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 </code></pre>
   <p><strong>Response: 201 CREATED</strong></p>
   <hr>
-  </section><section id="perform-a-handshake-0"><div class="header-wrapper"><h4 id="perform-a-handshake"><bdi class="secno">9.1.2 </bdi>Perform a handshake</h4><a class="self-link" href="#perform-a-handshake" aria-label="Permalink for Section 9.1.2"></a></div>
+  </section><section id="perform-a-handshake-0"><div class="header-wrapper"><h4 id="perform-a-handshake"><bdi class="secno">10.1.2 </bdi>Perform a handshake</h4><a class="self-link" href="#perform-a-handshake" aria-label="Permalink for Section 10.1.2"></a></div>
   <p><strong>POST</strong> <code>/peer/identity</code></p>
   <p><strong>Purpose:</strong> Allows (Relay) Peers to check the health an initial validity of the Relay Peer</p>
   <p><strong>Request payload <a href="#signedobject-signed-t">SignedObject&lt;DID&gt;</a>:</strong></p>
@@ -872,7 +824,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 }
 </code></pre>
   <hr>
-  </section><section id="request-ledger-delta-0"><div class="header-wrapper"><h4 id="request-ledger-delta"><bdi class="secno">9.1.3 </bdi>Request Ledger Delta</h4><a class="self-link" href="#request-ledger-delta" aria-label="Permalink for Section 9.1.3"></a></div>
+  </section><section id="request-ledger-delta-0"><div class="header-wrapper"><h4 id="request-ledger-delta"><bdi class="secno">10.1.3 </bdi>Request Ledger Delta</h4><a class="self-link" href="#request-ledger-delta" aria-label="Permalink for Section 10.1.3"></a></div>
   <p><strong>POST</strong> <code>/ledger/delta</code></p>
   <p><strong>Purpose:</strong> Allows a Peer to request ledger entries that are newer than a given epoch, if the peer is
     out of sync.</p>
@@ -931,7 +883,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 }
 </code></pre>
   <hr>
-  </section><section id="register-a-did"><div class="header-wrapper"><h4 id="register-did"><bdi class="secno">9.1.4 </bdi>Register a DID</h4><a class="self-link" href="#register-did" aria-label="Permalink for Section 9.1.4"></a></div>
+  </section><section id="register-a-did"><div class="header-wrapper"><h4 id="register-did"><bdi class="secno">10.1.4 </bdi>Register a DID</h4><a class="self-link" href="#register-did" aria-label="Permalink for Section 10.1.4"></a></div>
   <p><strong>POST</strong> <code>/ledger</code></p>
   <p>Purpose: Register a new DID on the ledger.</p>
   <p><strong>Request payload: <a href="signedobject-ledgerentry">LedgerEntry</a></strong></p>
@@ -952,7 +904,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 </code></pre>
   <p><strong>Response: 201 CREATED</strong></p>
   <hr>
-  </section><section id="revoke-a-did"><div class="header-wrapper"><h4 id="revoke-did"><bdi class="secno">9.1.5 </bdi>Revoke a DID</h4><a class="self-link" href="#revoke-did" aria-label="Permalink for Section 9.1.5"></a></div>
+  </section><section id="revoke-a-did"><div class="header-wrapper"><h4 id="revoke-did"><bdi class="secno">10.1.5 </bdi>Revoke a DID</h4><a class="self-link" href="#revoke-did" aria-label="Permalink for Section 10.1.5"></a></div>
   <p><strong>PUT</strong> <code>/ledger</code></p>
   <p>Purpose: Revoke a DID by submitting a revocation payload. Providing the taId means that the related TA can NEVER be
     used again to initialize a Wallet/register a DID. The taId is mandatory for Delegated Revocation.</p>
@@ -970,8 +922,8 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 </code></pre>
   <p><strong>Response: 204 NO CONTENT</strong></p>
   <hr>
-  </section></section><section id="shared-object-schemas-0"><div class="header-wrapper"><h3 id="shared-object-schemas"><bdi class="secno">9.2 </bdi>Shared Object Schemas</h3><a class="self-link" href="#shared-object-schemas" aria-label="Permalink for Section 9.2"></a></div>
-  <section id="signedobject-signed-t-0"><div class="header-wrapper"><h4 id="signedobject-signed-t"><bdi class="secno">9.2.1 </bdi>SignedObject (Signed&lt;T&gt;)</h4><a class="self-link" href="#signedobject-signed-t" aria-label="Permalink for Section 9.2.1"></a></div>
+  </section></section><section id="shared-object-schemas-0"><div class="header-wrapper"><h3 id="shared-object-schemas"><bdi class="secno">10.2 </bdi>Shared Object Schemas</h3><a class="self-link" href="#shared-object-schemas" aria-label="Permalink for Section 10.2"></a></div>
+  <section id="signedobject-signed-t-0"><div class="header-wrapper"><h4 id="signedobject-signed-t"><bdi class="secno">10.2.1 </bdi>SignedObject (Signed&lt;T&gt;)</h4><a class="self-link" href="#signedobject-signed-t" aria-label="Permalink for Section 10.2.1"></a></div>
   <table>
     <thead>
     <tr>
@@ -993,7 +945,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     </tr>
     </tbody>
   </table>
-  </section><section id="signedobject-ledgerentry-0"><div class="header-wrapper"><h4 id="signedobject-ledgerentry"><bdi class="secno">9.2.2 </bdi>SignedObject: LedgerEntry</h4><a class="self-link" href="#signedobject-ledgerentry" aria-label="Permalink for Section 9.2.2"></a></div>
+  </section><section id="signedobject-ledgerentry-0"><div class="header-wrapper"><h4 id="signedobject-ledgerentry"><bdi class="secno">10.2.2 </bdi>SignedObject: LedgerEntry</h4><a class="self-link" href="#signedobject-ledgerentry" aria-label="Permalink for Section 10.2.2"></a></div>
   <table>
     <thead>
     <tr>
@@ -1016,7 +968,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     </tr>
     </tbody>
   </table>
-  </section><section id="verifiablecredentialroot-0"><div class="header-wrapper"><h4 id="verifiablecredentialroot"><bdi class="secno">9.2.3 </bdi>VerifiableCredentialRoot</h4><a class="self-link" href="#verifiablecredentialroot" aria-label="Permalink for Section 9.2.3"></a></div>
+  </section><section id="verifiablecredentialroot-0"><div class="header-wrapper"><h4 id="verifiablecredentialroot"><bdi class="secno">10.2.3 </bdi>VerifiableCredentialRoot</h4><a class="self-link" href="#verifiablecredentialroot" aria-label="Permalink for Section 10.2.3"></a></div>
   <table>
     <thead>
     <tr>
@@ -1040,7 +992,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     </tr>
     </tbody>
   </table>
-  </section><section id="signedobject-ledgerentryrevocation-0"><div class="header-wrapper"><h4 id="signedobject-ledgerentryrevocation"><bdi class="secno">9.2.4 </bdi>SignedObject: LedgerEntryRevocation</h4><a class="self-link" href="#signedobject-ledgerentryrevocation" aria-label="Permalink for Section 9.2.4"></a></div>
+  </section><section id="signedobject-ledgerentryrevocation-0"><div class="header-wrapper"><h4 id="signedobject-ledgerentryrevocation"><bdi class="secno">10.2.4 </bdi>SignedObject: LedgerEntryRevocation</h4><a class="self-link" href="#signedobject-ledgerentryrevocation" aria-label="Permalink for Section 10.2.4"></a></div>
   <table>
     <thead>
     <tr>
@@ -1063,7 +1015,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     </tbody>
   </table>
 
-  </section><section id="proof-example-in-case-an-epassport-is-used-as-ta"><div class="header-wrapper"><h4 id="proof"><bdi class="secno">9.2.5 </bdi>Proof (Example, in case an ePassport is used as TA)</h4><a class="self-link" href="#proof" aria-label="Permalink for Section 9.2.5"></a></div>
+  </section><section id="proof-example-in-case-an-epassport-is-used-as-ta"><div class="header-wrapper"><h4 id="proof"><bdi class="secno">10.2.5 </bdi>Proof (Example, in case an ePassport is used as TA)</h4><a class="self-link" href="#proof" aria-label="Permalink for Section 10.2.5"></a></div>
   <table>
     <thead>
     <tr>
@@ -1095,7 +1047,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     </tr>
     </tbody>
   </table>
-  </section><section id="signatureenvelope-0"><div class="header-wrapper"><h4 id="signatureenvelope"><bdi class="secno">9.2.6 </bdi>SignatureEnvelope</h4><a class="self-link" href="#signatureenvelope" aria-label="Permalink for Section 9.2.6"></a></div>
+  </section><section id="signatureenvelope-0"><div class="header-wrapper"><h4 id="signatureenvelope"><bdi class="secno">10.2.6 </bdi>SignatureEnvelope</h4><a class="self-link" href="#signatureenvelope" aria-label="Permalink for Section 10.2.6"></a></div>
   <table>
     <thead>
     <tr>
@@ -1122,7 +1074,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     </tr>
     </tbody>
   </table>
-  </section><section id="signature-0"><div class="header-wrapper"><h4 id="signature"><bdi class="secno">9.2.7 </bdi>Signature</h4><a class="self-link" href="#signature" aria-label="Permalink for Section 9.2.7"></a></div>
+  </section><section id="signature-0"><div class="header-wrapper"><h4 id="signature"><bdi class="secno">10.2.7 </bdi>Signature</h4><a class="self-link" href="#signature" aria-label="Permalink for Section 10.2.7"></a></div>
   <table>
     <thead>
     <tr>
@@ -1149,7 +1101,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     </tr>
     </tbody>
   </table>
-  </section><section id="ledgerdeltarequest-0"><div class="header-wrapper"><h4 id="ledgerdeltarequest"><bdi class="secno">9.2.8 </bdi>LedgerDeltaRequest</h4><a class="self-link" href="#ledgerdeltarequest" aria-label="Permalink for Section 9.2.8"></a></div>
+  </section><section id="ledgerdeltarequest-0"><div class="header-wrapper"><h4 id="ledgerdeltarequest"><bdi class="secno">10.2.8 </bdi>LedgerDeltaRequest</h4><a class="self-link" href="#ledgerdeltarequest" aria-label="Permalink for Section 10.2.8"></a></div>
   <table>
     <thead>
     <tr>
@@ -1178,7 +1130,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     </tr>
     </tbody>
   </table>
-  </section><section id="ledgerdeltaresponse-0"><div class="header-wrapper"><h4 id="ledgerdeltaresponse"><bdi class="secno">9.2.9 </bdi>LedgerDeltaResponse</h4><a class="self-link" href="#ledgerdeltaresponse" aria-label="Permalink for Section 9.2.9"></a></div>
+  </section><section id="ledgerdeltaresponse-0"><div class="header-wrapper"><h4 id="ledgerdeltaresponse"><bdi class="secno">10.2.9 </bdi>LedgerDeltaResponse</h4><a class="self-link" href="#ledgerdeltaresponse" aria-label="Permalink for Section 10.2.9"></a></div>
   <table>
     <thead>
     <tr><th>Field</th>
@@ -1205,7 +1157,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     </tr>
     </tbody>
   </table>
-  </section><section id="relaypeerannouncement-0"><div class="header-wrapper"><h4 id="relaypeerannouncement"><bdi class="secno">9.2.10 </bdi>RelayPeerAnnouncement</h4><a class="self-link" href="#relaypeerannouncement" aria-label="Permalink for Section 9.2.10"></a></div>
+  </section><section id="relaypeerannouncement-0"><div class="header-wrapper"><h4 id="relaypeerannouncement"><bdi class="secno">10.2.10 </bdi>RelayPeerAnnouncement</h4><a class="self-link" href="#relaypeerannouncement" aria-label="Permalink for Section 10.2.10"></a></div>
   <table>
     <thead>
     <tr><th>Field</th>
