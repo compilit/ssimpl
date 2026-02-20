@@ -57,7 +57,8 @@
   <h1>Document Status</h1>
 
   <p>This document is an independent Editor’s Draft published by the SSIMPL project.
-  It is not affiliated with, endorsed by, or produced by the World Wide Web Consortium (W3C) or any W3C Working Group.</p>
+    It is not affiliated with, endorsed by, or produced by the World Wide Web Consortium (W3C) or any W3C Working
+    Group.</p>
 
   <p>This draft may change at any time and should not be considered a stable standard.</p>
 
@@ -228,11 +229,14 @@
 
   <h2>Delegated Revocation</h2>
   <p>In order to mitigate the most dire scenario, SSIMPL
-    offers a relatively straight-forward solution: two Peers (you and someone you trust, like a close relative) exchange a complete
-    <a href="#signedobject-ledgerentryrevocation">LedgerEntryRevocation</a>. In case of emergency, either Peer can always revoke the other Peers DID. This is a two-sided solution of
+    offers a relatively straight-forward solution: two Peers (you and someone you trust, like a close relative) exchange
+    a complete
+    <a href="#signedobject-ledgerentryrevocation">LedgerEntryRevocation</a>. In case of emergency, either Peer can
+    always revoke the other Peers DID. This is a two-sided solution of
     course: it provides a nice safety net, but also introduces another safety risk. For these kind of scenario's, there
     are rarely perfect solutions.</p>
-  <p>To support Delegated Revocation, an extra (otherwise optional) field is present: taId. Which allows future deny-listing of the use taId (e.g. the document number of the passport)</p>
+  <p>To support Delegated Revocation, an extra (otherwise optional) field is present: taHash. Which allows future
+    deny-listing of the use taHash</p>
 
   <h2 id="activation-process-in-case-of-an-e-passport-">Example activation Process (in case of an ePassport)</h2>
   <ol>
@@ -573,6 +577,18 @@
   <span class="hljs-attr">"signer"</span>: <span class="hljs-string">"&lt;DID of signer&gt;"</span>
 }
 </code></pre>
+  <h2 id="canonical-ta-hash">Canonical creation of the Trust Anchor Hash</h2>
+  <p>This following, canonical JSON structure needs to be fed into a hash function (SHA-256 recommended) which results in the 'taHash'</p>
+  <pre><code class="lang-json">{
+    <span class="hljs-attr">"dateOfBirth"</span>: <span class="hljs-number">580963131</span>,
+    <span class="hljs-attr">"documentExpiryDate"</span>: <span class="hljs-number">1960861131</span>,
+    <span class="hljs-attr">"documentNumber"</span>: <span class="hljs-string">"ABC123...example"</span>
+    <span class="hljs-attr">"documentType"</span>: <span class="hljs-string">"P"</span>
+    <span class="hljs-attr">"firstNames"</span>: <span class="hljs-string">"JOHN"</span>
+    <span class="hljs-attr">"lastName"</span>: <span class="hljs-string">"DOE"</span>
+    <span class="hljs-attr">"nationality"</span>: <span class="hljs-string">"DUTCH"</span>
+}
+</code></pre>
   <h3 id="usage">Usage</h3>
   <ul>
     <li>Every signed object in SSIMPL, including LedgerEntry, VerifiableCredentialRoot, revocation entries, and delta
@@ -638,7 +654,7 @@
   <p><strong>Request payload <a href="#signedobject-signed-t">SignedObject&lt;DID&gt;</a>:</strong></p>
   <p><strong>Example:</strong></p>
   <pre><code class="lang-json">{
-  <span class="hljs-string">"data"</span>:<span class="hljs-string">"did:key:1234abc...example",
+  <span class="hljs-string">"data"</span>:<span class="hljs-string">"did:key:1234abc...example",</span>
   <span class="hljs-string">"signatureEnvelope"</span>: {
     ...
   }
@@ -646,7 +662,7 @@
 </code></pre>
   <p><strong>Response: 200 OK + <a href="#signedobject-signed-t">SignedObject&lt;DID&gt;</a>:</strong></p>
   <pre><code class="lang-json">{
-  <span class="hljs-string">"data"</span>:<span class="hljs-string">"did:key:abc1234...example",
+  <span class="hljs-string">"data"</span>:<span class="hljs-string">"did:key:abc1234...example",</span>
   <span class="hljs-string">"signatureEnvelope"</span>: {
     ...
   }
@@ -691,7 +707,7 @@
         <span class="hljs-string">"type"</span>:<span class="hljs-string">"REVOCATION"</span>,
         <span class="hljs-string">"payload"</span>: {
           <span class="hljs-string">"did"</span>: <span class="hljs-string">"did:key:1234abc...example"</span>,
-          <span class="hljs-string">"taId"</span>: <span class="hljs-string">"ABC1234XYZ"</span>,
+          <span class="hljs-string">"taHash"</span>: <span class="hljs-string">"a1b2c3d4...example"</span>,
         },
       },
       <span class="hljs-string">"signatureEnvelope"</span>: {
@@ -735,14 +751,15 @@
   <hr/>
   <h3 id="revoke-did">Revoke a DID</h3>
   <p><strong>PUT</strong> <code>/ledger</code></p>
-  <p>Purpose: Revoke a DID by submitting a revocation payload. Providing the taId means that the related TA can NEVER be
-    used again to initialize a Wallet/register a DID. The taId is mandatory for Delegated Revocation.</p>
+  <p>Purpose: Revoke a DID by submitting a revocation payload. Providing the taHash means that the related TA can NEVER
+    be
+    used again to initialize a Wallet/register a DID. The taHash is mandatory for Delegated Revocation.</p>
   <p><strong>Request payload: <a href="#signedobject-ledgerentryrevocation">LedgerEntryRevocation</a></strong></p>
   <p><strong>Example:</strong></p>
   <pre><code class="lang-json">{
   <span class="hljs-string">"data"</span>: {
     <span class="hljs-string">"did"</span>: <span class="hljs-string">"did:key:z6Mkw...example"</span>,
-    <span class="hljs-string">"taId"</span>: <span class="hljs-string">"(optional) ABC123XYZ"</span>
+    <span class="hljs-string">"taHash"</span>: <span class="hljs-string">"(optional) a1b2c3d4...example"</span>
   },
   <span class="hljs-string">"signatureEnvelope"</span>: {
     ...
@@ -813,11 +830,9 @@
       <td>The DID to be associated with the VCR - has to be the same as the one in the</td>
     </tr>
     <tr>
-      <td>taId</td>
+      <td>taHash</td>
       <td>string</td>
-      <td>The id related to the TA (e.g. the documentNumber). Prevents double registration and allows for deny-listing
-        the TA for future registrations.
-      </td>
+      <td>The canonical hash of the ta, see <a href="#canonical-ta-hash">Trust Anchor Hash</a></td>
     </tr>
     </tbody>
   </table>
@@ -834,7 +849,7 @@
     <tr>
       <td>data</td>
       <td>object</td>
-      <td>Contains the DID (and optionally the taId) being revoked</td>
+      <td>Contains the DID (and optionally the taHash) being revoked</td>
     </tr>
     <tr>
       <td>signatureEnvelope</td>
