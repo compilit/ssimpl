@@ -183,7 +183,6 @@
     <li>Extract and store additional VCs such as DG11 for user
       convenience.
     </li>
-    <li>Send their signed VCR to Relay Peers.</li>
   </ul>
   <h2 id="wallet-functionality">Wallet Functionality</h2>
   <ul>
@@ -247,7 +246,6 @@
     <li>BIP39 mnemonic generation (and presentation to the user).</li>
     <li>BIP32 keypair derivation and storage.</li>
     <li>Signing of the VCR.</li>
-    <li>Submission of the VCR to a Relay Peer.</li>
   </ol>
 </section>
 
@@ -268,7 +266,6 @@
   <h3 id="relay-peer-responsibilities">Relay Peer Responsibilities</h3>
   <ul>
     <li>Announce themselves to a known (or the well-known) Relay Peer.</li>
-    <li>Receive, validate and store new LedgerEntries.</li>
     <li>Receive, validate and store new LedgerEntryRevocations.</li>
     <li>Providing and storing a list of known Relay Peers for discovery.</li>
     <li>Responding to registration attempts from new Relay Peers.</li>
@@ -471,8 +468,7 @@
 
 <section>
   <h2 id="canonicalization-rules">Canonicalization Rules</h2>
-  <p>To ensure that signatures are verifiable and consistent across all peers, every signed object in SSIMPL (including
-    LedgerEntry and VerifiableCredentialRoot) MUST be serialized in a canonical form before hashing and signing. These
+  <p>To ensure that signatures are verifiable and consistent across all peers, every signed object in SSIMPL MUST be serialized in a canonical form before hashing and signing. These
     rules
     remove ambiguity in encoding and field ordering, preventing mismatches between peers.</p>
   <h2 id="object-serialization">Object Serialization</h2>
@@ -591,10 +587,7 @@
 </code></pre>
   <h3 id="usage">Usage</h3>
   <ul>
-    <li>Every signed object in SSIMPL, including LedgerEntry, VerifiableCredentialRoot, revocation entries, and delta
-      updates,
-      MUST include a signatureEnvelope.
-    </li>
+    <li>Every signed object in SSIMPL MUST include a signatureEnvelope.</li>
     <li>The message field MUST be derived from the canonical serialization of the associated data object, ensuring that
       identical logical objects produce identical hashes.
     </li>
@@ -728,27 +721,6 @@
 }
 </code></pre>
   <hr/>
-  <h3 id="register-did">Register a DID</h3>
-  <p><strong>POST</strong> <code>/ledger</code></p>
-  <p>Purpose: Register a new DID on the ledger.</p>
-  <p><strong>Request payload: <a href="#signedobject-ledgerentry">LedgerEntry</a></strong></p>
-  <p><strong>Example:</strong></p>
-  <pre><code class="lang-json">{
-  <span class="hljs-string">"data"</span>: {
-    <span class="hljs-string">"verifiableCredentialRoot"</span>: {
-      ...
-    },
-    <span class="hljs-string">"proof"</span>: {
-      ...
-    }
-  },
-  <span class="hljs-string">"signatureEnvelope"</span>: {
-    ...
-  }
-}
-</code></pre>
-  <p><strong>Response: 201 CREATED</strong></p>
-  <hr/>
   <h3 id="revoke-did">Revoke a DID</h3>
   <p><strong>PUT</strong> <code>/ledger</code></p>
   <p>Purpose: Revoke a DID by submitting a revocation payload. Providing the taHash means that the related TA can NEVER
@@ -791,29 +763,6 @@
     </tr>
     </tbody>
   </table>
-  <h3 id="signedobject-ledgerentry">SignedObject: LedgerEntry</h3>
-  <table>
-    <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>data</td>
-      <td>object</td>
-      <td>Contains <code>verifiableCredentialRoot</code> and <code>proof</code></td>
-    </tr>
-    <tr>
-      <td>signatureEnvelope</td>
-      <td>object</td>
-      <td>Signature verifying the integrity of <code>data</code>. See <a href="#signatureenvelope">SignatureEnvelope</a>
-      </td>
-    </tr>
-    </tbody>
-  </table>
   <h3 id="verifiablecredentialroot">VerifiableCredentialRoot</h3>
   <table>
     <thead>
@@ -833,6 +782,11 @@
       <td>taHash</td>
       <td>string</td>
       <td>The canonical hash of the ta, see <a href="#canonical-ta-hash">Trust Anchor Hash</a></td>
+    </tr>
+    <tr>
+      <td>taExpirationDate</td>
+      <td>number</td>
+      <td>The Unix epoch timestamp (64-bit) derived from the parsed expiration date field on the TA</td>
     </tr>
     </tbody>
   </table>
