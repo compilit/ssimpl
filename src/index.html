@@ -843,7 +843,65 @@
     </tr>
     </tbody>
   </table>
+  <pre><code>{
+  "type": "&lt;trust-anchor-type-identifier&gt;",
+  "claims": {
+    // Raw verifiable data, defined per type
+  },
+  "proof": {
+    // Type-specific cryptographic proof material
+  }
+}</code></pre>
 
+  <h4>Example (in case an ePassport is used as TA):</h4>
+  <pre><code>{
+  "type": "ICAO_EPASSPORT",
+  "claims": {
+    "dg1": {
+      "mrz1": "P&lt;NLDDOE&lt;&lt;JOHN&lt;WILLIAM&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;",
+      "mrz2": "ABC1X10A99NLD8805304M2911135215802147&lt;&lt;&lt;&lt;&lt;72"
+    }
+  },
+  "proof": {
+    "sod": {
+      "dgHashList": {
+        "1":  "&lt;sha-256-hash-of-dg1&gt;",
+        "2":  "&lt;sha-256-hash-of-dg2&gt;",
+        "11": "&lt;sha-256-hash-of-dg11&gt;",
+        "14": "&lt;sha-256-hash-of-dg14&gt;",
+        "15": "&lt;sha-256-hash-of-dg15&gt;"
+      },
+      "signature": "&lt;base64-encoded-SOD-signature&gt;",
+      "signingCertificate": "&lt;base64-DER-encoded-DSC&gt;"
+    },
+    "trustChain": {
+      "cscaCertificate": "&lt;base64-DER-encoded-CSCA&gt;"
+    }
+  }
+}</code></pre>
+
+  <p>
+    The <code>type</code> field identifies the Trust Anchor implementation and determines
+    how <code>claims</code> and <code>proof</code> are interpreted. Peers <em>MUST</em> reject
+    any <code>TrustAnchorProof</code> whose <code>type</code> they do not recognise.
+  </p>
+
+  <p>
+    For the <code>ICAO_EPASSPORT</code> type, verification proceeds as follows:
+  </p>
+
+  <ol>
+    <li>Hash the canonical encoding of <code>claims.dg1</code> and verify it matches <code>proof.sod.dgHashList["1"]</code>.</li>
+    <li>Re-encode the complete <code>proof.sod.dgHashList</code> into its original ASN.1/DER structure and verify <code>proof.sod.signature</code> against it using the public key in <code>proof.sod.signingCertificate</code> (DSC).</li>
+    <li>Verify <code>proof.sod.signingCertificate</code> (DSC) was signed by <code>proof.trustChain.cscaCertificate</code> (CSCA).</li>
+    <li>Verify <code>proof.trustChain.cscaCertificate</code> is present on the ICAO master list.</li>
+  </ol>
+
+  <p class="note">
+    Note: The full <code>dgHashList</code> must be provided in its entirety. The SOD signature
+    is computed over the complete encoded hash list, not over individual entries. Omitting any
+    hash from the list will cause signature verification to fail.
+  </p>
   <h3 id="signatureenvelope">SignatureEnvelope</h3>
   <table>
     <thead>
