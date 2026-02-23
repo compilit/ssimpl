@@ -999,16 +999,9 @@
       <td>Containing the DID and the hostname of the Relay Peer</td>
     </tr>
     <tr>
-      <td>authoritativeRootHash</td>
-      <td>string</td>
-      <td>Merkle root hash after applying returned entries array Ordered ledger entries newer
-        than lastEpoch
-      </td>
-    </tr>
-    <tr>
-      <td>entries</td>
-      <td>array</td>
-      <td>The entries missing from your ledger based on the provided epoch</td>
+      <td>signatureEnvelope</td>
+      <td>object</td>
+      <td>Signature verifying the revocation. See <a href="#signatureenvelope">SignatureEnvelope</a></td>
     </tr>
     </tbody>
   </table>
