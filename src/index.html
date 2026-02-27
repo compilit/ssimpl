@@ -111,6 +111,16 @@
     and availability. Everything is made to be deterministic by default, so no authorities whatsoever are required
     except
     the one that signed the Trust Anchor (TA).</p>
+  <p>The protocol also offers two authentication 'modes': stable and ephemeral authentication. These correspond to the
+    respective use/lack of BIP32 & BIP39. Either mode has their pros and cons.</p>
+  <h2 id="stable-ephemeral-dids">Stateful & ephemeral DIDs</h2>
+  <p>A DID in SSIMPL is nothing more than a public key used for signing tied to a verifiable identity. The significance
+    of the signature can be as little as 'I am a human being and have signed this piece of data', or as much as 'I am
+    John Doe, age 39, and this is my stable DID'. Stable DIDs rely on the owners ability to restore them when necessary,
+    with the use of the BIP39 mnemonic. Any DID created from the master keypair can be related to its parents. Which
+    allows systems to trace a DID while retaining the pseudonymous nature, with the only caveat being that correlations
+    can be made over time. Tying claims to a stable DID. Ephemeral DIDs allow for pure pseudonymous. They are snapshots
+    of a reality at some point in time.</p>
   <h2 id="identity-trust-model">Identity Trust Model</h2>
   <p>SSIMPL identities are rooted in cryptographically verifiable credentials derived from <strong>Trust
     Anchors</strong>, such as
@@ -120,10 +130,7 @@
     <li>MUST perform necessary processes to verify chip authenticity. For example, an Active Authentication (AA)
       challenge.
     </li>
-    <li>MUST derive a <strong>Verifiable Credential Root (<a href="#vcr">VCR</a>)</strong> tied to the
-      user’s DID, as
-      defined in [[DID]].
-    </li>
+    <li>MUST extract/create a <strong><a href="#ta-proof">TrustAnchorProof</a>)</strong> from the TA.</li>
   </ul>
   <p>This ensures only owners of verifiable physical credentials can create valid DIDs.</p>
   <h3 id="considerations">Considerations</h3>
@@ -131,10 +138,14 @@
     deterministic proof of (human) identity available at the moment.</p>
   <h2 id="levels-of-authentication">Levels of Authentication</h2>
   <ul>
-    <li><strong>Level 0:</strong> DID confirms human ownership (bot detection).</li>
-    <li><strong>Level 1:</strong> Level 0 + unverifiable attributes (e.g. the owners home address) requested via scope.
+    <li><strong>Level 0:</strong> ephemeral DID + TrustAnchorProof confirms human ownership (bot detection).</li>
+    <li><strong>Level 1:</strong> stable DID + TrustAnchorProof confirms human ownership (bot detection) and identifies
+      owner spanning multiple sessions.
     </li>
-    <li><strong>Level 2:</strong> Level 1 + verifiable credentials requested via scope.</li>
+    <li><strong>Level 2:</strong> Level 0/1 + unverifiable attributes (e.g. the owners home address) requested via
+      scope.
+    </li>
+    <li><strong>Level 3:</strong> Level 2 + verifiable credentials requested via scope.</li>
   </ul>
   <p>These different levels allow people to authenticate themselves on several levels, depending on the context. Say a
     person would like to order a product from a website. Using SSIMPL, the webshop could request a certain scope of
@@ -169,13 +180,14 @@
   <ul>
     <li>Extract cryptographic material from a Trust Anchor (TA).</li>
     <li>Support Active Authentication challenge verification.</li>
-    <li>Derive BIP32 keypairs (as defined in [[BIP32]]), from the BIP39 mnemonic (as defined in [[BIP39]]).</li>
+    <li>Derive a BIP32 keypair (as defined in [[BIP32]]), from the BIP39 mnemonic (as defined in [[BIP39]]).</li>
     <li>Present the BIP39 mnemonic to the owner. <i>Note: the BIP39 mnemonic should be stored redundantly, preferably
       offline.</i></note></li>
-    <li>Store the master BIP32 keypair in a secure storage section of their device (e.g. Apple Keychain, Android
+    <li>Generate a fresh BIP32 keypair (as defined in [[BIP32]]).</li>
+    <li>Store the master BIP32 private key in a secure storage section of their device (e.g. Apple Keychain, Android
       Keystore).
     </li>
-    <li>Sign and manage the VCR.</li>
+    <li>Sign and manage the TA data.</li>
     <li>Generate (BIP32 child) DIDs compliant with <code>did:key</code> for interoperability.</li>
     <li>Support JWT issuance and asymmetric key exchange.</li>
   </ul>
@@ -206,19 +218,32 @@
 
   <h2 id="wallet-security">Wallet Security</h2>
   <p>A SSIMPL Wallet has certain security scenario's that need to be addressed</p>
+  <h3>Stateless mode</h3>
   <ul>
-    <li><strong>The owners TA is lost/stolen</strong>: The owner MUST revoke their current DID - No transactions can
+    <li><strong>The owners TA is lost/stolen</strong>: The owner MUST revoke their current TA - No transactions can
+      take place until a new TA has been used to bootstrap.
+    </li>
+    <li><strong>The owners device is lost/stolen</strong>: The owner MUST revoke their current TA through Delegated
+      Revocation.
+    </li>
+  </ul>
+  <h3>Stateful mode</h3>
+  <ul>
+    <li><strong>The owners TA is lost/stolen</strong>: The owner MUST revoke their current TA - No transactions can
       take place until a new TA has been used to bootstrap.
     </li>
     <li><strong>The owners device is lost/stolen</strong>: The owner MUST use their BIP39 mnemonic to restore their
-      Wallet on a new device, then the owner MUST revoke their current DID and reinitialize their wallet.
+      Wallet on a new device, then the owner MUST revoke their current DID and reinitialize their wallet. AND The owner
+      MUST revoke their current TA through Delegated Revocation.
     </li>
     <li><strong>The owners BIP39 mnemonic is lost/stolen</strong>: The owner MUST revoke their current DID and
       reinitialize their wallet. This will result in a double entry in respect to the same TA. But the 'older' one will
       be automatically ignored.
     </li>
-    <li><strong>The owners BIP39 mnemonic AND TA is lost/stolen</strong>: The owner MUST revoke their current DID
-      (through Delegated Revocation) and reinitialize their wallet on a new device using a new TA.
+    <li><strong>The owners BIP39 mnemonic AND TA is lost/stolen</strong>: The owner MUST use their BIP39 mnemonic to
+      restore their
+      Wallet on a new device, then the owner MUST revoke their current DID and reinitialize their wallet. AND The owner
+      MUST revoke their current TA through Delegated Revocation.
     </li>
     <li><strong>⚠️The owners BIP39 mnemonic AND TA is lost/stolen AND Delegated Revocation hasn't been
       configured</strong>:
@@ -228,19 +253,13 @@
       a mandatory Delegated Revocation exchange flow.
     </li>
   </ul>
-
   <h2>Delegated Revocation</h2>
-  <p>In order to mitigate the most dire scenario, SSIMPL
+  <p>In order to mitigate the scenario where the user has no access to their wallet anymore, SSIMPL
     offers a relatively straight-forward solution: two Peers (you and someone you trust, like a close relative) exchange
-    a complete
-    <a href="#signedobject-ledgerentryrevocation">LedgerEntryRevocation</a>. In case of emergency, either Peer can
-    always revoke the other Peers DID. This is a two-sided solution of
-    course: it provides a nice safety net, but also introduces another safety risk. For these kind of scenario's, there
-    are rarely perfect solutions.</p>
-  <p>To support Delegated Revocation, an extra (otherwise optional) field is present: taHash. Which allows future
-    deny-listing of the use taHash</p>
+    a complete <a href="#signedobject-revocation">Revocation</a>. In case of emergency, either Peer can
+    always revoke the other Peers DID.</p>
 
-  <h2 id="activation-process-in-case-of-an-e-passport-">Example activation Process (in case of an ePassport)</h2>
+  <h2 id="activation-process-in-case-of-an-e-passport-">Example activation Process (in case of stable mode)</h2>
   <ol>
     <li>User installs wallet.</li>
     <li>Wallet prompts for MRZ line.</li>
@@ -248,7 +267,7 @@
     <li>Creation of Verifiable Credential Root (VCR).</li>
     <li>BIP39 mnemonic generation (and presentation to the user).</li>
     <li>BIP32 keypair derivation and storage.</li>
-    <li>Signing of the VCR.</li>
+    <li>Signing of the TrustAnchorProof.</li>
   </ol>
 </section>
 
@@ -269,7 +288,7 @@
   <h3 id="relay-peer-responsibilities">Relay Peer Responsibilities</h3>
   <ul>
     <li>Announce themselves to a known (or the well-known) Relay Peer.</li>
-    <li>Receive, validate and store new LedgerEntryRevocations.</li>
+    <li>Receive, validate and store new Revocations.</li>
     <li>Providing and storing a list of known Relay Peers for discovery.</li>
     <li>Responding to registration attempts from new Relay Peers.</li>
     <li>Gossiping about active Relay Peers.</li>
@@ -575,10 +594,10 @@
     "value": "&lt;multibase-encoded signature&gt;"
     },
   "signer": "&lt;DID of signer&gt;"
-    }
+}
 </code></pre>
   <h2 id="canonical-ta-hash">Canonical creation of the Trust Anchor Hash (ePassport implementation)</h2>
-  <p>This following, canonical JSON structure needs to be fed into a hash function (SHA-256 recommended) which results
+  <p>The following, canonical, JSON structure needs to be fed into a hash function (SHA-256 recommended) which results
     in the 'taHash'. It is specific for standardised ePassports. Other TAs should have their own canonical JSON
     structure.</p>
   <pre><code>{
@@ -674,7 +693,7 @@
   <pre><code>{
     "since": 42,
     "rootHash": "abcdef1234567890"
-  }
+}
 </code></pre>
   <p><strong>Response: 200 OK + <a href="#ledgerdeltaresponse">LedgerDeltaResponse</a>:</strong></p>
   <p><strong>Example:</strong></p>
@@ -694,23 +713,21 @@
 }
 </code></pre>
   <hr/>
-  <h3 id="revoke-did">Revoke a DID</h3>
+  <h3 id="revoke-did">Revoke a TA</h3>
   <p><strong>PUT</strong> <code>/ledger</code></p>
-  <p>Purpose: Revoke a DID by submitting a revocation payload. Providing the taHash means that the related TA can NEVER
-    be
-    used again to initialize a Wallet/register a DID. The taHash is mandatory for Delegated Revocation.</p>
-  <p><strong>Request payload: <a href="#signedobject-ledgerentryrevocation">LedgerEntryRevocation</a></strong></p>
+  <p>Purpose: Revoke a TA by submitting a revocation payload. Providing the taHash means that the related TA can NEVER
+    be used again to initialize a Wallet. The taHash is mandatory for Delegated Revocation.</p>
+  <p><strong>Request payload: <a href="#signedobject-revocation">Revocation</a></strong></p>
   <p><strong>Example:</strong></p>
-  <pre><code>
-    {
-      "data": {
-        "taHash": "(optional) a1b2c3d4...example",
-        "taExpiration": 1961086620,
-      },
-      "signatureEnvelope": {
-        //...
-      }
-    }
+  <pre><code>{
+  "data": {
+    "taHash": "(optional) a1b2c3d4...example",
+    "taExpiration": 1961086620,
+  },
+  "signatureEnvelope": {
+  //...
+  }
+}
 </code></pre>
   <p><strong>Response: 204 NO CONTENT</strong></p>
   <hr/>
@@ -737,7 +754,7 @@
     </tr>
     </tbody>
   </table>
-  <h3 id="signedobject-ledgerentryrevocation">SignedObject: LedgerEntryRevocation</h3>
+  <h3 id="signedobject-revocation">SignedObject: Revocation</h3>
   <table>
     <thead>
     <tr>
@@ -760,35 +777,8 @@
     </tbody>
   </table>
 
-  <h3 id="vcr">VerifiableCredentialRoot (VCR)</h3>
-  <table>
-    <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>Signed DID</td>
-      <td>object</td>
-      <td>Identifies the subject</td>
-    </tr>
-    <tr>
-      <td>Claims</td>
-      <td>object</td>
-      <td>The raw verifiable data (e.g. MRZ)</td>
-    </tr>
-    <tr>
-      <td>Proof</td>
-      <td>string</td>
-      <td>TA-specific cryptographic proof material</td>
-    </tr>
-    </tbody>
-  </table>
-
   <h3 id="ta-proof">TrustAnchorProof</h3>
+
   <table>
     <thead>
     <tr>
@@ -804,51 +794,63 @@
       <td>Identifies the TA implementation</td>
     </tr>
     <tr>
-      <td>Claims</td>
-      <td>object</td>
-      <td>The raw verifiable data (e.g. MRZ or the taHash/taExpiration)</td>
+      <td>taHash</td>
+      <td>string</td>
+      <td></td>
     </tr>
     <tr>
-      <td>Proof</td>
-      <td>string</td>
+      <td>taExpirationDate</td>
+      <td>number</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>proof</td>
+      <td>object</td>
       <td>TA-specific cryptographic proof material</td>
     </tr>
     </tbody>
   </table>
   <pre><code>{
-  "type": "&lt;trust-anchor-type-identifier&gt;",
-  "claims": {
-    // Raw verifiable data, defined per type
+  "metadata": {
+    "type": "ICAO_EPASSPORT",
+    "taHash": "&lt;canonical-hash-of-the-ta&gt;",
+    "taExpirationDate": 42
+  },
+  "claims" {
+    //optional claims
   },
   "proof": {
-    // Type-specific cryptographic proof material
+  // Type-specific cryptographic proof material
   }
 }</code></pre>
-
   <h3>Example (in case an ePassport is used as TA):</h3>
+  <p>The chain of trust for an ePassport essentially goes like this:</p>
+  <p><b>Public ICAO ML - <i>contains:</i></b></p>
+  <p><b style="padding-left: 10px">CSCA public key - <i>verifies:</i></b></p>
+  <p><b style="padding-left: 20px">DS certificate signature - <i>is part of:</i></b></p>
+  <p><b style="padding-left: 30px">DS certificate - <i>contains:</i></b></p>
+  <p><b style="padding-left: 40px">DS public key - <i>verifies:</i></b></p>
+  <p><b style="padding-left: 50px">SOD signature - <i>verifies:</i></b></p>
+  <p><b style="padding-left: 60px">DG hash list - <i>contains:</i></b></p>
+  <p><b style="padding-left: 70px">DG hashes - <i>verifies:</i></b></p>
+  <p><b style="padding-left: 80px">DG sections (Verifiable Credentials)</b></p>
   <pre><code>{
-  "type": "ICAO_EPASSPORT",
+  "metadata": {
+    "type": "ICAO_EPASSPORT",
+    "taHash": "&lt;canonical-hash-of-the-ta&gt;",
+    "taExpirationDate": 42
+  },
   "claims": {
-    "dg1": {
-      "mrz1": "P&lt;NLDDOE&lt;&lt;JOHN&lt;WILLIAM&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;",
-      "mrz2": "ABC1X10A99NLD8805304M2911135215802147&lt;&lt;&lt;&lt;&lt;72"
-    }
+    //optional
   },
   "proof": {
-    "sod": {
-      "dgHashList": {
-        "1":  "&lt;sha-256-hash-of-dg1&gt;",
-        "2":  "&lt;sha-256-hash-of-dg2&gt;",
-        "11": "&lt;sha-256-hash-of-dg11&gt;",
-        "14": "&lt;sha-256-hash-of-dg14&gt;",
-        "15": "&lt;sha-256-hash-of-dg15&gt;"
-      },
-      "signature": "&lt;base64-encoded-SOD-signature&gt;",
-      "signingCertificate": "&lt;base64-DER-encoded-DSC&gt;"
+    "dsc": "&lt;dsCertificatePEM&gt;",
+    "dataGroupHashes": "&lt;DG-id, DG-hash dictionary&gt;",
+    "signature": {
+      "publicKey":  "&lt;multibase-encoded public key bytes>",,
+      "algorithm":  "&lt;algorithm id>",
+      "value": "&lt;multibase-encoded signature bytes&gt;",
     },
-    "trustChain": {
-      "cscaCertificate": "&lt;base64-DER-encoded-CSCA&gt;"
-    }
   }
 }</code></pre>
 
@@ -863,23 +865,59 @@
   </p>
 
   <ol>
-    <li>Hash the canonical encoding of <code>claims.dg1</code> and verify it matches
-      <code>proof.sod.dgHashList["1"]</code>.
+    <li>Match the claims with their corresponding proof, <code>e.g. proof.DG1</code>.
     </li>
-    <li>Re-encode the complete <code>proof.sod.dgHashList</code> into its original ASN.1/DER structure and verify <code>proof.sod.signature</code>
-      against it using the public key in <code>proof.sod.signingCertificate</code> (DSC).
+    <li>Re-encode the complete <code>proof.dataGroupHashes</code> into its original ASN.1/DER structure and verify
+      <code>proof.signature</code>
+      against it using the public key in <code>proof.dsc</code> (DSC).
     </li>
-    <li>Verify <code>proof.sod.signingCertificate</code> (DSC) was signed by
-      <code>proof.trustChain.cscaCertificate</code> (CSCA).
+    <li>Verify <code>proof.dcs</code> (DSC) was signed by
+      <code>the CSCA</code>.
     </li>
-    <li>Verify <code>proof.trustChain.cscaCertificate</code> is present on the ICAO master list.</li>
+    <li>Verify <code>CSCA</code> is present on the ICAO master list.</li>
   </ol>
 
   <p class="note">
-    Note: The full <code>dgHashList</code> must be provided in its entirety. The SOD signature
+    Note: The full <code>proof.dataGroupHashes</code> must be provided in its entirety. The SOD signature
     is computed over the complete encoded hash list, not over individual entries. Omitting any
     hash from the list will cause signature verification to fail.
   </p>
+
+  <h3 id="ssimpl-jwt">SSIMPL JWT</h3>
+  <p>By combining the DID and the owners TrustAnchorProof, one could create a JWT that would allow the bearer to
+    authenticate themselves.</p>
+  <p>The 'claims' array can be filled with the required scope depending on how pseudonymous you wish to make the JWT.
+    One could even omit the claims, and only provide the hash list. This proved that the bearer owns a Trust Anchor
+    which was signed by a trusted authority.</p>
+  <pre>
+    <code>{
+  "sub": "&lt;did:key...&gt;",             // The DID being asserted
+  "iat": "&lt;ISO8601 timestamp&gt;",      // Issued at
+  "exp": "&lt;ISO8601 timestamp&gt;",      // Optional expiry
+  "jti": "&lt;unique-token-id&gt;",        // Prevent replay attacks
+  "trustAnchor": {
+    "type": "ICAO_EPASSPORT",
+    "claims": {
+      "firstNames: "John William",
+      "lastName: "Doe",
+      "birthDate: "05-30-1988"
+    },
+    "proof": {
+      "dsc": "&lt;multibase-encoded-DS-certficate&gt;",
+      "dataGroupHashes": {
+        "DG1":  "&lt;sha-256-hash-of-dg1&gt;",
+        "DG2":  "&lt;sha-256-hash-of-dg2&gt;",
+        "DG11": "&lt;sha-256-hash-of-dg11&gt;",
+        "DG14": "&lt;sha-256-hash-of-dg14&gt;",
+        "DG15": "&lt;sha-256-hash-of-dg15&gt;"
+      },
+      "signature": "&lt;multibase-encoded-SOD-signature&gt;"
+      //optional, necessary for proving the claims, but contains more data than the actual claims, like the SSN
+      "DG1": "P&lt;NLDDOE&lt;&lt;JOHN&lt;WILLIAM&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;ABC1X10A99NLD8805304M2911135215802147&lt;&lt;&lt;&lt;&lt;72"
+    }
+  }
+}</code></pre>
+
   <h3 id="signatureenvelope">SignatureEnvelope</h3>
   <table>
     <thead>
