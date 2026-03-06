@@ -647,7 +647,7 @@
   <h2 id="endpoints">Endpoints</h2>
 
   <h3 id="register-relay-peer">Register a Relay Peer</h3>
-  <p><strong>POST</strong> <code>/peer</code></p>
+  <p><strong>POST</strong> <code>/peers</code></p>
   <p>Purpose: Make a Relay Peer known to another Relay Peer.</p>
   <p><strong>Request payload: <a href="relaypeerannouncement">RelayPeerAnnouncement</a></strong></p>
   <p><strong>Example:</strong></p>
@@ -664,7 +664,7 @@
   <p><strong>Response: 201 CREATED</strong></p>
   <hr/>
   <h3 id="perform-a-handshake">Perform a handshake</h3>
-  <p><strong>POST</strong> <code>/peer/identity</code></p>
+  <p><strong>POST</strong> <code>/peers/identity</code></p>
   <p><strong>Purpose:</strong> Allows (Relay) Peers to check the health an initial validity of the Relay Peer</p>
   <p><strong>Request payload <a href="#signedobject-signed-t">SignedObject&lt;DID&gt;</a>:</strong></p>
   <p><strong>Example:</strong></p>
@@ -683,6 +683,12 @@
   }
 }
 </code></pre>
+  <hr/>
+
+  <h3 id="request-relay-peers">Request known Relay Peers</h3>
+  <p><strong>GET</strong> <code>/peers</code></p>
+  <p>Purpose: Request a list of known Relay Peers.</p>
+  <p><strong>Response: 200 OK + <a href="#relaypeerannouncement">RelayPeerAnnouncement[]</a></strong></p>
   <hr/>
   <h3 id="request-ledger-delta">Request Ledger Delta</h3>
   <p><strong>POST</strong> <code>/ledger/delta</code></p>
@@ -713,7 +719,7 @@
 }
 </code></pre>
   <hr/>
-  <h3 id="revoke-did">Revoke a TA</h3>
+  <h3 id="revoke-ta">Revoke a TA</h3>
   <p><strong>PUT</strong> <code>/ledger</code></p>
   <p>Purpose: Revoke a TA by submitting a revocation payload. Providing the taHash means that the related TA can NEVER
     be used again to initialize a Wallet. The taHash is mandatory for Delegated Revocation.</p>
@@ -811,11 +817,9 @@
     </tbody>
   </table>
   <pre><code>{
-  "metadata": {
-    "type": "ICAO_EPASSPORT",
-    "taHash": "&lt;canonical-hash-of-the-ta&gt;",
-    "taExpirationDate": 42
-  },
+  "type": "ICAO_EPASSPORT",
+  "taHash": "&lt;canonical-hash-of-the-ta&gt;",
+  "taExpirationDate": 42,
   "claims" {
     //optional claims
   },
@@ -835,11 +839,9 @@
   <p><b style="padding-left: 70px">DG hashes - <i>verifies:</i></b></p>
   <p><b style="padding-left: 80px">DG sections (Verifiable Credentials)</b></p>
   <pre><code>{
-  "metadata": {
-    "type": "ICAO_EPASSPORT",
-    "taHash": "&lt;canonical-hash-of-the-ta&gt;",
-    "taExpirationDate": 42
-  },
+  "type": "ICAO_EPASSPORT",
+  "taHash": "&lt;canonical-hash-of-the-ta&gt;",
+  "taExpirationDate": 42,
   "claims": {
     //optional
   },
@@ -1034,7 +1036,7 @@
     <tr>
       <td>data</td>
       <td>object</td>
-      <td>Containing the DID and the hostname of the Relay Peer</td>
+      <td>Containing the DID, hostname and the <a href="#ta-proof">TrustAnchorProof</a> of the Relay Peer</td>
     </tr>
     <tr>
       <td>signatureEnvelope</td>
