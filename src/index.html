@@ -18,7 +18,7 @@
       additionalCopyrightHolders: "Bastiën G.A. Bonsel",  // Optional: claim your own copyright
       latestVersion: null,
       localBiblio: {
-        "DID": {
+        "DIDCORE": {
           "title": "Decentralized Identifiers (DIDs) v1.0",
           "href": "https://www.w3.org/TR/did-core/",
         },
@@ -34,15 +34,78 @@
           "title": "BIP39",
           "href": "https://en.bitcoin.it/wiki/BIP_0039",
         },
+        "ICAO9303": {
+          "title": "ICAO9303",
+          "href": "https://www.icao.int/publications/doc-series/doc-9303",
+        },
         "Multibase": {
           "title": "The Multibase Data Format",
-          "href": "https://www.ietf.org/archive/id/draft-multiformats-multibase-07.html",
+          "href": "https://www.ietf.org/archive/id/draft-multiformats-Multibase-07.html",
         }
       }
     };
   </script>
 
   <script src="https://www.w3.org/Tools/respec/respec-w3c" async></script>
+  <style>
+    .encoding-diagram {
+      font-family: monospace;
+      background: #f8f8f8;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 1em 1.5em;
+      margin: 1em 0;
+      overflow-x: auto;
+    }
+
+    .encoding-diagram table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .encoding-diagram td {
+      border: 1px solid #999;
+      padding: 0.4em 0.6em;
+      text-align: center;
+      font-size: 0.9em;
+    }
+
+    .encoding-diagram td.label {
+      background: #e0e8f0;
+      font-weight: bold;
+    }
+
+    .encoding-diagram td.byte {
+      background: #fff;
+      min-width: 2em;
+    }
+
+    .encoding-diagram td.group-country {
+      background: #ddeeff;
+    }
+
+    .encoding-diagram td.group-subnet {
+      background: #ddffd4;
+    }
+
+    .encoding-diagram td.group-node {
+      background: #fff3cc;
+    }
+
+    .encoding-diagram td.group-pk {
+      background: #fde8e8;
+    }
+
+    code.did-example {
+      display: block;
+      background: #f4f4f4;
+      border-left: 3px solid #0066cc;
+      padding: 0.6em 1em;
+      margin: 0.5em 0;
+      font-size: 0.95em;
+      word-break: break-all;
+    }
+  </style>
 </head>
 
 <body>
@@ -94,33 +157,23 @@
   <p>The SSIMPL protocol defines a <strong>Self-Sovereign Identity &amp; Mondial Pseudonymous Ledger</strong> framework
     that allows
     individuals to maintain control over their digital identity while enabling verifiable credential issuance and
-    revocation. It bridges physical trust anchors (e.g., ePassports) with digital identity systems, ensuring
+    revocation. It bridges physical trust anchors (e.g. ePassports) with digital identity systems, ensuring
     cryptographic
     verification without reliance on centralized authorities.</p>
   <p>SSIMPL addresses several key problems:</p>
   <ol>
+    <li><strong>Pseudonymous digital identity</strong> - tied to a physical identity.</li>
     <li><strong>User control over digital identity</strong> – eliminating reliance on centralized identity providers.
     </li>
     <li><strong>Verification of identities</strong> – ensuring online credentials correspond to real individuals using
-      cryptographic
-      proofs.
+      cryptographic proofs.
     </li>
     <li><strong>Sharing of identity-related data</strong> - allowing secure and transparent sharing of data</li>
   </ol>
-  <p>The protocol balances decentralization, peer authority, and optional server-assisted synchronization for efficiency
+  <p>The protocol balances decentralization, peer authority, and (optional) server-assisted reconciliation for
+    efficiency
     and availability. Everything is made to be deterministic by default, so no authorities whatsoever are required
-    except
-    the one that signed the Trust Anchor (TA).</p>
-  <p>The protocol also offers two authentication 'modes': stable and ephemeral authentication. These correspond to the
-    respective use/lack of BIP32 & BIP39. Either mode has their pros and cons.</p>
-  <h2 id="stable-ephemeral-dids">Stateful & ephemeral DIDs</h2>
-  <p>A DID in SSIMPL is nothing more than a public key used for signing tied to a verifiable identity. The significance
-    of the signature can be as little as 'I am a human being and have signed this piece of data', or as much as 'I am
-    John Doe, age 39, and this is my stable DID'. Stable DIDs rely on the owners ability to restore them when necessary,
-    with the use of the BIP39 mnemonic. Any DID created from the master keypair can be related to its parents. Which
-    allows systems to trace a DID while retaining the pseudonymous nature, with the only caveat being that correlations
-    can be made over time. Tying claims to a stable DID. Ephemeral DIDs allow for pure pseudonymous. They are snapshots
-    of a reality at some point in time.</p>
+    except the one that signed the Trust Anchor (TA).</p>
   <h2 id="identity-trust-model">Identity Trust Model</h2>
   <p>SSIMPL identities are rooted in cryptographically verifiable credentials derived from <strong>Trust
     Anchors</strong>, such as
@@ -130,7 +183,7 @@
     <li>MUST perform necessary processes to verify chip authenticity. For example, an Active Authentication (AA)
       challenge.
     </li>
-    <li>MUST extract/create a <strong><a href="#ta-proof">TrustAnchorProof</a>)</strong> from the TA.</li>
+    <li>MUST extract and store all relevant claims and their proofs. See <a href="#vcr">VCR</a></li>
   </ul>
   <p>This ensures only owners of verifiable physical credentials can create valid DIDs.</p>
   <h3 id="considerations">Considerations</h3>
@@ -153,7 +206,7 @@
     flow is very similar to Open ID Connect, except that there is no need for a 3rd party.</p>
   <h2 id="roles">Roles</h2>
   <ul>
-    <li><strong>Identity</strong> The owner of the TA.</li>
+    <li><strong>Identity</strong> The owner of the TA and user of the network.</li>
     <li><strong>Wallet:</strong> The actual software responsible for encapsulating the owners TA.</li>
     <li><strong>Peers:</strong> Mobile devices with the Wallet installed.</li>
     <li><strong>Relay Peers:</strong> Servers that act both as Peers and distribution points, allowing other Peers to
@@ -161,12 +214,295 @@
     </li>
   </ul>
 </section>
+</hr>
+<section id="did-method">
+  <h1>The <code>did:ssimpl</code> Method</h1>
+  <p>A SSIMPL DID captures several things: a public key used for signing tied to a verifiable identity and the network
+    where the identity is registered. The significance
+    of the signature can be as little as 'I am a human being and have signed this piece of data', or as much as 'I am
+    John Doe, age 39, and this is my DID'. DIDs rely on the owners ability to restore them when necessary, with the use
+    of the BIP39 mnemonic.</p>
+  <h2 id="did-syntax">DID Syntax</h2>
+  <p>
+    A <code>did:ssimpl</code> identifier has the following structure,
+    conforming to the generic DID syntax defined in [[DIDCORE]]:
+  </p>
+  <pre class="nohighlight">
+ssimpl-did     = "did:ssimpl:" ssimpl-specific-id
+ssimpl-specific-id = Multibase( network-bytes || pk-bytes )
+network-bytes  = country-bytes subnetwork-byte node-byte
+country-bytes  = 3ALPHA        ; ICAO 9303 alpha-3 country code
+subnetwork-byte = 1OCTET       ; unsigned integer 0–255
+node-byte      = 1OCTET        ; unsigned integer 0–255
+pk-bytes       = 33OCTET       ; compressed secp256k1 public key
+        </pre>
+  <p>
+    The method-specific identifier is a single Multibase-encoded
+    opaque string. It encodes 38 bytes: 3 bytes of country code,
+    1 byte of subnetwork identifier, 1 byte of node identifier,
+    and 33 bytes of compressed public key. No delimiters are used.
+    Decoding is deterministic by fixed byte offset.
+  </p>
 
-<hr/>
+  <aside class="example" title="Example DID">
+    <code class="did-example">did:ssimpl:3vYhGpQrKmNxTfBwLsAeDcJqZiUoMbXn</code>
+    <p>
+      The above identifier decodes to: country = <code>NLD</code>,
+      subnetwork = <code>0</code>, node = <code>3</code>,
+      public key = <code>02ab…</code>.
+    </p>
+  </aside>
 
+  <h2 id="did-encoding">Byte Layout</h2>
+  <p>
+    The 38-byte payload prior to Multibase-encoding is laid out as follows:
+  </p>
+  <div class="encoding-diagram">
+    <table>
+      <tr>
+        <td class="label">Offset</td>
+        <td class="byte">0</td>
+        <td class="byte">1</td>
+        <td class="byte">2</td>
+        <td class="byte">3</td>
+        <td class="byte">4</td>
+        <td class="byte">5 – 37</td>
+      </tr>
+      <tr>
+        <td class="label">Field</td>
+        <td class="group-country" colspan="3">Country (3 bytes)</td>
+        <td class="group-subnet">Subnetwork (1 byte)</td>
+        <td class="group-node">Node (1 byte)</td>
+        <td class="group-pk">Public Key (33 bytes)</td>
+      </tr>
+      <tr>
+        <td class="label">Example</td>
+        <td class="group-country"><code>N</code></td>
+        <td class="group-country"><code>L</code></td>
+        <td class="group-country"><code>D</code></td>
+        <td class="group-subnet"><code>0x00</code></td>
+        <td class="group-node"><code>0x03</code></td>
+        <td class="group-pk"><code>02ab cd…</code></td>
+      </tr>
+    </table>
+  </div>
+  <p>
+    The country code MUST be an ICAO 9303 [[ICAO9303]] alpha-3 code
+    encoded as ASCII uppercase bytes. The subnetwork and node fields
+    are unsigned 8-bit integers (range 0–255). The public key is a
+    33-byte compressed secp256k1 public key.
+  </p>
+
+  <h2 id="did-decoding">Decoding Algorithm</h2>
+  <p>
+    Given a <code>did:ssimpl</code> identifier, the following algorithm
+    recovers the network coordinates and public key:
+  </p>
+  <ol>
+    <li>
+      Strip the <code>did:ssimpl:</code> prefix to obtain the
+      method-specific identifier string.
+    </li>
+    <li>
+      Multibase-decode the string to obtain a byte array. The result
+      MUST be exactly 38 bytes. If not, the DID is malformed.
+    </li>
+    <li>
+      Extract <code>bytes[0..2]</code> (inclusive) as the country
+      code. Interpret as ASCII. The result MUST be a valid ICAO
+      9303 alpha-3 country code.
+    </li>
+    <li>
+      Extract <code>bytes[3]</code> as the subnetwork identifier
+      (unsigned integer).
+    </li>
+    <li>
+      Extract <code>bytes[4]</code> as the node identifier
+      (unsigned integer).
+    </li>
+    <li>
+      Extract <code>bytes[5..37]</code> (inclusive) as the 33-byte
+      compressed secp256k1 public key.
+    </li>
+  </ol>
+
+  <h2 id="did-key-derivation">Key Derivation</h2>
+  <p>
+    The keypair corresponding to a <code>did:ssimpl</code> identifier
+    is derived using [[BIP32]] hierarchical deterministic key derivation.
+    The seed is computed as:
+  </p>
+  <pre class="nohighlight">
+seed = HASH( mnemonic )
+DID keypair = BIP32( seed )
+  </pre>
+  <p>
+    Where <code>mnemonic</code> is the user's secret mnemonic phrase, and <code>HASH</code>
+    is a cryptographically secure hash function (SHA-256 or equivalent).
+  </p>
+  <p>
+    For TA-backed identities, the mnemonic is additionally bound to the
+    passport's AA public key:
+  </p>
+  <pre class="nohighlight">
+seed = HASH( mnemonic || HASH( aa_public_key ) )
+  </pre>
+  <p>
+    This binding ensures that possession of the DID keypair implicitly
+    attests possession of the corresponding passport material, without
+    exposing the AA public key or mnemonic to any external party.
+  </p>
+  <p class="note">
+    The salt MUST be changed between identity rotation events to
+    ensure that successive DIDs derived from the same mnemonic are
+    computationally unlinkable.
+  </p>
+</section>
+</hr>
+<section id="network-addressing">
+  <h1>Network Addressing</h1>
+  <h2 id="network-structure">Network Structure</h2>
+  <p>
+    SSIMPL networks are organised hierarchically by country and
+    subnetwork. Each country identified by its ICAO 9303 alpha-3 code
+    constitutes a top-level network. Large countries MAY be subdivided
+    into subnetworks to bound ledger size on mobile devices.
+  </p>
+  <p>
+    Every peer holds a complete copy of the ledger for their own
+    network. No peer holds a privileged or partial role. Relay peers
+    and wallet peers are structurally identical.
+  </p>
+  <p>
+    A network SHOULD be sized such that its ledger remains manageable
+    on a contemporary mobile device. A suggested ceiling is one million
+    registered identities per subnetwork, corresponding to approximately
+    200 megabytes of ledger storage at maximum capacity. This is also where the subnetworks come into play. Each
+    subnetwork can be used for one separate ledger. Depending on the identity you're interacting with, you either need
+    your ledger AND theirs, or can keep using your own.
+  </p>
+
+  <h2 id="dns-addressing">DNS Addressing Scheme</h2>
+  <p>
+    Individual nodes are addressed using DNS subdomain names under the networks domain
+    <code>e.g. ssimpl.org</code>. The addressing scheme is:
+  </p>
+  <pre class="nohighlight">
+&lt;country&gt;.&lt;subnetwork&gt;.&lt;node&gt;.&lt;domain&gt;
+  </pre>
+  <p>
+    Where <code>&lt;country&gt;</code> is the lowercase ICAO 9303
+    alpha-3 country code, <code>&lt;subnetwork&gt;</code> is the
+    decimal subnetwork number, and <code>&lt;node&gt;</code> is the
+    decimal node number.
+  </p>
+
+  <aside class="example" title="DNS address examples">
+    <dl>
+      <dt><code>nld.0.3.ssimpl.org</code></dt>
+      <dd>Netherlands, subnetwork 0, node 3.</dd>
+      <dt><code>usa.4.12.ssimpl.org</code></dt>
+      <dd>United States, subnetwork 4, node 12.</dd>
+      <dt><code>deu.0.0.ssimpl.org</code></dt>
+      <dd>Germany, subnetwork 0, node 0.</dd>
+    </dl>
+  </aside>
+
+  <p>
+    A client wishing to reach any node within a given subnetwork MAY
+    omit the node segment and resolve at the subnetwork level:
+  </p>
+  <pre class="nohighlight">
+&lt;country&gt;.&lt;subnetwork&gt;.ssimpl.org   ; any node in subnetwork
+&lt;country&gt;.ssimpl.org                 ; any node in country
+        </pre>
+  <p>
+    DNS wildcard records SHOULD be configured to support these
+    resolution patterns. The DNS infrastructure does not carry
+    authoritative identity data; it serves only as a bootstrap
+    mechanism for peer discovery.
+  </p>
+  <p class="note">
+    Country codes in DNS addresses are lowercase for compatibility
+    with DNS conventions, while country codes within DID byte payloads
+    are uppercase ASCII per ICAO 9303.
+  </p>
+
+  <h2 id="network-resolution">Network Resolution from a DID</h2>
+  <p>
+    Given a <code>did:ssimpl</code> identifier, the corresponding
+    network and node are resolved as follows:
+  </p>
+  <ol>
+    <li>
+      Decode the DID per the algorithm in
+      <a href="#did-decoding"></a> to obtain
+      <code>country</code>, <code>subnetwork</code>, and
+      <code>node</code>.
+    </li>
+    <li>
+      Construct the DNS address:
+      <code>lower(country).subnetwork.node.ssimpl.org</code>.
+    </li>
+    <li>
+      Resolve via DNS to obtain the peer's IP address and port.
+    </li>
+    <li>
+      To query any peer in the same subnetwork (e.g. for ledger
+      synchronisation), resolve
+      <code>lower(country).subnetwork.ssimpl.org</code>.
+    </li>
+  </ol>
+
+  <h2 id="network-segregation">Network Segregation and Ledger Size</h2>
+  <p>
+    Country-based network segregation provides a natural bound on
+    ledger size. Peers overwhelmingly interact with others from the
+    same country, meaning most peers need only one ledger. Additional
+    ledgers are downloaded lazily on first encounter with a foreign
+    DID and MAY be pruned after a configurable period of inactivity.
+  </p>
+  <p>
+    For countries with populations where passport adoption would
+    exceed the recommended per-subnetwork ceiling, additional
+    subnetworks MUST be provisioned. Subnetwork assignment for new
+    registrations SHOULD be load-balanced across available subnetworks
+    within the country.
+  </p>
+
+  <aside class="example" title="Ledger size estimates">
+    <p>
+      At 200 bytes per entry and a ceiling of one million identities:
+    </p>
+    <ul>
+      <li>Netherlands (NLD): single subnetwork, ~200 MB at full capacity.</li>
+      <li>United States (USA): requires multiple subnetworks at meaningful adoption; each subnetwork ~200 MB.</li>
+    </ul>
+  </aside>
+
+  <h2 id="cross-network">Cross-Network Verification</h2>
+  <p>
+    When a peer encounters a DID from a foreign network, they
+    MUST download the relevant subnetwork ledger before verifying
+    the identity. Ledgers are cached locally and synchronised
+    incrementally on subsequent interactions.
+  </p>
+  <p>
+    A peer MAY pre-emptively download ledgers for networks they
+    anticipate interacting with — for example, before international
+    travel. Implementations SHOULD provide a mechanism for users to
+    manage which ledgers are retained on their device.
+  </p>
+  <p>
+    Ledger freshness is maintained by delta synchronisation: a peer
+    requests only entries added since their last known ledger state.
+    Full re-download is not required after initial acquisition.
+  </p>
+</section>
+</hr>
 <section>
   <h1 id="wallet-specification">Wallet Specification</h1>
-  <p>The wallet is a Self-Sovereign means of identification that can be installed and bootstrapped entirely independent
+  <p id="vcr">The wallet is a Self-Sovereign means of identification that can be installed and bootstrapped entirely independent
     of
     any authority. It solely relies on cryptographic proof. This cryptographic proof is contained within the so-called
     VCR. The Verifiable Credential Root is a VC, as defined in [[VC]], necessary to link the signer of this VC to the
@@ -218,16 +554,6 @@
 
   <h2 id="wallet-security">Wallet Security</h2>
   <p>A SSIMPL Wallet has certain security scenario's that need to be addressed</p>
-  <h3>Stateless mode</h3>
-  <ul>
-    <li><strong>The owners TA is lost/stolen</strong>: The owner MUST revoke their current TA - No transactions can
-      take place until a new TA has been used to bootstrap.
-    </li>
-    <li><strong>The owners device is lost/stolen</strong>: The owner MUST revoke their current TA through Delegated
-      Revocation.
-    </li>
-  </ul>
-  <h3>Stateful mode</h3>
   <ul>
     <li><strong>The owners TA is lost/stolen</strong>: The owner MUST revoke their current TA - No transactions can
       take place until a new TA has been used to bootstrap.
@@ -253,13 +579,13 @@
       a mandatory Delegated Revocation exchange flow.
     </li>
   </ul>
-  <h2>Delegated Revocation</h2>
+  <h2 id="delegated-revocation">Delegated Revocation</h2>
   <p>In order to mitigate the scenario where the user has no access to their wallet anymore, SSIMPL
     offers a relatively straight-forward solution: two Peers (you and someone you trust, like a close relative) exchange
     a complete <a href="#signedobject-revocation">Revocation</a>. In case of emergency, either Peer can
     always revoke the other Peers DID.</p>
 
-  <h2 id="activation-process-in-case-of-an-e-passport-">Example activation Process (in case of stable mode)</h2>
+  <h2 id="activation-process-in-case-of-an-e-passport-">Example activation Process</h2>
   <ol>
     <li>User installs wallet.</li>
     <li>Wallet prompts for MRZ line.</li>
@@ -268,6 +594,7 @@
     <li>BIP39 mnemonic generation (and presentation to the user).</li>
     <li>BIP32 keypair derivation and storage.</li>
     <li>Signing of the TrustAnchorProof.</li>
+    <li>(lazy) publication of the TrustAnchorProof to the network.</li>
   </ol>
 </section>
 
@@ -281,43 +608,89 @@
     This is purely infrastructural to help communication between Peers. It doesn't give any special privileges or
     authorities to any of the Relay Peers and does therefore still fulfill all requirements to be called
     decentralized.</p>
-  <h3 id="well-known-relay-peer">The well-known Relay Peer</h3>
-  <p>In order to establish a stable network, there should always be one well-known Relay Peer, which allows another
-    Relay Peer to find others within the network. It also serves as an entry point for freshly installed Wallets to
-    bootstrap.</p>
+  <p class="note">Any network can use their own domain</p>
+  <p>The ring serves two distinct purposes:</p>
+  <ol>
+    <li><strong>Bootstrap and discovery</strong>— any client or new Relay Peer can locate an active peer without
+      prior knowledge, by traversing the ring until a responsive node is found.
+    </li>
+    <li><strong>Exhaustive reconciliation</strong>— a client that detects ledger inconsistency can traverse the
+      entire ring to collect and reconcile all known valid entries.
+    </li>
+  </ol>
+  <p>Index gaps MAY occur when a Relay Peer goes permanently offline. Gaps are acceptable and do not
+    affect ring traversal. Re-indexing is outside the scope of this specification.</p>
+
   <h3 id="relay-peer-responsibilities">Relay Peer Responsibilities</h3>
   <ul>
-    <li>Announce themselves to a known (or the well-known) Relay Peer.</li>
-    <li>Receive, validate and store new Revocations.</li>
-    <li>Providing and storing a list of known Relay Peers for discovery.</li>
-    <li>Responding to registration attempts from new Relay Peers.</li>
-    <li>Gossiping about active Relay Peers.</li>
+    <li><strong>Receive, validate and store</strong> new Registrations/Revocations.</li>
+    <li><strong>Propagate ledger changes</strong> to a minimum quorum of <strong>N = 3*</strong> other Relay Peers upon
+      receiving
+      a new valid ledger entry or revocation, using the <a href="traversal-algorithm">traversal algorithm</a>.
+    </li>
+    <li><strong>Provide metadata</strong> about the ledger.
+    </li>
   </ul>
+  <p class="note">
+    *if N >= 3, otherwise the minimum quorum should just be <strong>N</strong>
+  </p>
   <h2 id="relay-peer-bootstrap-and-verification">Relay Peer Bootstrap and Verification</h2>
   <p>To enable deterministic network formation and secure onboarding of Relay Peers, the SSIMPL protocol defines a
     bootstrap
     and verification procedure.</p>
-  <p>The first time a new Relay Peer is bootstrapped, it MUST make itself known to a known (or a well-known Relay Peer,
-    e.g., <code>root.ssimpl.org</code>) to
-    obtain the first list of known Relay Peers. This is a hard-coded node that allows the network to kickstart itself
-    and to
-    have zero knowledge upfront when adding a new Relay Peer.</p>
-  <h3 id="relay-peer-registration">Relay Peer Registration</h3>
-  <p>Upon first contact with the network, a new Relay Peer:</p>
+  <h3 id="relay-peer-registration">Relay Peer Bootstrapping</h3>
+  <p>Upon first contact with the network:</p>
   <ol>
-    <li>Contacts the Well-known Relay Peer (or another known Relay Peer) to announce its presence.</li>
-    <li>Provides its signed DID using the canonical <strong>SignatureEnvelope</strong> format.</li>
-    <li>Receives information about other Relay Peers in the network for further connections.</li>
+    <li>The DNS controller assigns the next available index and creates the corresponding DNS record
+      `{country}.{subnetworkIndex}.{nodeIndex}.ssimpl.org` pointing to the new Relay Peer's hostname. Where the network index can be
+      used to allow for multiple networks to co-exist.
+    </li>
     <li>Requests delta's from one (or more) of the Relay Peers in the network in chunks based on the time between
       two epochs.
       Starting with 0 (Unix Time) if it has never been online and otherwise starting with the epoch it was last online.
     </li>
   </ol>
 
+  <p>Index assignment is strictly sequential: the assigned index MUST equal the highest currently
+    assigned index plus one. The DNS controller is the sole arbiter of index assignment.</p>
+
+  <p>A newly registered Relay Peer MAY take several minutes to become discoverable via DNS, due to
+    TTL propagation. This is acceptable behavior.</p>
 </section>
 
-<hr/>
+<section>
+  <h1 id="traversal-algorithm">Ring Traversal Algorithm</h1>
 
+  <p>The ring traversal algorithm is used for both peer discovery and gossip propagation. Given a
+    node's own networkIndex `n` & nodeIndex `i` and the traversal purpose (discovery or propagation), a client or peer
+    MUST traverse as follows:</p>
+
+  <h3>For discovery (finding any single responsive peer)</h3>
+
+  <ol>
+    <li>Attempt contact with `n.{i+1}.ssimpl.org`.</li>
+    <li>If unresponsive, assume end of ring and wrap to `0.ssimpl.org`.</li>
+    <li>Continue incrementally (`1`, `2`, ...) until a responsive peer is found or all indices up to
+      `i` have been exhausted.
+    </li>
+    <li>An unresponsive node MUST be skipped; it is not an error condition.</li>
+  </ol>
+  <h3>For gossip propagation (pushing a ledger change)</h3>
+  <ol>
+    <li>Beginning at `{country}.n.{i+1}.ssimpl.org`, push the change to each responsive peer in sequence.</li>
+    <li>Count each successful push. If the minimum quorum of <strong>N = 3</strong> successful pushes is reached,
+      propagation is complete.
+    </li>
+    <li>If the end of the ring is reached before quorum is met, wrap to `n.0.ssimpl.org` and continue.</li>
+    <li>If the full ring is exhausted without reaching quorum, propagation MUST still be considered
+      complete — quorum is a best-effort guarantee.
+    </li>
+  </ol>
+  <p>A peer that receives a pushed change via gossip MUST validate the entry before storing it, and
+    *MUST NOT* re-propagate it (the originating peer is responsible for reaching quorum).</p>
+
+  <hr/>
+</section>
 <section>
   <h1 id="ledger-specification">Ledger Specification</h1>
   <p>The SSIMPL ledger is a <strong>deterministically canonical, peer-replicated structure</strong> tracking valid DIDs,
@@ -328,7 +701,7 @@
     <li>Track valid DIDs without a central authority.</li>
     <li>Support bounded state and deterministic pruning.</li>
     <li>Enable single-peer verification.</li>
-    <li>Eventual consistency via optional gossip or client/server synchronization.</li>
+    <li>Eventual consistency via optional gossip or client/server reconciliation.</li>
     <li>Mobile-friendly operation for large ledgers (5–30 GB).</li>
   </ul>
   <h2 id="state-and-canonical-construction">State and Canonical Construction</h2>
@@ -364,11 +737,11 @@
     <li>Other peers can recompute the root from the proof and verify it matches the canonical <code>root_hash</code>.
     </li>
   </ul>
-  <h3 id="relation-to-checkpoints">Relation to Checkpoints</h3>
-  <ul>
-    <li>Checkpoints store a <code>root_hash</code> for a specific epoch.</li>
-    <li>Peers can verify their ledger or deltas by starting from the latest checkpoint and applying updates.</li>
-  </ul>
+  <!--  <h3 id="relation-to-checkpoints">Relation to Checkpoints</h3>-->
+  <!--  <ul>-->
+  <!--    <li>Checkpoints store a <code>root_hash</code> for a specific epoch.</li>-->
+  <!--    <li>Peers can verify their ledger or deltas by starting from the latest checkpoint and applying updates.</li>-->
+  <!--  </ul>-->
   <h2 id="validation-rules">Validation Rules</h2>
   <p>An entry is valid if:</p>
   <ol>
@@ -397,81 +770,176 @@
     </li>
     <li>Deterministic pruning ensures consistent ledger state across peers.</li>
   </ul>
-  <h2 id="synchronization">Synchronization</h2>
+  <h2 id="reconciliation">Reconciliation</h2>
   <ul>
-    <li>Peers exchange <code>{ epoch, root_hash }</code> metadata.</li>
-    <li><strong>Matching hash:</strong> No action required.</li>
-    <li><strong>Hash mismatch:</strong> Request missing entries or snapshots.</li>
     <li>Iterative delta exchange ensures eventual convergence.</li>
     <li>Relay Peers act as distribution points while also validating entries.</li>
-    <li>Stateless Relay Peers may bootstrap from peers but should persist data for efficiency.</li>
-  </ul>
-  <h2 id="merkle-checkpoints">Merkle Checkpoints</h2>
-  <p>To enable efficient verification of ledger history and prevent forks from propagating, the SSIMPL protocol
-    introduces
-    Merkle checkpoints. These checkpoints allow peers to validate that their current ledger state stems from a
-    previously
-    agreed-upon canonical state.</p>
-  <h3 id="definition">Definition</h3>
-  <p>A Merkle checkpoint is a snapshot of the canonical ledger at a given epoch, containing:</p>
-  <ul>
-    <li>epoch — The deterministic epoch number of the snapshot</li>
-    <li>root_hash — The canonical ledger Merkle root at that epoch</li>
-    <li>metadata (optional) — Any additional information, such as total entry count, checkpoint creator DID, or a
-      reference
-      timestamp
+    <li>Stateless Relay Peers MAY bootstrap from peers but SHOULD persist data for efficiency.</li>
+    <li>Upon requesting deltas from other Peers, any requesting RelayPeer MUST send their index* along with the request.
+      A regular Peer doesn't have an index, so this requirement can be ignored in that case.
     </li>
   </ul>
-  <h3 id="purpose">Purpose</h3>
-  <p>Merkle checkpoints serve three main purposes:</p>
+  <p class="note">
+    *the way this index is shared is beyond the scope of this document. However, it is recommended to use a custom
+    header like 'x-ssimpl-index'.
+  </p>
+  <p>Repeat until reconciled:</p>
   <ol>
-    <li>Anchoring history — They provide a trusted reference point for peers to verify that their current ledger is an
-      extension of a previous canonical state.
+    <li>(Relay)Peer sends <a href="#ledgerdeltarequest">LedgerDeltaRequests</a> to <strong>2-N</strong> other
+      (Relay)Peers.
     </li>
-    <li>Fork detection — Peers can detect divergence by comparing their checkpointed root hash with peers’ reported
-      checkpoints.
-    </li>
-    <li>Efficient synchronization — When a peer joins the network or recovers from offline mode, it can request deltas
-      starting from the latest known checkpoint rather than from the genesis ledger.
+    <li><strong>Matching hash:</strong> No action required.</li>
+    <li><strong>Hash mismatch:</strong> Merge attached Entries.</li>
+    <li><strong>Hash mismatch:</strong> (Relay)Peer sends <a href="#ledgerdeltarequest">LedgerDeltaRequests</a> to
+      <strong>2-N</strong>
+      other (Relay)Peers. Etc.
     </li>
   </ol>
-  <h3 id="creation-and-storage">Creation and Storage</h3>
+  <h3 id="relay-peer-error-handling">Relay Peer Ledger Divergence</h3>
+  <p>If a Relay Peer encounters any kind of unrecoverable exception resulting in one or more missed entries, the
+    ledgers' state will diverge from that of the network. This scenario should, eventually, be automatically repaired by
+    other Peers requesting
+    Delta's from the faulty Relay Peer. To spot divergence, the requested Relay Peer can see that
+    the received 'currentEpoch' is larger than its own. A requested Relay Peer MUST in that scenario respond with
+    <strong>503 Service Unavailable</strong> and trigger a reconciliation process.</p>
+  <!--  <h2 id="merkle-checkpoints">Merkle Checkpoints</h2>-->
+  <!--  <p>To enable efficient verification of ledger history and prevent forks from propagating, the SSIMPL protocol-->
+  <!--    introduces-->
+  <!--    Merkle checkpoints. These checkpoints allow peers to validate that their current ledger state stems from a-->
+  <!--    previously-->
+  <!--    agreed-upon canonical state.</p>-->
+  <!--  <h3 id="definition">Definition</h3>-->
+  <!--  <p>A Merkle checkpoint is a snapshot of the canonical ledger at a given epoch, containing:</p>-->
+  <!--  <ul>-->
+  <!--    <li>epoch — The deterministic epoch number of the snapshot</li>-->
+  <!--    <li>root_hash — The canonical ledger Merkle root at that epoch</li>-->
+  <!--    <li>metadata (optional) — Any additional information, such as total entry count, checkpoint creator DID, or a-->
+  <!--      reference-->
+  <!--      timestamp-->
+  <!--    </li>-->
+  <!--  </ul>-->
+  <!--  <h3 id="purpose">Purpose</h3>-->
+  <!--  <p>Merkle checkpoints serve three main purposes:</p>-->
+  <!--  <ol>-->
+  <!--    <li>Anchoring history — They provide a trusted reference point for peers to verify that their current ledger is an-->
+  <!--      extension of a previous canonical state.-->
+  <!--    </li>-->
+  <!--    <li>Fork detection — Peers can detect divergence by comparing their checkpointed root hash with peers’ reported-->
+  <!--      checkpoints.-->
+  <!--    </li>-->
+  <!--    <li>Efficient reconciliation — When a peer joins the network or recovers from offline mode, it can request deltas-->
+  <!--      starting from the latest known checkpoint rather than from the genesis ledger.-->
+  <!--    </li>-->
+  <!--  </ol>-->
+  <!--  <h3 id="creation-and-storage">Creation and Storage</h3>-->
+  <!--  <ul>-->
+  <!--    <li>Peers MAY create checkpoints at deterministic intervals (e.g., end of each epoch).</li>-->
+  <!--    <li>Relay Peers SHOULD store checkpoints for availability, enabling efficient delta requests for mobile peers.</li>-->
+  <!--    <li>Checkpoints themselves are immutable; once created, they cannot be modified or deleted.</li>-->
+  <!--  </ul>-->
+  <!--  <h3 id="verification">Verification</h3>-->
+  <!--  <p>To verify a ledger using a checkpoint:</p>-->
+  <!--  <ol>-->
+  <!--    <li>Obtain the checkpoint for the target epoch (epoch, root_hash).</li>-->
+  <!--    <li>Compute the canonical ledger state from the checkpoint epoch to the current state.</li>-->
+  <!--    <li>Recompute the Merkle root for the resulting ledger.</li>-->
+  <!--    <li>Confirm that the recomputed root matches the current root_hash.</li>-->
+  <!--  </ol>-->
+  <!--  <p>A mismatch indicates ledger tampering or divergence, and the peer MUST reject the inconsistent entries.</p>-->
+  <!--  <h3 id="pruning-and-expiry">Pruning and Expiry</h3>-->
+  <!--  <ul>-->
+  <!--    <li>Checkpoints older than a configurable retention window MAY be pruned to reduce storage overhead.</li>-->
+  <!--    <li>Retention policies SHOULD be deterministic and consistent across peers to maintain canonical verification-->
+  <!--      paths.-->
+  <!--    </li>-->
+  <!--  </ul>-->
+  <!--  <h3 id="security-considerations">Security Considerations</h3>-->
+  <!--  <ul>-->
+  <!--    <li>Checkpoint integrity — Checkpoints must be signed by the creating peer using their DID key.</li>-->
+  <!--    <li>Fork prevention — Peers must reject any checkpoint that does not extend a known valid previous checkpoint.</li>-->
+  <!--    <li>Replay attacks — Timestamps and epoch numbers help prevent replay of stale checkpoints.</li>-->
+  <!--  </ul>-->
+  <!--  <h2 id="security-properties">Security Properties</h2>-->
+  <!--  <ul>-->
+  <!--    <li>Single-peer revocation verification.</li>-->
+  <!--    <li>Privacy-preserving registration.</li>-->
+  <!--    <li>Resistance to illegal pruning and tampering.</li>-->
+  <!--    <li>Bounded state growth.</li>-->
+  <!--    <li>Eventual convergence under client/server reconciliation.</li>-->
+  <!--  </ul>-->
+
+  <h2>Ledger Reconciliation</h2>
+
+  <h3>Motivation</h3>
+
+  <p>Because any Relay Peer may selectively withhold valid ledger entries — whether due to malice,
+    misconfiguration, or partial failure — no single peer's ledger can be considered authoritative
+    in isolation. The Merkle `rootHash` comparison allows a client to detect
+    divergence, but does not resolve it.</p>
+
+  <p>This section defines a <strong>reconciliation protocol</strong> that allows any peer or wallet to reconstruct
+    the authoritative ledger state by exhaustively querying the ring.</p>
+
+  <h3>The Completeness Principle</h3>
+
+  <p>The authoritative ledger state is defined as the <strong>union of all cryptographically valid entries
+    across 2-N peers</strong>. This follows directly from two properties of the ledger:</p>
   <ul>
-    <li>Peers MAY create checkpoints at deterministic intervals (e.g., end of each epoch).</li>
-    <li>Relay Peers SHOULD store checkpoints for availability, enabling efficient delta requests for mobile peers.</li>
-    <li>Checkpoints themselves are immutable; once created, they cannot be modified or deleted.</li>
-  </ul>
-  <h3 id="verification">Verification</h3>
-  <p>To verify a ledger using a checkpoint:</p>
-  <ol>
-    <li>Obtain the checkpoint for the target epoch (epoch, root_hash).</li>
-    <li>Compute the canonical ledger state from the checkpoint epoch to the current state.</li>
-    <li>Recompute the Merkle root for the resulting ledger.</li>
-    <li>Confirm that the recomputed root matches the current root_hash.</li>
-  </ol>
-  <p>A mismatch indicates ledger tampering or divergence, and the peer MUST reject the inconsistent entries.</p>
-  <h3 id="pruning-and-expiry">Pruning and Expiry</h3>
-  <ul>
-    <li>Checkpoints older than a configurable retention window MAY be pruned to reduce storage overhead.</li>
-    <li>Retention policies SHOULD be deterministic and consistent across peers to maintain canonical verification
-      paths.
+    <li>Entries can only be *added*, never fabricated — every valid entry carries a signature that can
+      be independently verified.
     </li>
-  </ul>
-  <h3 id="security-considerations">Security Considerations</h3>
-  <ul>
-    <li>Checkpoint integrity — Checkpoints must be signed by the creating peer using their DID key.</li>
-    <li>Fork prevention — Peers must reject any checkpoint that does not extend a known valid previous checkpoint.</li>
-    <li>Replay attacks — Timestamps and epoch numbers help prevent replay of stale checkpoints.</li>
-  </ul>
-  <h2 id="security-properties">Security Properties</h2>
-  <ul>
-    <li>Single-peer revocation verification.</li>
-    <li>Privacy-preserving registration.</li>
-    <li>Resistance to illegal pruning and tampering.</li>
-    <li>Bounded state growth.</li>
-    <li>Eventual convergence under client/server synchronization.</li>
+    <li>A peer with fewer valid entries than another is, by definition, holding an incomplete view.
+      There is no scenario in which fewer entries represents more accurate state.
+    </li>
   </ul>
 
+  <p>Therefore: <strong>a larger valid ledger always supersedes a smaller one</strong>. Majority voting over
+    `rootHash` values is explicitly *not* the reconciliation mechanism — a single honest peer holding
+    one valid entry not present on any other peer is sufficient to make that entry canonical.</p>
+
+  <h3>Reconciliation Procedure</h3>
+
+  <p>To perform full reconciliation, a client MUST:</p>
+
+  <ol>
+    <li><strong>Traverse 2-N nodes of the entire ring</strong> using the <a href="#traversal-algorithm">traversal
+      algorithm</a>,
+      requesting a
+      full ledger delta
+      (since epoch 0) from every responsive peer.
+    </li>
+    <li><strong>Validate every entry</strong> received from every peer against the canonicalization and validation
+      rules defined in <a href="#validation-rules">Validation Rules</a>. Invalid entries MUST be discarded.
+    </li>
+    <li><strong>Merge all valid entries</strong> into a local union ledger. The union is the set of all unique,
+      valid entries across all peer responses.
+    </li>
+    <li><strong>Recompute the canonical ledger</strong> from the union by applying the pruning and sorting rules
+      defined in <a href="#state-and-canonical-construction">State and Canonical Construction</a>.
+    </li>
+    <li><strong>Recompute the `rootHash`</strong> over the canonical ledger. This is the post-reconciliation
+      authoritative state.
+    </li>
+  </ol>
+  <p>The client MAY then push any entries present in its reconciled ledger but absent from a given
+    peer's ledger back to that peer, to aid network convergence.</p>
+
+  <h3>Security Properties</h3>
+
+  <p>The reconciliation protocol provides the following guarantees:</p>
+
+  <ul>
+    <li><strong>A single honest peer is sufficient</strong> to preserve any valid entry against a malicious majority
+      attempting to suppress it, provided the honest peer is reachable during reconciliation.
+    </li>
+    <li><strong>Fabrication remains impossible</strong> — a malicious peer cannot introduce entries it did not
+      legitimately sign, as all entries are independently verifiable.
+    </li>
+    <li><strong>Suppression is detectable</strong> — a peer whose ledger is a strict subset of the reconciled state
+      is provably withholding entries, and MAY be flagged as untrustworthy by the client for future
+      interactions.
+    </li>
+  </ul>
 </section>
 
 <hr/>
@@ -566,10 +1034,8 @@
   </ul>
   <h2 id="canonical-signature-object-pattern">Canonical Signature Object Pattern</h2>
   <p>All cryptographically signed objects in SSIMPL <strong>MUST</strong> follow a uniform, canonical structure, known
-    as the <em>
-    </em>SignatureEnvelope**. This ensures consistency across all signed data, including ledger entries, Verifiable
-    Credential
-    Roots (VCR), revocations, and delta payloads.</p>
+    as the <em>SignatureEnvelope</em>. This ensures consistency across all signed data, including ledger entries,
+    revocations, and delta payloads.</p>
   <h3 id="structure">Structure</h3>
   <p>Each signed object <strong>MUST</strong> include a <code>SignatureEnvelope</code> with the following structure:</p>
   <ul>
@@ -589,9 +1055,9 @@
   <pre><code>{
   "message": "&lt;hash-of-canonical-data&gt;",
   "signature": {
-    "publicKey": "&lt;multibase-encoded public key&gt;",
+    "publicKey": "&lt;Multibase-encoded public key&gt;",
     "algorithm": "&lt;algorithm identifier&gt;",
-    "value": "&lt;multibase-encoded signature&gt;"
+    "value": "&lt;Multibase-encoded signature&gt;"
     },
   "signer": "&lt;DID of signer&gt;"
 }
@@ -638,104 +1104,28 @@
   <h1 id="ssimpl-api-specification">SSIMPL API Specification
   </h1>
   <p>This section defines the reference API for Relay Peers in the SSIMPL protocol. It provides endpoints for <strong>DID
-    registration</strong>, <strong>revocation</strong>, and <strong>ledger synchronization</strong>.</p>
+    registration</strong>, <strong>revocation</strong>, and <strong>ledger reconciliation</strong>.</p>
   <p>All requests <strong>MUST</strong> be authenticated using a <code>Bearer</code> token, containing a <strong>signed
     DID in the canonical
-    SignatureEnvelope format, multibase-encoded</strong>.</p>
+    SignatureEnvelope format, Multibase-encoded</strong>.</p>
   <p>You can also check the open-api spec <a
       href="https://raw.githubusercontent.com/compilit/ssimpl/refs/heads/main/ssimpl-spec.json">here</a>.</p>
-  <h2 id="endpoints">Endpoints</h2>
-
-  <h3 id="register-relay-peer">Register a Relay Peer</h3>
-  <p><strong>POST</strong> <code>/peers</code></p>
-  <p>Purpose: Make a Relay Peer known to another Relay Peer.</p>
-  <p><strong>Request payload: <a href="relaypeerannouncement">RelayPeerAnnouncement</a></strong></p>
-  <p><strong>Example:</strong></p>
-  <pre><code>{
-  "data": {
-    "did": "did:key:1234abc...example"
-    "hostname": "some.hostname.org"
-  },
-  "signatureEnvelope": {
-    //...
-  }
-}
-</code></pre>
-  <p><strong>Response: 201 CREATED</strong></p>
-  <hr/>
-  <h3 id="perform-a-handshake">Perform a handshake</h3>
-  <p><strong>POST</strong> <code>/peers/identity</code></p>
-  <p><strong>Purpose:</strong> Allows (Relay) Peers to check the health an initial validity of the Relay Peer</p>
-  <p><strong>Request payload <a href="#signedobject-signed-t">SignedObject&lt;DID&gt;</a>:</strong></p>
-  <p><strong>Example:</strong></p>
-  <pre><code>{
-  "data":"did:key:1234abc...example",</span>
-    "signatureEnvelope": {
-    //...
-  }
-}
-</code></pre>
-  <p><strong>Response: 200 OK + <a href="#signedobject-signed-t">SignedObject&lt;DID&gt;</a>:</strong></p>
-  <pre><code>{
-  "data":"did:key:abc1234...example",</span>
-    "signatureEnvelope": {
-    //...
-  }
-}
-</code></pre>
-  <hr/>
-
-  <h3 id="request-relay-peers">Request known Relay Peers</h3>
-  <p><strong>GET</strong> <code>/peers</code></p>
-  <p>Purpose: Request a list of known Relay Peers.</p>
-  <p><strong>Response: 200 OK + <a href="#relaypeerannouncement">RelayPeerAnnouncement[]</a></strong></p>
-  <hr/>
-  <h3 id="request-ledger-delta">Request Ledger Delta</h3>
-  <p><strong>POST</strong> <code>/ledger/delta</code></p>
-  <p><strong>Purpose:</strong> Allows a Peer to request ledger entries that are newer than a given epoch, if the peer is
-    out of sync.</p>
-  <p><strong>Request payload <a href="#ledgerdeltarequest">LedgerDeltaRequest</a>:</strong></p>
-  <p><strong>Example:</strong></p>
-  <pre><code>{
-    "since": 42,
-    "rootHash": "abcdef1234567890"
-}
-</code></pre>
-  <p><strong>Response: 200 OK + <a href="#ledgerdeltaresponse">LedgerDeltaResponse</a>:</strong></p>
-  <p><strong>Example:</strong></p>
-  <pre><code>{
-  "currentEpoch": 43,
-  "authoritativeRootHash": "1234abcd5678ef90",
-  "entries": [
-    "data": {
-        "taHash": "a1b2c3d4...example",
-        "taExpiration": "1961086620",
-      },
-      "signatureEnvelope": {
-        //...
-      }
-    }
-  ]
-}
-</code></pre>
-  <hr/>
   <h3 id="revoke-ta">Revoke a TA</h3>
   <p><strong>PUT</strong> <code>/ledger</code></p>
   <p>Purpose: Revoke a TA by submitting a revocation payload. Providing the taHash means that the related TA can NEVER
     be used again to initialize a Wallet. The taHash is mandatory for Delegated Revocation.</p>
   <p><strong>Request payload: <a href="#signedobject-revocation">Revocation</a></strong></p>
-  <p><strong>Example:</strong></p>
-  <pre><code>{
-  "data": {
-    "taHash": "(optional) a1b2c3d4...example",
-    "taExpiration": 1961086620,
-  },
-  "signatureEnvelope": {
-  //...
-  }
-}
-</code></pre>
-  <p><strong>Response: 204 NO CONTENT</strong></p>
+  <p><strong>Response: 201 ACCEPTED</strong></p>
+  <hr/>
+  <h3 id="request-delta">Request a Delta</h3>
+  <p><strong>PUT</strong> <code>/ledger</code></p>
+  <p>Purpose: Revoke a TA by submitting a revocation payload. Providing the taHash means that the related TA can NEVER
+    be used again to initialize a Wallet. The taHash is mandatory for Delegated Revocation.</p>
+  <p><strong>Request payload: <a href="#ledgerdeltarequest">LedgerDeltaRequest</a></strong></p>
+  <p><strong>Response: 200 OK</strong></p>
+  <p><strong>Response payload: <a href="#ledgerdeltaresponse">LedgerDeltaResponse</a></strong></p>
+  <p><strong>Response: 409 CONFLICT</strong></p>
+  <p><strong>Response payload: none</strong></p>
   <hr/>
   <h2 id="shared-object-schemas">Shared Object Schemas</h2>
   <h3 id="signedobject-signed-t">SignedObject (Signed&lt;T&gt;)</h3>
@@ -829,15 +1219,15 @@
 }</code></pre>
   <h3>Example (in case an ePassport is used as TA):</h3>
   <p>The chain of trust for an ePassport essentially goes like this:</p>
-  <p><b>Public ICAO ML - <i>contains:</i></b></p>
-  <p><b style="padding-left: 10px">CSCA public key - <i>verifies:</i></b></p>
-  <p><b style="padding-left: 20px">DS certificate signature - <i>is part of:</i></b></p>
-  <p><b style="padding-left: 30px">DS certificate - <i>contains:</i></b></p>
-  <p><b style="padding-left: 40px">DS public key - <i>verifies:</i></b></p>
-  <p><b style="padding-left: 50px">SOD signature - <i>verifies:</i></b></p>
-  <p><b style="padding-left: 60px">DG hash list - <i>contains:</i></b></p>
-  <p><b style="padding-left: 70px">DG hashes - <i>verifies:</i></b></p>
-  <p><b style="padding-left: 80px">DG sections (Verifiable Credentials)</b></p>
+  <p><strong>Public ICAO ML - <i>contains:</i></strong></p>
+  <p><strong style="padding-left: 10px">CSCA public key - <i>verifies:</i></strong></p>
+  <p><strong style="padding-left: 20px">DS certificate signature - <i>is part of:</i></strong></p>
+  <p><strong style="padding-left: 30px">DS certificate - <i>contains:</i></strong></p>
+  <p><strong style="padding-left: 40px">DS public key - <i>verifies:</i></strong></p>
+  <p><strong style="padding-left: 50px">SOD signature - <i>verifies:</i></strong></p>
+  <p><strong style="padding-left: 60px">DG hash list - <i>contains:</i></strong></p>
+  <p><strong style="padding-left: 70px">DG hashes - <i>verifies:</i></strong></p>
+  <p><strong style="padding-left: 80px">DG sections (Verifiable Credentials)</strong></p>
   <pre><code>{
   "type": "ICAO_EPASSPORT",
   "taHash": "&lt;canonical-hash-of-the-ta&gt;",
@@ -849,9 +1239,9 @@
     "dsc": "&lt;dsCertificatePEM&gt;",
     "dataGroupHashes": "&lt;DG-id, DG-hash dictionary&gt;",
     "signature": {
-      "publicKey":  "&lt;multibase-encoded public key bytes>",,
+      "publicKey":  "&lt;Multibase-encoded public key bytes>",,
       "algorithm":  "&lt;algorithm id>",
-      "value": "&lt;multibase-encoded signature bytes&gt;",
+      "value": "&lt;Multibase-encoded signature bytes&gt;",
     },
   }
 }</code></pre>
@@ -879,8 +1269,7 @@
     <li>Verify <code>CSCA</code> is present on the ICAO master list.</li>
   </ol>
 
-  <p class="note">
-    Note: The full <code>proof.dataGroupHashes</code> must be provided in its entirety. The SOD signature
+  <p class="note">The full <code>proof.dataGroupHashes</code> must be provided in its entirety. The SOD signature
     is computed over the complete encoded hash list, not over individual entries. Omitting any
     hash from the list will cause signature verification to fail.
   </p>
@@ -905,7 +1294,7 @@
       "birthDate: "05-30-1988"
     },
     "proof": {
-      "dsc": "&lt;multibase-encoded-DS-certficate&gt;",
+      "dsc": "&lt;Multibase-encoded-DS-certficate&gt;",
       "dataGroupHashes": {
         "DG1":  "&lt;sha-256-hash-of-dg1&gt;",
         "DG2":  "&lt;sha-256-hash-of-dg2&gt;",
@@ -913,7 +1302,7 @@
         "DG14": "&lt;sha-256-hash-of-dg14&gt;",
         "DG15": "&lt;sha-256-hash-of-dg15&gt;"
       },
-      "signature": "&lt;multibase-encoded-SOD-signature&gt;"
+      "signature": "&lt;Multibase-encoded-SOD-signature&gt;"
       //optional, necessary for proving the claims, but contains more data than the actual claims, like the SSN
       "DG1": "P&lt;NLDDOE&lt;&lt;JOHN&lt;WILLIAM&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;ABC1X10A99NLD8805304M2911135215802147&lt;&lt;&lt;&lt;&lt;72"
     }
@@ -1012,7 +1401,7 @@
       <td>Current epoch of the relay peer ledger</td>
     </tr>
     <tr>
-      <td>authoritativeRootHash</td>
+      <td>rootHash</td>
       <td>string</td>
       <td>Merkle root hash after applying returned entries array Ordered ledger entries newer
         than lastEpoch
@@ -1022,26 +1411,6 @@
       <td>entries</td>
       <td>array</td>
       <td>The entries missing from your ledger based on the provided epoch</td>
-    </tr>
-    </tbody>
-  </table>
-  <h3 id="relaypeerannouncement">RelayPeerAnnouncement</h3>
-  <table>
-    <thead>
-    <th>Field</th>
-    <th>Type</th>
-    <th>Description</th>
-    </thead>
-    <tbody>
-    <tr>
-      <td>data</td>
-      <td>object</td>
-      <td>Containing the DID, hostname and the <a href="#ta-proof">TrustAnchorProof</a> of the Relay Peer</td>
-    </tr>
-    <tr>
-      <td>signatureEnvelope</td>
-      <td>object</td>
-      <td>Signature verifying the revocation. See <a href="#signatureenvelope">SignatureEnvelope</a></td>
     </tr>
     </tbody>
   </table>
