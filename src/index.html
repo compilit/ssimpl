@@ -363,7 +363,7 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
   <h1>Network Addressing</h1>
   <h2 id="network-structure">Network Structure</h2>
   <p>
-    SSIMPL networks are organised hierarchically by country and
+    SSIMPL networks are organized hierarchically by country and
     subnetwork. Each country identified by its ICAO 9303 alpha-3 code
     constitutes a top-level network. Large countries MAY be subdivided
     into subnetworks to bound ledger size on mobile devices.
@@ -484,7 +484,7 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
   <p>
     When a peer encounters a DID from a foreign network, they
     MUST download the relevant subnetwork ledger before verifying
-    the identity. Ledgers are cached locally and synchronised
+    the identity. Ledgers are cached locally and synchronized
     incrementally on subsequent interactions.
   </p>
   <p>
@@ -1064,7 +1064,7 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
 </code></pre>
   <h2 id="canonical-ta-hash">Canonical creation of the Trust Anchor Hash (ePassport implementation)</h2>
   <p>The following, canonical, JSON structure needs to be fed into a hash function (SHA-256 recommended) which results
-    in the 'taHash'. It is specific for standardised ePassports. Other TAs should have their own canonical JSON
+    in the 'taHash'. It is specific for standardized ePassports. Other TAs should have their own canonical JSON
     structure.</p>
   <pre><code>{
     "dateOfBirth": 580963131,

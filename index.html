@@ -246,15 +246,15 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       "id": "multibase"
     }
   },
-  "publishISODate": "2026-03-16T00:00:00.000Z",
-  "generatedSubtitle": "Unofficial Draft 16 March 2026"
+  "publishISODate": "2026-03-17T00:00:00.000Z",
+  "generatedSubtitle": "Unofficial Draft 17 March 2026"
 }</script>
 <link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2021/W3C-UD"></head>
 
 <body class="h-entry"><div class="head">
     
     <h1 id="title" class="title">SSIMPL Specification</h1> 
-    <p id="w3c-state">Unofficial Draft <time class="dt-published" datetime="2026-03-16">16 March 2026</time></p>
+    <p id="w3c-state">Unofficial Draft <time class="dt-published" datetime="2026-03-17">17 March 2026</time></p>
     <details open="">
       <summary>More details about this document</summary>
       <dl>
@@ -555,7 +555,7 @@ DID keypair = BIP32( seed )</pre>
   
   <section id="network-structure-0"><div class="header-wrapper"><h3 id="network-structure"><bdi class="secno">6.1 </bdi>Network Structure</h3><a class="self-link" href="#network-structure" aria-label="Permalink for Section 6.1"></a></div>
   <p>
-    SSIMPL networks are organised hierarchically by country and
+    SSIMPL networks are organized hierarchically by country and
     subnetwork. Each country identified by its ICAO 9303 alpha-3 code
     constitutes a top-level network. Large countries <em class="rfc2119">MAY</em> be subdivided
     into subnetworks to bound ledger size on mobile devices.
@@ -676,7 +676,7 @@ DID keypair = BIP32( seed )</pre>
   <p>
     When a peer encounters a DID from a foreign network, they
     <em class="rfc2119">MUST</em> download the relevant subnetwork ledger before verifying
-    the identity. Ledgers are cached locally and synchronised
+    the identity. Ledgers are cached locally and synchronized
     incrementally on subsequent interactions.
   </p>
   <p>
@@ -1256,7 +1256,7 @@ DID keypair = BIP32( seed )</pre>
 </code></pre>
   </section></section><section id="canonical-creation-of-the-trust-anchor-hash-epassport-implementation"><div class="header-wrapper"><h3 id="canonical-ta-hash"><bdi class="secno">12.8 </bdi>Canonical creation of the Trust Anchor Hash (ePassport implementation)</h3><a class="self-link" href="#canonical-ta-hash" aria-label="Permalink for Section 12.8"></a></div>
   <p>The following, canonical, JSON structure needs to be fed into a hash function (SHA-256 recommended) which results
-    in the 'taHash'. It is specific for standardised ePassports. Other TAs should have their own canonical JSON
+    in the 'taHash'. It is specific for standardized ePassports. Other TAs should have their own canonical JSON
     structure.</p>
   <pre><code aria-busy="false" class="hljs json"><span class="hljs-punctuation">{</span>
     <span class="hljs-attr">"dateOfBirth"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">580963131</span><span class="hljs-punctuation">,</span>
