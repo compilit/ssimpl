@@ -502,7 +502,8 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
 </hr>
 <section>
   <h1 id="wallet-specification">Wallet Specification</h1>
-  <p id="vcr">The wallet is a Self-Sovereign means of identification that can be installed and bootstrapped entirely independent
+  <p id="vcr">The wallet is a Self-Sovereign means of identification that can be installed and bootstrapped entirely
+    independent
     of
     any authority. It solely relies on cryptographic proof. This cryptographic proof is contained within the so-called
     VCR. The Verifiable Credential Root is a VC, as defined in [[VC]], necessary to link the signer of this VC to the
@@ -642,7 +643,8 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
   <p>Upon first contact with the network:</p>
   <ol>
     <li>The DNS controller assigns the next available index and creates the corresponding DNS record
-      `{country}.{subnetworkIndex}.{nodeIndex}.ssimpl.org` pointing to the new Relay Peer's hostname. Where the network index can be
+      `{country}.{subnetworkIndex}.{nodeIndex}.ssimpl.org` pointing to the new Relay Peer's hostname. Where the network
+      index can be
       used to allow for multiple networks to co-exist.
     </li>
     <li>Requests delta's from one (or more) of the Relay Peers in the network in chunks based on the time between
@@ -717,7 +719,7 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
     individual entries.</p>
   <h3 id="mt-structure">Structure</h3>
   <ul>
-    <li><strong>Leaves:</strong> Hashes of canonical ledger entries.</li>
+    <li><strong>Leaves:</strong> Hashes of canonical ledger entries. See <a href="#ledger-entry">LedgerEntry</a></li>
     <li><strong>Branches:</strong> Hashes of concatenated child nodes.</li>
     <li><strong>Root:</strong> <code>root_hash</code> representing the current canonical ledger state.</li>
   </ul>
@@ -1058,7 +1060,7 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
     "publicKey": "&lt;Multibase-encoded public key&gt;",
     "algorithm": "&lt;algorithm identifier&gt;",
     "value": "&lt;Multibase-encoded signature&gt;"
-    },
+  },
   "signer": "&lt;DID of signer&gt;"
 }
 </code></pre>
@@ -1163,12 +1165,14 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
     <tr>
       <td>data</td>
       <td>object</td>
-      <td>Contains the <a href="#ta-proof">TrustAnchorProof</a> of the being revoked</td>
+      <td>Contains the <a href="#ta-proof">TrustAnchorProof</a> of the identity being revoked along with the AA public
+        key.
+      </td>
     </tr>
     <tr>
       <td>signatureEnvelope</td>
       <td>object</td>
-      <td>Signature verifying the revocation. See <a href="#signatureenvelope">SignatureEnvelope</a></td>
+      <td>Signature verifying the revocation. See <a href="#signatureenvelope">SignatureEnvelope</a>.</td>
     </tr>
     </tbody>
   </table>
@@ -1187,7 +1191,7 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
     <tr>
       <td>Type</td>
       <td>string</td>
-      <td>Identifies the TA implementation</td>
+      <td>Identifies the TA implementation.</td>
     </tr>
     <tr>
       <td>taHash</td>
@@ -1202,7 +1206,7 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
     <tr>
       <td>proof</td>
       <td>object</td>
-      <td>TA-specific cryptographic proof material</td>
+      <td>TA-specific cryptographic proof material.</td>
     </tr>
     </tbody>
   </table>
@@ -1414,6 +1418,10 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
     </tr>
     </tbody>
   </table>
+  <h3 id="ledger-entry">LedgerEntry</h3>
+  <p>To preserve ledger space, the entry has to be made as small as possible. This is a suggested canonicalization of
+    the Ledger Entry. After verifying the proofs, this entry is derived, hashed and stored in the Merkle Tree.</p>
+  <pre><code>{expirationEpoch}|{commit}|{DID}</code></pre>
 </section>
 <section class="appendix informative">
   <h2>Subscription-Based Credential Distribution</h2>
