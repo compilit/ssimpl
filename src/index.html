@@ -189,7 +189,17 @@
   <h3 id="considerations">Considerations</h3>
   <p>Identity is hard to verify by nature. Using a state-issued TA is not a perfect solution, but it's the best
     deterministic proof of (human) identity available at the moment.</p>
+  <p>In transactions where a TA is used, there is often a final verification check done by comparing the photo on the
+    document with the one providing the document. This verification step is the actual crucial part tying the document
+    to the bearer. It is therefor recommended to implement something similar in a SSIMPL wallet. In case of the ICAO
+    ePassport implementations, one could extract the raw bytes from the DG2 (the photograph on the document) and let the
+    user take a picture of themselves. Using image-comparison algorithms/software, it would be possible to add this
+    verification.</p>
   <h2 id="levels-of-authentication">Levels of Authentication</h2>
+  <p>SSIMPL DIDs can come in two forms: ephemeral and stable. The ephemeral DIDs are created from randomly selected
+    BIP32 children keypairs from their respective stable parent BIP32 keypair. Whereas, their stable counterparts are
+    based upon the actual parent keypairs OR by storing the path to the actual child keypair. The latter situation would
+    give you the benefit of being able to decide for yourself what the scope/lifetime of a keypair would be.</p>
   <ul>
     <li><strong>Level 0:</strong> ephemeral DID + TrustAnchorProof confirms human ownership (bot detection).</li>
     <li><strong>Level 1:</strong> stable DID + TrustAnchorProof confirms human ownership (bot detection) and identifies
@@ -437,12 +447,11 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
     <li>
       Decode the DID per the algorithm in
       <a href="#did-decoding"></a> to obtain
-      <code>country</code>, <code>subnetwork</code>, and
-      <code>node</code>.
+      <code>country</code>
     </li>
     <li>
-      Construct the DNS address:
-      <code>lower(country).subnetwork.node.ssimpl.org</code>.
+      Construct the DNS address: (start with 0 for subnetwork/node)
+      <code>lower(country).&lt;subnetwork&gt;.&lt;node&gt;.ssimpl.org</code>.
     </li>
     <li>
       Resolve via DNS to obtain the peer's IP address and port.
@@ -450,7 +459,7 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
     <li>
       To query any peer in the same subnetwork (e.g. for ledger
       synchronisation), resolve
-      <code>lower(country).subnetwork.ssimpl.org</code>.
+      <code>lower(country).ssimpl.org</code>.
     </li>
   </ol>
 
