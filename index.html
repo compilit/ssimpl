@@ -246,15 +246,15 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       "id": "multibase"
     }
   },
-  "publishISODate": "2026-03-20T00:00:00.000Z",
-  "generatedSubtitle": "Unofficial Draft 20 March 2026"
+  "publishISODate": "2026-03-23T00:00:00.000Z",
+  "generatedSubtitle": "Unofficial Draft 23 March 2026"
 }</script>
 <link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2021/W3C-UD"></head>
 
 <body class="h-entry"><div class="head">
     
     <h1 id="title" class="title">SSIMPL Specification</h1> 
-    <p id="w3c-state">Unofficial Draft <time class="dt-published" datetime="2026-03-20">20 March 2026</time></p>
+    <p id="w3c-state">Unofficial Draft <time class="dt-published" datetime="2026-03-23">23 March 2026</time></p>
     <details open="">
       <summary>More details about this document</summary>
       <dl>
@@ -303,7 +303,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     government-issued trust anchors and a peer-validated ledger.
   </p>
 </section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#abstract">Abstract</a></li><li class="tocline"><a class="tocxref" href="#document-status"><bdi class="secno">1. </bdi>Document Status</a></li><li class="tocline"><a class="tocxref" href="#conformance"><bdi class="secno">2. </bdi>Conformance</a></li><li class="tocline"><a class="tocxref" href="#introduction"><bdi class="secno">3. </bdi>Introduction</a></li><li class="tocline"><a class="tocxref" href="#overview"><bdi class="secno">4. </bdi>Overview</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#identity-trust-model"><bdi class="secno">4.1 </bdi>Identity Trust Model</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#considerations"><bdi class="secno">4.1.1 </bdi>Considerations</a></li></ol></li><li class="tocline"><a class="tocxref" href="#levels-of-authentication"><bdi class="secno">4.2 </bdi>Levels of Authentication</a></li><li class="tocline"><a class="tocxref" href="#roles"><bdi class="secno">4.3 </bdi>Roles</a></li></ol></li><li class="tocline"><a class="tocxref" href="#did-method"><bdi class="secno">5. </bdi>The <code>did:ssimpl</code> Method</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#did-syntax"><bdi class="secno">5.1 </bdi>DID Syntax</a></li><li class="tocline"><a class="tocxref" href="#did-encoding"><bdi class="secno">5.2 </bdi>Byte Layout</a></li><li class="tocline"><a class="tocxref" href="#did-decoding"><bdi class="secno">5.3 </bdi>Decoding Algorithm</a></li><li class="tocline"><a class="tocxref" href="#did-key-derivation"><bdi class="secno">5.4 </bdi>Key Derivation</a></li></ol></li><li class="tocline"><a class="tocxref" href="#network-addressing"><bdi class="secno">6. </bdi>Network Addressing</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#network-structure"><bdi class="secno">6.1 </bdi>Network Structure</a></li><li class="tocline"><a class="tocxref" href="#dns-addressing"><bdi class="secno">6.2 </bdi>DNS Addressing Scheme</a></li><li class="tocline"><a class="tocxref" href="#network-resolution"><bdi class="secno">6.3 </bdi>Network Resolution from a DID</a></li><li class="tocline"><a class="tocxref" href="#network-segregation"><bdi class="secno">6.4 </bdi>Network Segregation and Ledger Size</a></li><li class="tocline"><a class="tocxref" href="#cross-network"><bdi class="secno">6.5 </bdi>Cross-Network Verification</a></li></ol></li><li class="tocline"><a class="tocxref" href="#wallet-specification"><bdi class="secno">7. </bdi>Wallet Specification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#wallet-requirements"><bdi class="secno">7.1 </bdi>Wallet Requirements</a></li><li class="tocline"><a class="tocxref" href="#wallet-functionality"><bdi class="secno">7.2 </bdi>Wallet Functionality</a></li><li class="tocline"><a class="tocxref" href="#wallet-security"><bdi class="secno">7.3 </bdi>Wallet Security</a></li><li class="tocline"><a class="tocxref" href="#delegated-revocation"><bdi class="secno">7.4 </bdi>Delegated Revocation</a></li><li class="tocline"><a class="tocxref" href="#activation-process-in-case-of-an-e-passport-"><bdi class="secno">7.5 </bdi>Example activation Process</a></li></ol></li><li class="tocline"><a class="tocxref" href="#relay-peer-specification"><bdi class="secno">8. </bdi>Relay Peer Specification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#relay-peer-responsibilities"><bdi class="secno">8.1 </bdi>Relay Peer Responsibilities</a></li><li class="tocline"><a class="tocxref" href="#relay-peer-bootstrap-and-verification"><bdi class="secno">8.2 </bdi>Relay Peer Bootstrap and Verification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#relay-peer-registration"><bdi class="secno">8.2.1 </bdi>Relay Peer Bootstrapping</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#traversal-algorithm"><bdi class="secno">9. </bdi>Ring Traversal Algorithm</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#for-discovery-finding-any-single-responsive-peer"><bdi class="secno">9.1 </bdi>For discovery (finding any single responsive peer)</a></li><li class="tocline"><a class="tocxref" href="#for-gossip-propagation-pushing-a-ledger-change"><bdi class="secno">9.2 </bdi>For gossip propagation (pushing a ledger change)</a></li></ol></li><li class="tocline"><a class="tocxref" href="#ledger-specification"><bdi class="secno">10. </bdi>Ledger Specification</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#goals"><bdi class="secno">10.1 </bdi>Goals</a></li><li class="tocline"><a class="tocxref" href="#state-and-canonical-construction"><bdi class="secno">10.2 </bdi>State and Canonical Construction</a></li><li class="tocline"><a class="tocxref" href="#merkle-tree"><bdi class="secno">10.3 </bdi>Merkle Tree</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#mt-structure"><bdi class="secno">10.3.1 </bdi>Structure</a></li><li class="tocline"><a class="tocxref" href="#updates"><bdi class="secno">10.3.2 </bdi>Updates</a></li><li class="tocline"><a class="tocxref" href="#merkle-proofs"><bdi class="secno">10.3.3 </bdi>Merkle Proofs</a></li></ol></li><li class="tocline"><a class="tocxref" href="#validation-rules"><bdi class="secno">10.4 </bdi>Validation Rules</a></li><li class="tocline"><a class="tocxref" href="#pruning-and-mutability"><bdi class="secno">10.5 </bdi>Pruning and Mutability</a></li><li class="tocline"><a class="tocxref" href="#reconciliation"><bdi class="secno">10.6 </bdi>Reconciliation</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#relay-peer-error-handling"><bdi class="secno">10.6.1 </bdi>Relay Peer Ledger Divergence</a></li></ol></li><li class="tocline"><a class="tocxref" href="#ledger-reconciliation"><bdi class="secno">10.7 </bdi>Ledger Reconciliation</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#motivation"><bdi class="secno">10.7.1 </bdi>Motivation</a></li><li class="tocline"><a class="tocxref" href="#the-completeness-principle"><bdi class="secno">10.7.2 </bdi>The Completeness Principle</a></li><li class="tocline"><a class="tocxref" href="#reconciliation-procedure"><bdi class="secno">10.7.3 </bdi>Reconciliation Procedure</a></li><li class="tocline"><a class="tocxref" href="#security-properties"><bdi class="secno">10.7.4 </bdi>Security Properties</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#conclusion"><bdi class="secno">11. </bdi>Conclusion</a></li><li class="tocline"><a class="tocxref" href="#canonicalization-rules"><bdi class="secno">12. </bdi>Canonicalization Rules</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#object-serialization"><bdi class="secno">12.1 </bdi>Object Serialization</a></li><li class="tocline"><a class="tocxref" href="#nested-objects"><bdi class="secno">12.2 </bdi>Nested Objects</a></li><li class="tocline"><a class="tocxref" href="#signature-message"><bdi class="secno">12.3 </bdi>Signature Message</a></li><li class="tocline"><a class="tocxref" href="#deterministic-encoding"><bdi class="secno">12.4 </bdi>Deterministic Encoding</a></li><li class="tocline"><a class="tocxref" href="#verification-procedure"><bdi class="secno">12.5 </bdi>Verification Procedure</a></li><li class="tocline"><a class="tocxref" href="#rationale"><bdi class="secno">12.6 </bdi>Rationale</a></li><li class="tocline"><a class="tocxref" href="#canonical-signature-object-pattern"><bdi class="secno">12.7 </bdi>Canonical Signature Object Pattern</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#structure"><bdi class="secno">12.7.1 </bdi>Structure</a></li></ol></li><li class="tocline"><a class="tocxref" href="#canonical-ta-hash"><bdi class="secno">12.8 </bdi>Canonical creation of the Trust Anchor Hash (ePassport implementation)</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#usage"><bdi class="secno">12.8.1 </bdi>Usage</a></li><li class="tocline"><a class="tocxref" href="#rules-and-notes"><bdi class="secno">12.8.2 </bdi>Rules and Notes</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#ssimpl-api-specification"><bdi class="secno">13. </bdi>SSIMPL API Specification
-  </a><ol class="toc"><li class="tocline"><a class="tocxref" href="#revoke-ta"><bdi class="secno">13.1 </bdi>Revoke a TA</a></li><li class="tocline"><a class="tocxref" href="#request-delta"><bdi class="secno">13.2 </bdi>Request a Delta</a></li><li class="tocline"><a class="tocxref" href="#shared-object-schemas"><bdi class="secno">13.3 </bdi>Shared Object Schemas</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#signedobject-signed-t"><bdi class="secno">13.3.1 </bdi>SignedObject (Signed&lt;T&gt;)</a></li><li class="tocline"><a class="tocxref" href="#signedobject-revocation"><bdi class="secno">13.3.2 </bdi>SignedObject: Revocation</a></li><li class="tocline"><a class="tocxref" href="#ta-proof"><bdi class="secno">13.3.3 </bdi>TrustAnchorProof</a></li><li class="tocline"><a class="tocxref" href="#example-in-case-an-epassport-is-used-as-ta"><bdi class="secno">13.3.4 </bdi>Example (in case an ePassport is used as TA):</a></li><li class="tocline"><a class="tocxref" href="#ssimpl-jwt"><bdi class="secno">13.3.5 </bdi>SSIMPL JWT</a></li><li class="tocline"><a class="tocxref" href="#signatureenvelope"><bdi class="secno">13.3.6 </bdi>SignatureEnvelope</a></li><li class="tocline"><a class="tocxref" href="#signature"><bdi class="secno">13.3.7 </bdi>Signature</a></li><li class="tocline"><a class="tocxref" href="#ledgerdeltarequest"><bdi class="secno">13.3.8 </bdi>LedgerDeltaRequest</a></li><li class="tocline"><a class="tocxref" href="#ledgerdeltaresponse"><bdi class="secno">13.3.9 </bdi>LedgerDeltaResponse</a></li><li class="tocline"><a class="tocxref" href="#ledger-entry"><bdi class="secno">13.3.10 </bdi>LedgerEntry</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#subscription-based-credential-distribution"><bdi class="secno">A. </bdi>Subscription-Based Credential Distribution</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#subscription-model"><bdi class="secno">A.1 </bdi>Subscription Model</a></li><li class="tocline"><a class="tocxref" href="#subscription-properties"><bdi class="secno">A.2 </bdi>Subscription Properties</a></li><li class="tocline"><a class="tocxref" href="#subscription-flow"><bdi class="secno">A.3 </bdi>Subscription Flow</a></li><li class="tocline"><a class="tocxref" href="#verification"><bdi class="secno">A.4 </bdi>Verification</a></li><li class="tocline"><a class="tocxref" href="#revocation-and-expiry"><bdi class="secno">A.5 </bdi>Revocation and Expiry</a></li><li class="tocline"><a class="tocxref" href="#security-considerations"><bdi class="secno">A.6 </bdi>Security Considerations</a></li></ol></li><li class="tocline"><a class="tocxref" href="#references"><bdi class="secno">B. </bdi>References</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#normative-references"><bdi class="secno">B.1 </bdi>Normative references</a></li></ol></li></ol></nav>
+  </a><ol class="toc"><li class="tocline"><a class="tocxref" href="#register-did"><bdi class="secno">13.1 </bdi>Revoke a DID/TA</a></li><li class="tocline"><a class="tocxref" href="#revoke-did"><bdi class="secno">13.2 </bdi>Revoke a DID/TA</a></li><li class="tocline"><a class="tocxref" href="#request-delta"><bdi class="secno">13.3 </bdi>Request a Delta</a></li><li class="tocline"><a class="tocxref" href="#shared-object-schemas"><bdi class="secno">13.4 </bdi>Shared Object Schemas</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#signedobject-signed-t"><bdi class="secno">13.4.1 </bdi>SignedObject (Signed&lt;T&gt;)</a></li><li class="tocline"><a class="tocxref" href="#signedobject-registration"><bdi class="secno">13.4.2 </bdi>SignedObject: Registration</a></li><li class="tocline"><a class="tocxref" href="#signedobject-revocation"><bdi class="secno">13.4.3 </bdi>SignedObject: Revocation</a></li><li class="tocline"><a class="tocxref" href="#ta-proof"><bdi class="secno">13.4.4 </bdi>TrustAnchorProof</a></li><li class="tocline"><a class="tocxref" href="#example-in-case-an-epassport-is-used-as-ta"><bdi class="secno">13.4.5 </bdi>Example (in case an ePassport is used as TA):</a></li><li class="tocline"><a class="tocxref" href="#ssimpl-jwt"><bdi class="secno">13.4.6 </bdi>SSIMPL JWT</a></li><li class="tocline"><a class="tocxref" href="#signatureenvelope"><bdi class="secno">13.4.7 </bdi>SignatureEnvelope</a></li><li class="tocline"><a class="tocxref" href="#signature"><bdi class="secno">13.4.8 </bdi>Signature</a></li><li class="tocline"><a class="tocxref" href="#ledgerdeltarequest"><bdi class="secno">13.4.9 </bdi>LedgerDeltaRequest</a></li><li class="tocline"><a class="tocxref" href="#ledgerdeltaresponse"><bdi class="secno">13.4.10 </bdi>LedgerDeltaResponse</a></li><li class="tocline"><a class="tocxref" href="#ledger-entry"><bdi class="secno">13.4.11 </bdi>LedgerEntry</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#subscription-based-credential-distribution"><bdi class="secno">A. </bdi>Subscription-Based Credential Distribution</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#subscription-model"><bdi class="secno">A.1 </bdi>Subscription Model</a></li><li class="tocline"><a class="tocxref" href="#subscription-properties"><bdi class="secno">A.2 </bdi>Subscription Properties</a></li><li class="tocline"><a class="tocxref" href="#subscription-flow"><bdi class="secno">A.3 </bdi>Subscription Flow</a></li><li class="tocline"><a class="tocxref" href="#verification"><bdi class="secno">A.4 </bdi>Verification</a></li><li class="tocline"><a class="tocxref" href="#revocation-and-expiry"><bdi class="secno">A.5 </bdi>Revocation and Expiry</a></li><li class="tocline"><a class="tocxref" href="#security-considerations"><bdi class="secno">A.6 </bdi>Security Considerations</a></li></ol></li><li class="tocline"><a class="tocxref" href="#references"><bdi class="secno">B. </bdi>References</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#normative-references"><bdi class="secno">B.1 </bdi>Normative references</a></li></ol></li></ol></nav>
 
 <section id="document-status"><div class="header-wrapper"><h2 id="x1-document-status"><bdi class="secno">1. </bdi>Document Status</h2><a class="self-link" href="#document-status" aria-label="Permalink for Section 1."></a></div>
   
@@ -470,15 +470,11 @@ pk-bytes       = 33OCTET       ; compressed secp256k1 public key</pre>
         <td class="byte">0</td>
         <td class="byte">1</td>
         <td class="byte">2</td>
-        <td class="byte">3</td>
-        <td class="byte">4</td>
-        <td class="byte">5 – 37</td>
+        <td class="byte">3 – 35</td>
       </tr>
       <tr>
         <td class="label">Field</td>
         <td class="group-country" colspan="3">Country (3 bytes)</td>
-        <td class="group-subnet">Subnetwork (1 byte)</td>
-        <td class="group-node">Node (1 byte)</td>
         <td class="group-pk">Public Key (33 bytes)</td>
       </tr>
       <tr>
@@ -486,16 +482,13 @@ pk-bytes       = 33OCTET       ; compressed secp256k1 public key</pre>
         <td class="group-country"><code>N</code></td>
         <td class="group-country"><code>L</code></td>
         <td class="group-country"><code>D</code></td>
-        <td class="group-subnet"><code>0x00</code></td>
-        <td class="group-node"><code>0x03</code></td>
         <td class="group-pk"><code>02ab cd…</code></td>
       </tr>
     </tbody></table>
   </div>
   <p>
     The country code <em class="rfc2119">MUST</em> be an ICAO 9303 [<cite><a class="bibref" data-link-type="biblio" href="#bib-icao9303" title="ICAO9303">ICAO9303</a></cite>] alpha-3 code
-    encoded as ASCII uppercase bytes. The subnetwork and node fields
-    are unsigned 8-bit integers (range 0–255). The public key is a
+    encoded as ASCII uppercase bytes. The public key is a
     33-byte compressed secp256k1 public key.
   </p>
 
@@ -511,7 +504,7 @@ pk-bytes       = 33OCTET       ; compressed secp256k1 public key</pre>
     </li>
     <li>
       Multibase-decode the string to obtain a byte array. The result
-      <em class="rfc2119">MUST</em> be exactly 38 bytes. If not, the DID is malformed.
+      <em class="rfc2119">MUST</em> be exactly 35 bytes. If not, the DID is malformed.
     </li>
     <li>
       Extract <code>bytes[0..2]</code> (inclusive) as the country
@@ -519,15 +512,7 @@ pk-bytes       = 33OCTET       ; compressed secp256k1 public key</pre>
       9303 alpha-3 country code.
     </li>
     <li>
-      Extract <code>bytes[3]</code> as the subnetwork identifier
-      (unsigned integer).
-    </li>
-    <li>
-      Extract <code>bytes[4]</code> as the node identifier
-      (unsigned integer).
-    </li>
-    <li>
-      Extract <code>bytes[5..37]</code> (inclusive) as the 33-byte
+      Extract <code>bytes[3..35]</code> (inclusive) as the 33-byte
       compressed secp256k1 public key.
     </li>
   </ol>
@@ -1312,14 +1297,19 @@ DID keypair = BIP32( seed )</pre>
     DID in the canonical
     SignatureEnvelope format, Multibase-encoded</strong>.</p>
   <p>You can also check the open-api spec <a href="https://raw.githubusercontent.com/compilit/ssimpl/refs/heads/main/ssimpl-spec.json">here</a>.</p>
-  <section id="revoke-a-ta"><div class="header-wrapper"><h3 id="revoke-ta"><bdi class="secno">13.1 </bdi>Revoke a TA</h3><a class="self-link" href="#revoke-ta" aria-label="Permalink for Section 13.1"></a></div>
+  <section id="revoke-a-did-ta"><div class="header-wrapper"><h3 id="register-did"><bdi class="secno">13.1 </bdi>Revoke a DID/TA</h3><a class="self-link" href="#register-did" aria-label="Permalink for Section 13.1"></a></div>
+  <p><strong>POST</strong> <code>/ledger</code></p>
+  <p>Purpose: Register a DID/TA by submitting a registration payload.</p>
+  <p><strong>Request payload: <a href="#signedobject-registration">Registration</a></strong></p>
+  <p><strong>Response: 201 ACCEPTED</strong></p>
+  <hr>
+  </section><section id="revoke-a-did-ta-0"><div class="header-wrapper"><h3 id="revoke-did"><bdi class="secno">13.2 </bdi>Revoke a DID/TA</h3><a class="self-link" href="#revoke-did" aria-label="Permalink for Section 13.2"></a></div>
   <p><strong>PUT</strong> <code>/ledger</code></p>
-  <p>Purpose: Revoke a TA by submitting a revocation payload. Providing the taHash means that the related TA can NEVER
-    be used again to initialize a Wallet. The taHash is mandatory for Delegated Revocation.</p>
+  <p>Purpose: Revoke a DID/TA by submitting a revocation payload.</p>
   <p><strong>Request payload: <a href="#signedobject-revocation">Revocation</a></strong></p>
   <p><strong>Response: 201 ACCEPTED</strong></p>
   <hr>
-  </section><section id="request-a-delta"><div class="header-wrapper"><h3 id="request-delta"><bdi class="secno">13.2 </bdi>Request a Delta</h3><a class="self-link" href="#request-delta" aria-label="Permalink for Section 13.2"></a></div>
+  </section><section id="request-a-delta"><div class="header-wrapper"><h3 id="request-delta"><bdi class="secno">13.3 </bdi>Request a Delta</h3><a class="self-link" href="#request-delta" aria-label="Permalink for Section 13.3"></a></div>
   <p><strong>PUT</strong> <code>/ledger</code></p>
   <p>Purpose: Revoke a TA by submitting a revocation payload. Providing the taHash means that the related TA can NEVER
     be used again to initialize a Wallet. The taHash is mandatory for Delegated Revocation.</p>
@@ -1329,8 +1319,8 @@ DID keypair = BIP32( seed )</pre>
   <p><strong>Response: 409 CONFLICT</strong></p>
   <p><strong>Response payload: none</strong></p>
   <hr>
-  </section><section id="shared-object-schemas-0"><div class="header-wrapper"><h3 id="shared-object-schemas"><bdi class="secno">13.3 </bdi>Shared Object Schemas</h3><a class="self-link" href="#shared-object-schemas" aria-label="Permalink for Section 13.3"></a></div>
-  <section id="signedobject-signed-t-0"><div class="header-wrapper"><h4 id="signedobject-signed-t"><bdi class="secno">13.3.1 </bdi>SignedObject (Signed&lt;T&gt;)</h4><a class="self-link" href="#signedobject-signed-t" aria-label="Permalink for Section 13.3.1"></a></div>
+  </section><section id="shared-object-schemas-0"><div class="header-wrapper"><h3 id="shared-object-schemas"><bdi class="secno">13.4 </bdi>Shared Object Schemas</h3><a class="self-link" href="#shared-object-schemas" aria-label="Permalink for Section 13.4"></a></div>
+  <section id="signedobject-signed-t-0"><div class="header-wrapper"><h4 id="signedobject-signed-t"><bdi class="secno">13.4.1 </bdi>SignedObject (Signed&lt;T&gt;)</h4><a class="self-link" href="#signedobject-signed-t" aria-label="Permalink for Section 13.4.1"></a></div>
   <table>
     <thead>
     <tr>
@@ -1352,7 +1342,31 @@ DID keypair = BIP32( seed )</pre>
     </tr>
     </tbody>
   </table>
-  </section><section id="signedobject-revocation-0"><div class="header-wrapper"><h4 id="signedobject-revocation"><bdi class="secno">13.3.2 </bdi>SignedObject: Revocation</h4><a class="self-link" href="#signedobject-revocation" aria-label="Permalink for Section 13.3.2"></a></div>
+  </section><section id="signedobject-registration-0"><div class="header-wrapper"><h4 id="signedobject-registration"><bdi class="secno">13.4.2 </bdi>SignedObject: Registration</h4><a class="self-link" href="#signedobject-registration" aria-label="Permalink for Section 13.4.2"></a></div>
+  <table>
+    <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>data</td>
+      <td>object</td>
+      <td>Contains the <a href="#ta-proof">TrustAnchorProof</a> of the identity being revoked along with the AA public
+        key.
+      </td>
+    </tr>
+    <tr>
+      <td>signatureEnvelope</td>
+      <td>object</td>
+      <td>Signature verifying the revocation. See <a href="#signatureenvelope">SignatureEnvelope</a>.</td>
+    </tr>
+    </tbody>
+  </table>
+  </section><section id="signedobject-revocation-0"><div class="header-wrapper"><h4 id="signedobject-revocation"><bdi class="secno">13.4.3 </bdi>SignedObject: Revocation</h4><a class="self-link" href="#signedobject-revocation" aria-label="Permalink for Section 13.4.3"></a></div>
   <table>
     <thead>
     <tr>
@@ -1377,7 +1391,7 @@ DID keypair = BIP32( seed )</pre>
     </tbody>
   </table>
 
-  </section><section id="trustanchorproof"><div class="header-wrapper"><h4 id="ta-proof"><bdi class="secno">13.3.3 </bdi>TrustAnchorProof</h4><a class="self-link" href="#ta-proof" aria-label="Permalink for Section 13.3.3"></a></div>
+  </section><section id="trustanchorproof"><div class="header-wrapper"><h4 id="ta-proof"><bdi class="secno">13.4.4 </bdi>TrustAnchorProof</h4><a class="self-link" href="#ta-proof" aria-label="Permalink for Section 13.4.4"></a></div>
 
   <table>
     <thead>
@@ -1421,7 +1435,7 @@ DID keypair = BIP32( seed )</pre>
   <span class="hljs-comment">// Type-specific cryptographic proof material</span>
   <span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span></code></pre>
-  </section><section id="example-in-case-an-epassport-is-used-as-ta"><div class="header-wrapper"><h4 id="x13-3-4-example-in-case-an-epassport-is-used-as-ta"><bdi class="secno">13.3.4 </bdi>Example (in case an ePassport is used as TA):</h4><a class="self-link" href="#example-in-case-an-epassport-is-used-as-ta" aria-label="Permalink for Section 13.3.4"></a></div>
+  </section><section id="example-in-case-an-epassport-is-used-as-ta"><div class="header-wrapper"><h4 id="x13-4-5-example-in-case-an-epassport-is-used-as-ta"><bdi class="secno">13.4.5 </bdi>Example (in case an ePassport is used as TA):</h4><a class="self-link" href="#example-in-case-an-epassport-is-used-as-ta" aria-label="Permalink for Section 13.4.5"></a></div>
   <p>The chain of trust for an ePassport essentially goes like this:</p>
   <p><strong>Public ICAO ML - <i>contains:</i></strong></p>
   <p><strong style="padding-left: 10px">CSCA public key - <i>verifies:</i></strong></p>
@@ -1478,7 +1492,7 @@ DID keypair = BIP32( seed )</pre>
     hash from the list will cause signature verification to fail.
   </p></div>
 
-  </section><section id="ssimpl-jwt-0"><div class="header-wrapper"><h4 id="ssimpl-jwt"><bdi class="secno">13.3.5 </bdi>SSIMPL JWT</h4><a class="self-link" href="#ssimpl-jwt" aria-label="Permalink for Section 13.3.5"></a></div>
+  </section><section id="ssimpl-jwt-0"><div class="header-wrapper"><h4 id="ssimpl-jwt"><bdi class="secno">13.4.6 </bdi>SSIMPL JWT</h4><a class="self-link" href="#ssimpl-jwt" aria-label="Permalink for Section 13.4.6"></a></div>
   <p>By combining the DID and the owners TrustAnchorProof, one could create a JWT that would allow the bearer to
     authenticate themselves.</p>
   <p>The 'claims' array can be filled with the required scope depending on how pseudonymous you wish to make the JWT.
@@ -1512,7 +1526,7 @@ DID keypair = BIP32( seed )</pre>
   }
 }</code></pre>
 
-  </section><section id="signatureenvelope-0"><div class="header-wrapper"><h4 id="signatureenvelope"><bdi class="secno">13.3.6 </bdi>SignatureEnvelope</h4><a class="self-link" href="#signatureenvelope" aria-label="Permalink for Section 13.3.6"></a></div>
+  </section><section id="signatureenvelope-0"><div class="header-wrapper"><h4 id="signatureenvelope"><bdi class="secno">13.4.7 </bdi>SignatureEnvelope</h4><a class="self-link" href="#signatureenvelope" aria-label="Permalink for Section 13.4.7"></a></div>
   <table>
     <thead>
     <tr>
@@ -1539,7 +1553,7 @@ DID keypair = BIP32( seed )</pre>
     </tr>
     </tbody>
   </table>
-  </section><section id="signature-0"><div class="header-wrapper"><h4 id="signature"><bdi class="secno">13.3.7 </bdi>Signature</h4><a class="self-link" href="#signature" aria-label="Permalink for Section 13.3.7"></a></div>
+  </section><section id="signature-0"><div class="header-wrapper"><h4 id="signature"><bdi class="secno">13.4.8 </bdi>Signature</h4><a class="self-link" href="#signature" aria-label="Permalink for Section 13.4.8"></a></div>
   <table>
     <thead>
     <tr>
@@ -1566,7 +1580,7 @@ DID keypair = BIP32( seed )</pre>
     </tr>
     </tbody>
   </table>
-  </section><section id="ledgerdeltarequest-0"><div class="header-wrapper"><h4 id="ledgerdeltarequest"><bdi class="secno">13.3.8 </bdi>LedgerDeltaRequest</h4><a class="self-link" href="#ledgerdeltarequest" aria-label="Permalink for Section 13.3.8"></a></div>
+  </section><section id="ledgerdeltarequest-0"><div class="header-wrapper"><h4 id="ledgerdeltarequest"><bdi class="secno">13.4.9 </bdi>LedgerDeltaRequest</h4><a class="self-link" href="#ledgerdeltarequest" aria-label="Permalink for Section 13.4.9"></a></div>
   <table>
     <thead>
     <tr>
@@ -1590,7 +1604,7 @@ DID keypair = BIP32( seed )</pre>
     </tr>
     </tbody>
   </table>
-  </section><section id="ledgerdeltaresponse-0"><div class="header-wrapper"><h4 id="ledgerdeltaresponse"><bdi class="secno">13.3.9 </bdi>LedgerDeltaResponse</h4><a class="self-link" href="#ledgerdeltaresponse" aria-label="Permalink for Section 13.3.9"></a></div>
+  </section><section id="ledgerdeltaresponse-0"><div class="header-wrapper"><h4 id="ledgerdeltaresponse"><bdi class="secno">13.4.10 </bdi>LedgerDeltaResponse</h4><a class="self-link" href="#ledgerdeltaresponse" aria-label="Permalink for Section 13.4.10"></a></div>
   <table>
     <thead>
     <tr><th>Field</th>
@@ -1617,7 +1631,7 @@ DID keypair = BIP32( seed )</pre>
     </tr>
     </tbody>
   </table>
-  </section><section id="ledgerentry"><div class="header-wrapper"><h4 id="ledger-entry"><bdi class="secno">13.3.10 </bdi>LedgerEntry</h4><a class="self-link" href="#ledger-entry" aria-label="Permalink for Section 13.3.10"></a></div>
+  </section><section id="ledgerentry"><div class="header-wrapper"><h4 id="ledger-entry"><bdi class="secno">13.4.11 </bdi>LedgerEntry</h4><a class="self-link" href="#ledger-entry" aria-label="Permalink for Section 13.4.11"></a></div>
   <p>To preserve ledger space, the entry has to be made as small as possible. This is a suggested canonicalization of
     the Ledger Entry. After verifying the proofs, this entry is derived, hashed and stored in the Merkle Tree.</p>
   <pre><code aria-busy="false" class="hljs">{expirationEpoch}|{commit}|{DID}</code></pre>

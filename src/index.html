@@ -14,7 +14,7 @@
           url: "https://compilit.com",
         }
       ],
-      github: "https://github.com/compilit/ssimpl",
+      github: "https://gitlab.com/compilit/ssimpl",
       additionalCopyrightHolders: "Bastiën G.A. Bonsel",  // Optional: claim your own copyright
       latestVersion: null,
       localBiblio: {
@@ -274,15 +274,11 @@ pk-bytes       = 33OCTET       ; compressed secp256k1 public key
         <td class="byte">0</td>
         <td class="byte">1</td>
         <td class="byte">2</td>
-        <td class="byte">3</td>
-        <td class="byte">4</td>
-        <td class="byte">5 – 37</td>
+        <td class="byte">3 – 35</td>
       </tr>
       <tr>
         <td class="label">Field</td>
         <td class="group-country" colspan="3">Country (3 bytes)</td>
-        <td class="group-subnet">Subnetwork (1 byte)</td>
-        <td class="group-node">Node (1 byte)</td>
         <td class="group-pk">Public Key (33 bytes)</td>
       </tr>
       <tr>
@@ -290,16 +286,13 @@ pk-bytes       = 33OCTET       ; compressed secp256k1 public key
         <td class="group-country"><code>N</code></td>
         <td class="group-country"><code>L</code></td>
         <td class="group-country"><code>D</code></td>
-        <td class="group-subnet"><code>0x00</code></td>
-        <td class="group-node"><code>0x03</code></td>
         <td class="group-pk"><code>02ab cd…</code></td>
       </tr>
     </table>
   </div>
   <p>
     The country code MUST be an ICAO 9303 [[ICAO9303]] alpha-3 code
-    encoded as ASCII uppercase bytes. The subnetwork and node fields
-    are unsigned 8-bit integers (range 0–255). The public key is a
+    encoded as ASCII uppercase bytes. The public key is a
     33-byte compressed secp256k1 public key.
   </p>
 
@@ -315,7 +308,7 @@ pk-bytes       = 33OCTET       ; compressed secp256k1 public key
     </li>
     <li>
       Multibase-decode the string to obtain a byte array. The result
-      MUST be exactly 38 bytes. If not, the DID is malformed.
+      MUST be exactly 35 bytes. If not, the DID is malformed.
     </li>
     <li>
       Extract <code>bytes[0..2]</code> (inclusive) as the country
@@ -323,15 +316,7 @@ pk-bytes       = 33OCTET       ; compressed secp256k1 public key
       9303 alpha-3 country code.
     </li>
     <li>
-      Extract <code>bytes[3]</code> as the subnetwork identifier
-      (unsigned integer).
-    </li>
-    <li>
-      Extract <code>bytes[4]</code> as the node identifier
-      (unsigned integer).
-    </li>
-    <li>
-      Extract <code>bytes[5..37]</code> (inclusive) as the 33-byte
+      Extract <code>bytes[3..35]</code> (inclusive) as the 33-byte
       compressed secp256k1 public key.
     </li>
   </ol>
@@ -1121,10 +1106,15 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
     SignatureEnvelope format, Multibase-encoded</strong>.</p>
   <p>You can also check the open-api spec <a
       href="https://raw.githubusercontent.com/compilit/ssimpl/refs/heads/main/ssimpl-spec.json">here</a>.</p>
-  <h3 id="revoke-ta">Revoke a TA</h3>
+  <h3 id="register-did">Revoke a DID/TA</h3>
+  <p><strong>POST</strong> <code>/ledger</code></p>
+  <p>Purpose: Register a DID/TA by submitting a registration payload.</p>
+  <p><strong>Request payload: <a href="#signedobject-registration">Registration</a></strong></p>
+  <p><strong>Response: 201 ACCEPTED</strong></p>
+  <hr/>
+  <h3 id="revoke-did">Revoke a DID/TA</h3>
   <p><strong>PUT</strong> <code>/ledger</code></p>
-  <p>Purpose: Revoke a TA by submitting a revocation payload. Providing the taHash means that the related TA can NEVER
-    be used again to initialize a Wallet. The taHash is mandatory for Delegated Revocation.</p>
+  <p>Purpose: Revoke a DID/TA by submitting a revocation payload.</p>
   <p><strong>Request payload: <a href="#signedobject-revocation">Revocation</a></strong></p>
   <p><strong>Response: 201 ACCEPTED</strong></p>
   <hr/>
@@ -1158,6 +1148,30 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
       <td>signatureEnvelope</td>
       <td>object</td>
       <td>Signature verifying the <code>data</code>. See <a href="#signatureenvelope">SignatureEnvelope</a></td>
+    </tr>
+    </tbody>
+  </table>
+  <h3 id="signedobject-registration">SignedObject: Registration</h3>
+  <table>
+    <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>data</td>
+      <td>object</td>
+      <td>Contains the <a href="#ta-proof">TrustAnchorProof</a> of the identity being revoked along with the AA public
+        key.
+      </td>
+    </tr>
+    <tr>
+      <td>signatureEnvelope</td>
+      <td>object</td>
+      <td>Signature verifying the revocation. See <a href="#signatureenvelope">SignatureEnvelope</a>.</td>
     </tr>
     </tbody>
   </table>
