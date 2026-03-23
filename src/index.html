@@ -14,7 +14,7 @@
           url: "https://compilit.com",
         }
       ],
-      github: "https://gitlab.com/compilit/ssimpl",
+      github: "https://github.com/compilit/ssimpl",
       additionalCopyrightHolders: "Bastiën G.A. Bonsel",  // Optional: claim your own copyright
       latestVersion: null,
       localBiblio: {
@@ -238,18 +238,14 @@
     conforming to the generic DID syntax defined in [[DIDCORE]]:
   </p>
   <pre class="nohighlight">
-ssimpl-did     = "did:ssimpl:" ssimpl-specific-id
-ssimpl-specific-id = Multibase( network-bytes || pk-bytes )
-network-bytes  = country-bytes subnetwork-byte node-byte
+ssimpl-did     = "did:ssimpl:" ; ssimpl-specific-id
+ssimpl-specific-id = Multibase( country-bytes || pk-bytes )
 country-bytes  = 3ALPHA        ; ICAO 9303 alpha-3 country code
-subnetwork-byte = 1OCTET       ; unsigned integer 0–255
-node-byte      = 1OCTET        ; unsigned integer 0–255
 pk-bytes       = 33OCTET       ; compressed secp256k1 public key
         </pre>
   <p>
     The method-specific identifier is a single Multibase-encoded
-    opaque string. It encodes 38 bytes: 3 bytes of country code,
-    1 byte of subnetwork identifier, 1 byte of node identifier,
+    opaque string. It encodes 36 bytes: 3 bytes of country code,
     and 33 bytes of compressed public key. No delimiters are used.
     Decoding is deterministic by fixed byte offset.
   </p>
@@ -258,7 +254,6 @@ pk-bytes       = 33OCTET       ; compressed secp256k1 public key
     <code class="did-example">did:ssimpl:3vYhGpQrKmNxTfBwLsAeDcJqZiUoMbXn</code>
     <p>
       The above identifier decodes to: country = <code>NLD</code>,
-      subnetwork = <code>0</code>, node = <code>3</code>,
       public key = <code>02ab…</code>.
     </p>
   </aside>

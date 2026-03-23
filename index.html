@@ -433,17 +433,13 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     A <code>did:ssimpl</code> identifier has the following structure,
     conforming to the generic DID syntax defined in [<cite><a class="bibref" data-link-type="biblio" href="#bib-didcore" title="Decentralized Identifiers (DIDs) v1.0">DIDCORE</a></cite>]:
   </p>
-  <pre class="nohighlight">ssimpl-did     = "did:ssimpl:" ssimpl-specific-id
-ssimpl-specific-id = Multibase( network-bytes || pk-bytes )
-network-bytes  = country-bytes subnetwork-byte node-byte
+  <pre class="nohighlight">ssimpl-did     = "did:ssimpl:" ; ssimpl-specific-id
+ssimpl-specific-id = Multibase( country-bytes || pk-bytes )
 country-bytes  = 3ALPHA        ; ICAO 9303 alpha-3 country code
-subnetwork-byte = 1OCTET       ; unsigned integer 0–255
-node-byte      = 1OCTET        ; unsigned integer 0–255
 pk-bytes       = 33OCTET       ; compressed secp256k1 public key</pre>
   <p>
     The method-specific identifier is a single Multibase-encoded
-    opaque string. It encodes 38 bytes: 3 bytes of country code,
-    1 byte of subnetwork identifier, 1 byte of node identifier,
+    opaque string. It encodes 36 bytes: 3 bytes of country code,
     and 33 bytes of compressed public key. No delimiters are used.
     Decoding is deterministic by fixed byte offset.
   </p>
@@ -454,7 +450,6 @@ pk-bytes       = 33OCTET       ; compressed secp256k1 public key</pre>
     <code class="did-example">did:ssimpl:3vYhGpQrKmNxTfBwLsAeDcJqZiUoMbXn</code>
     <p>
       The above identifier decodes to: country = <code>NLD</code>,
-      subnetwork = <code>0</code>, node = <code>3</code>,
       public key = <code>02ab…</code>.
     </p>
   </aside>
