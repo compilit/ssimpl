@@ -367,7 +367,7 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
     A network SHOULD be sized such that its ledger remains manageable
     on a contemporary mobile device. A suggested ceiling is one million
     registered identities per subnetwork, corresponding to approximately
-    200 megabytes of ledger storage at maximum capacity. This is also where the subnetworks come into play. Each
+    4 gigabytes of ledger storage at maximum capacity. This is also where the subnetworks come into play. Each
     subnetwork can be used for one separate ledger. Depending on the identity you're interacting with, you either need
     your ledger AND theirs, or can keep using your own.
   </p>
@@ -461,11 +461,11 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
 
   <aside class="example" title="Ledger size estimates">
     <p>
-      At 200 bytes per entry and a ceiling of one million identities:
+      At 4 kilobytes per entry and a ceiling of one million identities:
     </p>
     <ul>
-      <li>Netherlands (NLD): single subnetwork, ~200 MB at full capacity.</li>
-      <li>United States (USA): requires multiple subnetworks at meaningful adoption; each subnetwork ~200 MB.</li>
+      <li>Netherlands (NLD): single subnetwork, ~4 GB at full capacity.</li>
+      <li>United States (USA): requires multiple subnetworks at meaningful adoption; each subnetwork ~4 GB .</li>
     </ul>
   </aside>
 

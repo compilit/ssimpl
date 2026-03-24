@@ -246,15 +246,15 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       "id": "multibase"
     }
   },
-  "publishISODate": "2026-03-23T00:00:00.000Z",
-  "generatedSubtitle": "Unofficial Draft 23 March 2026"
+  "publishISODate": "2026-03-24T00:00:00.000Z",
+  "generatedSubtitle": "Unofficial Draft 24 March 2026"
 }</script>
 <link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2021/W3C-UD"></head>
 
 <body class="h-entry"><div class="head">
     
     <h1 id="title" class="title">SSIMPL Specification</h1> 
-    <p id="w3c-state">Unofficial Draft <time class="dt-published" datetime="2026-03-23">23 March 2026</time></p>
+    <p id="w3c-state">Unofficial Draft <time class="dt-published" datetime="2026-03-24">24 March 2026</time></p>
     <details open="">
       <summary>More details about this document</summary>
       <dl>
@@ -559,7 +559,7 @@ DID keypair = BIP32( seed )</pre>
     A network <em class="rfc2119">SHOULD</em> be sized such that its ledger remains manageable
     on a contemporary mobile device. A suggested ceiling is one million
     registered identities per subnetwork, corresponding to approximately
-    200 megabytes of ledger storage at maximum capacity. This is also where the subnetworks come into play. Each
+    4 gigabytes of ledger storage at maximum capacity. This is also where the subnetworks come into play. Each
     subnetwork can be used for one separate ledger. Depending on the identity you're interacting with, you either need
     your ledger AND theirs, or can keep using your own.
   </p>
@@ -653,11 +653,11 @@ DID keypair = BIP32( seed )</pre>
     <a class="self-link" href="#example-ledger-size-estimates">Example<bdi> 3</bdi></a><span class="example-title">: Ledger size estimates</span>
   </div>
     <p>
-      At 200 bytes per entry and a ceiling of one million identities:
+      At 4 kilobytes per entry and a ceiling of one million identities:
     </p>
     <ul>
-      <li>Netherlands (NLD): single subnetwork, ~200 MB at full capacity.</li>
-      <li>United States (USA): requires multiple subnetworks at meaningful adoption; each subnetwork ~200 MB.</li>
+      <li>Netherlands (NLD): single subnetwork, ~4 GB at full capacity.</li>
+      <li>United States (USA): requires multiple subnetworks at meaningful adoption; each subnetwork ~4 GB .</li>
     </ul>
   </aside>
 
