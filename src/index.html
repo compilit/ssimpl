@@ -84,7 +84,7 @@
       background: #ddeeff;
     }
 
-    .encoding-diagram td.group-subnet {
+    .encoding-diagram td.group-subnetwork {
       background: #ddffd4;
     }
 
@@ -224,7 +224,7 @@
     </li>
   </ul>
 </section>
-</hr>
+<hr/>
 <section id="did-method">
   <h1>The <code>did:ssimpl</code> Method</h1>
   <p>A SSIMPL DID captures several things: a public key used for signing tied to a verifiable identity and the network
@@ -240,27 +240,28 @@
   <pre class="nohighlight">
 ssimpl-did     = "did:ssimpl:" ; ssimpl-specific-id
 ssimpl-specific-id = Multibase( country-bytes || pk-bytes )
+subnet-bytes  = 1INTEGER       ; integer representing the subnetwork
 country-bytes  = 3ALPHA        ; ICAO 9303 alpha-3 country code
 pk-bytes       = 33OCTET       ; compressed secp256k1 public key
         </pre>
   <p>
     The method-specific identifier is a single Multibase-encoded
-    opaque string. It encodes 36 bytes: 3 bytes of country code,
+    opaque string. It encodes 37 bytes: 3 bytes of country code, 1 byte of subnetwork
     and 33 bytes of compressed public key. No delimiters are used.
     Decoding is deterministic by fixed byte offset.
   </p>
 
   <aside class="example" title="Example DID">
-    <code class="did-example">did:ssimpl:3vYhGpQrKmNxTfBwLsAeDcJqZiUoMbXn</code>
+    <code class="did-example">did:ssimpl:MbmxkMDN2WWhHcFFyS21OeFRmQndMc0FlRGNKcVppVW9NYlhu</code>
     <p>
-      The above identifier decodes to: country = <code>NLD</code>,
-      public key = <code>02ab…</code>.
+      The above identifier decodes to: country = <code>NLD</code>, subnetwork = <code>0</code>,
+      public key = <code>3vYh...</code>.
     </p>
   </aside>
 
   <h2 id="did-encoding">Byte Layout</h2>
   <p>
-    The 38-byte payload prior to Multibase-encoding is laid out as follows:
+    The 37-byte payload prior to Multibase-encoding is laid out as follows:
   </p>
   <div class="encoding-diagram">
     <table>
@@ -269,11 +270,13 @@ pk-bytes       = 33OCTET       ; compressed secp256k1 public key
         <td class="byte">0</td>
         <td class="byte">1</td>
         <td class="byte">2</td>
-        <td class="byte">3 – 35</td>
+        <td class="byte">3</td>
+        <td class="byte">4 – 36</td>
       </tr>
       <tr>
         <td class="label">Field</td>
         <td class="group-country" colspan="3">Country (3 bytes)</td>
+        <td class="group-subnetwork" colspan="1">Subnetwork (1 byte)</td>
         <td class="group-pk">Public Key (33 bytes)</td>
       </tr>
       <tr>
@@ -281,7 +284,8 @@ pk-bytes       = 33OCTET       ; compressed secp256k1 public key
         <td class="group-country"><code>N</code></td>
         <td class="group-country"><code>L</code></td>
         <td class="group-country"><code>D</code></td>
-        <td class="group-pk"><code>02ab cd…</code></td>
+        <td class="group-subnetwork"><code>0</code></td>
+        <td class="group-pk"><code>03vYh...</code></td>
       </tr>
     </table>
   </div>
@@ -311,7 +315,11 @@ pk-bytes       = 33OCTET       ; compressed secp256k1 public key
       9303 alpha-3 country code.
     </li>
     <li>
-      Extract <code>bytes[3..35]</code> (inclusive) as the 33-byte
+      Extract <code>bytes[3]</code>as the subnetwork
+      code. Interpret as Integer. The result MUST be an integer between 0-255.
+    </li>
+    <li>
+      Extract <code>bytes[4..36]</code> (inclusive) as the 33-byte
       compressed secp256k1 public key.
     </li>
   </ol>
@@ -348,7 +356,7 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
     computationally unlinkable.
   </p>
 </section>
-</hr>
+<hr/>
 <section id="network-addressing">
   <h1>Network Addressing</h1>
   <h2 id="network-structure">Network Structure</h2>
@@ -438,7 +446,7 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
     </li>
     <li>
       To query any peer in the same subnetwork (e.g. for ledger
-      synchronisation), resolve
+      synchronization), resolve
       <code>lower(country).ssimpl.org</code>.
     </li>
   </ol>
@@ -483,12 +491,12 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
     manage which ledgers are retained on their device.
   </p>
   <p>
-    Ledger freshness is maintained by delta synchronisation: a peer
+    Ledger freshness is maintained by delta synchronization: a peer
     requests only entries added since their last known ledger state.
     Full re-download is not required after initial acquisition.
   </p>
 </section>
-</hr>
+<hr/>
 <section>
   <h1 id="wallet-specification">Wallet Specification</h1>
   <p id="vcr">The wallet is a Self-Sovereign means of identification that can be installed and bootstrapped entirely
@@ -1271,7 +1279,7 @@ seed = HASH( mnemonic || HASH( aa_public_key ) )
   <p>
     The <code>type</code> field identifies the Trust Anchor implementation and determines
     how <code>claims</code> and <code>proof</code> are interpreted. Peers <em>MUST</em> reject
-    any <code>TrustAnchorProof</code> whose <code>type</code> they do not recognise.
+    any <code>TrustAnchorProof</code> whose <code>type</code> they do not recognize.
   </p>
 
   <p>

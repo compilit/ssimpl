@@ -89,7 +89,7 @@ dfn{cursor:pointer}
       background: #ddeeff;
     }
 
-    .encoding-diagram td.group-subnet {
+    .encoding-diagram td.group-subnetwork {
       background: #ddffd4;
     }
 
@@ -420,7 +420,7 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
     </li>
   </ul>
 </section></section>
-
+<hr>
 <section id="did-method"><div class="header-wrapper"><h2 id="x5-the-did-ssimpl-method"><bdi class="secno">5. </bdi>The <code>did:ssimpl</code> Method</h2><a class="self-link" href="#did-method" aria-label="Permalink for Section 5."></a></div>
   
   <p>A SSIMPL DID captures several things: a public key used for signing tied to a verifiable identity and the network
@@ -435,11 +435,12 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
   </p>
   <pre class="nohighlight">ssimpl-did     = "did:ssimpl:" ; ssimpl-specific-id
 ssimpl-specific-id = Multibase( country-bytes || pk-bytes )
+subnet-bytes  = 1INTEGER       ; integer representing the subnetwork
 country-bytes  = 3ALPHA        ; ICAO 9303 alpha-3 country code
 pk-bytes       = 33OCTET       ; compressed secp256k1 public key</pre>
   <p>
     The method-specific identifier is a single Multibase-encoded
-    opaque string. It encodes 36 bytes: 3 bytes of country code,
+    opaque string. It encodes 37 bytes: 3 bytes of country code, 1 byte of subnetwork
     and 33 bytes of compressed public key. No delimiters are used.
     Decoding is deterministic by fixed byte offset.
   </p>
@@ -447,16 +448,16 @@ pk-bytes       = 33OCTET       ; compressed secp256k1 public key</pre>
   <aside class="example" id="example-example-did"><div class="marker">
     <a class="self-link" href="#example-example-did">Example<bdi> 1</bdi></a><span class="example-title">: Example DID</span>
   </div>
-    <code class="did-example">did:ssimpl:3vYhGpQrKmNxTfBwLsAeDcJqZiUoMbXn</code>
+    <code class="did-example">did:ssimpl:MbmxkMDN2WWhHcFFyS21OeFRmQndMc0FlRGNKcVppVW9NYlhu</code>
     <p>
-      The above identifier decodes to: country = <code>NLD</code>,
-      public key = <code>02ab…</code>.
+      The above identifier decodes to: country = <code>NLD</code>, subnetwork = <code>0</code>,
+      public key = <code>3vYh...</code>.
     </p>
   </aside>
 
   </section><section id="byte-layout"><div class="header-wrapper"><h3 id="did-encoding"><bdi class="secno">5.2 </bdi>Byte Layout</h3><a class="self-link" href="#did-encoding" aria-label="Permalink for Section 5.2"></a></div>
   <p>
-    The 38-byte payload prior to Multibase-encoding is laid out as follows:
+    The 37-byte payload prior to Multibase-encoding is laid out as follows:
   </p>
   <div class="encoding-diagram">
     <table>
@@ -465,11 +466,13 @@ pk-bytes       = 33OCTET       ; compressed secp256k1 public key</pre>
         <td class="byte">0</td>
         <td class="byte">1</td>
         <td class="byte">2</td>
-        <td class="byte">3 – 35</td>
+        <td class="byte">3</td>
+        <td class="byte">4 – 36</td>
       </tr>
       <tr>
         <td class="label">Field</td>
         <td class="group-country" colspan="3">Country (3 bytes)</td>
+        <td class="group-subnetwork" colspan="1">Subnetwork (1 byte)</td>
         <td class="group-pk">Public Key (33 bytes)</td>
       </tr>
       <tr>
@@ -477,7 +480,8 @@ pk-bytes       = 33OCTET       ; compressed secp256k1 public key</pre>
         <td class="group-country"><code>N</code></td>
         <td class="group-country"><code>L</code></td>
         <td class="group-country"><code>D</code></td>
-        <td class="group-pk"><code>02ab cd…</code></td>
+        <td class="group-subnetwork"><code>0</code></td>
+        <td class="group-pk"><code>03vYh...</code></td>
       </tr>
     </tbody></table>
   </div>
@@ -507,7 +511,11 @@ pk-bytes       = 33OCTET       ; compressed secp256k1 public key</pre>
       9303 alpha-3 country code.
     </li>
     <li>
-      Extract <code>bytes[3..35]</code> (inclusive) as the 33-byte
+      Extract <code>bytes[3]</code>as the subnetwork
+      code. Interpret as Integer. The result <em class="rfc2119">MUST</em> be an integer between 0-255.
+    </li>
+    <li>
+      Extract <code>bytes[4..36]</code> (inclusive) as the 33-byte
       compressed secp256k1 public key.
     </li>
   </ol>
@@ -540,7 +548,7 @@ DID keypair = BIP32( seed )</pre>
     computationally unlinkable.
   </p></div>
 </section></section>
-
+<hr>
 <section id="network-addressing"><div class="header-wrapper"><h2 id="x6-network-addressing"><bdi class="secno">6. </bdi>Network Addressing</h2><a class="self-link" href="#network-addressing" aria-label="Permalink for Section 6."></a></div>
   
   <section id="network-structure-0"><div class="header-wrapper"><h3 id="network-structure"><bdi class="secno">6.1 </bdi>Network Structure</h3><a class="self-link" href="#network-structure" aria-label="Permalink for Section 6.1"></a></div>
@@ -628,7 +636,7 @@ DID keypair = BIP32( seed )</pre>
     </li>
     <li>
       To query any peer in the same subnetwork (e.g. for ledger
-      synchronisation), resolve
+      synchronization), resolve
       <code>lower(country).ssimpl.org</code>.
     </li>
   </ol>
@@ -675,12 +683,12 @@ DID keypair = BIP32( seed )</pre>
     manage which ledgers are retained on their device.
   </p>
   <p>
-    Ledger freshness is maintained by delta synchronisation: a peer
+    Ledger freshness is maintained by delta synchronization: a peer
     requests only entries added since their last known ledger state.
     Full re-download is not required after initial acquisition.
   </p>
 </section></section>
-
+<hr>
 <section id="wallet-specification-0"><div class="header-wrapper"><h2 id="wallet-specification"><bdi class="secno">7. </bdi>Wallet Specification</h2><a class="self-link" href="#wallet-specification" aria-label="Permalink for Section 7."></a></div>
   
   <p id="vcr">The wallet is a Self-Sovereign means of identification that can be installed and bootstrapped entirely
@@ -1462,7 +1470,7 @@ DID keypair = BIP32( seed )</pre>
   <p>
     The <code>type</code> field identifies the Trust Anchor implementation and determines
     how <code>claims</code> and <code>proof</code> are interpreted. Peers <em><em class="rfc2119">MUST</em></em> reject
-    any <code>TrustAnchorProof</code> whose <code>type</code> they do not recognise.
+    any <code>TrustAnchorProof</code> whose <code>type</code> they do not recognize.
   </p>
 
   <p>
